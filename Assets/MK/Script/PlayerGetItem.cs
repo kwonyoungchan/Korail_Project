@@ -15,15 +15,22 @@ public class PlayerGetItem : MonoBehaviour
     // 팔 상태
     int armState = 1;
 
+    // 아이템 개수
+    Item item;
+    int treeCnt;
+    int steelCnt;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        item = GameObject.Find()
     }
 
     // Update is called once per frame
     void Update()
     {
+        treeCnt = 
         // 점프키를 누른다면
         if (Input.GetButtonDown("Jump"))
         {

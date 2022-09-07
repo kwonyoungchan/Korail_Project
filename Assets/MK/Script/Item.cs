@@ -25,16 +25,14 @@ public class Item : MonoBehaviour
         // Hierarchy 창 확인해서 아이템 상태 보기
         item[0] = treeCnt;
         item[1] = steelCnt;
-
-        print(treeCnt + " / " + steelCnt);
     }
 
     // 플레이어가 닿으면 개수 증가
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Player"))
+        if (other.gameObject.name.Contains("Body"))
         {
-            print("항");
+            print("얻음");
             if (gameObject.name.Contains("Branch"))
             {
                 treeCnt++;
