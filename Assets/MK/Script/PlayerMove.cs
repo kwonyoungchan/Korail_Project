@@ -10,19 +10,29 @@ public class PlayerMove : MonoBehaviour
 {
     // 필요 속성 : 속도
     public float speed = 3;
+    // 대쉬 속도
+    public float a = 2;
 
-    // 캐릭터 컨트롤러
-    CharacterController playerCc;
+    // 최종 속도
+    public float finSpeed;
+
+    // 대쉬 시간
+    public float dashTime = 0.3f;
 
     // 입력값 받아오는 변수
     float h;
     float v;
 
+    // 리지드바디
+    Rigidbody rigid;
+
     // Start is called before the first frame update
     void Start()
     {
-        // 캐릭터 컨트롤러 속성 가져오기
-        playerCc = GetComponent<CharacterController>();
+        // 리지드바디
+        rigid = GetComponentInChildren<Rigidbody>();
+        // 속도 초기화
+        finSpeed = speed;
     }
 
     // Update is called once per frame
@@ -35,12 +45,17 @@ public class PlayerMove : MonoBehaviour
         // 방향 전환에 따른 캐릭터 바라보는 부분
         LookPlayer();
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Dashing();
+        }
+
         // 2. 방향 설정하기
         Vector3 dir = h * Vector3.right + v * Vector3.forward;
         dir.Normalize();
 
         // 3. 플레이어 움직이기
-        playerCc.Move(dir * speed * Time.deltaTime);
+        transform.position += dir * finSpeed * Time.deltaTime;
     }
 
     // 플레이어의 앞방향 전환하는 함수
@@ -95,6 +110,8 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator IEDash()
     {
-        yield return null;
+        finSpeed = speed * a;
+        yield return new WaitForSeconds(dashTime);
+        finSpeed = speed;
     }
 }
