@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tool
+  - Branch
+  - Steel
   layers:
   - Default
   - TransparentFX
