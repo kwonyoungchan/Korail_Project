@@ -8,6 +8,7 @@ public class ToolItem : MonoBehaviour
     // È¹µæ °¡´É
     public bool isAx = false;
     public bool isPick = false;
+    public bool isPail = false;
 
     // È½¼ö Áõ°¡
     int cnt = 0;
@@ -42,7 +43,16 @@ public class ToolItem : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
-
+            if (gameObject.name.Contains("Pail"))
+            {
+                isPail = true;
+                if(cnt > 0)
+                {
+                    player.curArm = 0;
+                    isPail = false;
+                    Destroy(gameObject);
+                }
+            }
         }
     }
     private void OnTriggerExit(Collider other)
@@ -51,12 +61,14 @@ public class ToolItem : MonoBehaviour
         {
             isAx = false;
             isPick = false;
+            isPail = false;
         }
     }
     private void OnDestroy()
     {
         isPick = false;
         isAx = false;
+        isPail = false;
     }
 
 }

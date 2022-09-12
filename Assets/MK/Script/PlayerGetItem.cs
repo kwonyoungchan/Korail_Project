@@ -9,7 +9,7 @@ public class PlayerGetItem : MonoBehaviour
     public GameObject rArm;
     public GameObject lArm;
     // 팔에 있는 도구들
-    public GameObject[] tool = new GameObject[2];
+    public GameObject[] tool = new GameObject[3];
     public GameObject[] material = new GameObject[2];
 
     // 회전 속도 
@@ -24,6 +24,7 @@ public class PlayerGetItem : MonoBehaviour
     // 도구 생성
     public GameObject axFact;
     public GameObject pickFact;
+    public GameObject pailFact;
 
     // 재료 생성
     public GameObject branchFact;
@@ -33,12 +34,13 @@ public class PlayerGetItem : MonoBehaviour
     public float y = 0.5f;
 
     // 도구 상태
-    bool[] isTool = new bool[2];
+    bool[] isTool = new bool[3];
     bool[] isMaterial = new bool[2];
 
     // 도구
     ToolItem ax;
     ToolItem pick;
+    ToolItem pail;
 
     // 재료
     Material branch;
@@ -47,6 +49,7 @@ public class PlayerGetItem : MonoBehaviour
     // 도구
     GameObject createAx;
     GameObject createPick;
+    GameObject createPail;
     // 재료
     GameObject putBranch;
     GameObject putSteel;
@@ -56,6 +59,7 @@ public class PlayerGetItem : MonoBehaviour
         // 도구이름 찾기
         ax = GameObject.Find("Ax").GetComponent<ToolItem>();
         pick = GameObject.Find("Pick").GetComponent<ToolItem>();
+        pail = GameObject.Find("Pail").GetComponent<ToolItem>();
     }
     // Update is called once per frame
     void Update()
@@ -63,6 +67,7 @@ public class PlayerGetItem : MonoBehaviour
         // 도구 업데이트
         isTool[0] = ax.isAx;
         isTool[1] = pick.isPick;
+        isTool[2] = pail.isPail;
 
         if (GameObject.Find("Branch(Clone)"))
         {   
@@ -70,14 +75,13 @@ public class PlayerGetItem : MonoBehaviour
 
             isMaterial[0] = branch.isIngredient[0];
         }
-
         if (GameObject.Find("Steel(Clone)"))
         {
             steel = GameObject.Find("Steel(Clone)").GetComponent<Material>();
-            isMaterial[1] = branch.isIngredient[1];
+            isMaterial[1] = steel.isIngredient[1];
         }
-        print(isMaterial[0]);
-        if (isTool[0] || isTool[1])
+
+        if (isTool[0] || isTool[1] || isTool[2])
         {
             // 점프키를 누른다면
             if (Input.GetButtonDown("Jump"))
@@ -96,6 +100,10 @@ public class PlayerGetItem : MonoBehaviour
                     if (isTool[1])
                     {
                         ToolSwitch(1);
+                    }
+                    if (isTool[2])
+                    {
+                        ToolSwitch(2);
                     }
                 }
                 else
@@ -190,7 +198,7 @@ public class PlayerGetItem : MonoBehaviour
     void PutTool()
     {
         // 도끼를 곡갱이가 없는 곳에 놨을 경우
-        if (tool[0].activeSelf && isTool[1] == false)
+        if (tool[0].activeSelf && isTool[1] == false && isTool[2] == false)
         {
             tool[0].SetActive(false);
             createAx = Instantiate(axFact);
@@ -198,19 +206,26 @@ public class PlayerGetItem : MonoBehaviour
             ax = createAx.GetComponent<ToolItem>();
         }
         // 곡갱이를 도끼가 없는 곳에 놨을 경우
-        if (tool[1].activeSelf && isTool[0] == false)
+        if (tool[1].activeSelf && isTool[0] == false && isTool[2] == false)
         {
             tool[1].SetActive(false);
             createPick = Instantiate(pickFact);
             createPick.transform.position = transform.position + new Vector3(0, y, 0);
             pick = createPick.GetComponent<ToolItem>();
         }
+        if(tool[2].activeSelf && isTool[0] == false && isTool[1] == false)
+        {
+            tool[2].SetActive(false);
+            createPail = Instantiate(pailFact);
+            createPail.transform.position = transform.position + new Vector3(0, y, 0);
+            pail = createPail.GetComponent<ToolItem>();
+        }
     }
     // 재료 바닥에 두기
     void PutMaterial()
     {
 
-        // 도끼를 곡갱이가 없는 곳에 놨을 경우
+        // 나뭇가지를 바닥에 놓는 경우
         if (material[0].activeSelf && isMaterial[1] == false)
         {
             material[0].SetActive(false);
@@ -219,7 +234,7 @@ public class PlayerGetItem : MonoBehaviour
             putBranch.transform.position = transform.position + new Vector3(0, y, 0);
             
         }
-        // 곡갱이를 도끼가 없는 곳에 놨을 경우
+        // 철을 바닥에 놓는 경우
         if (material[1].activeSelf && isMaterial[0] == false)
         {
             material[1].SetActive(false);
@@ -243,6 +258,16 @@ public class PlayerGetItem : MonoBehaviour
             ax = createAx.GetComponent<ToolItem>();
             Destroy(pick.gameObject);
         }
+        // 도끼를 든 상태에서 양동이를 드는 경우
+        if (tool[0].activeSelf && isTool[2])
+        {
+            tool[0].SetActive(false);
+            tool[2].SetActive(true);
+            createAx = Instantiate(axFact);
+            createAx.transform.position = transform.position + new Vector3(0, y, 0);
+            ax = createAx.GetComponent<ToolItem>();
+            Destroy(pail.gameObject);
+        }
         // 곡갱이를 들고있는 상태에서 도끼를 드는 경우
         if (tool[1].activeSelf && isTool[0])
         {
@@ -252,6 +277,36 @@ public class PlayerGetItem : MonoBehaviour
             createPick.transform.position = transform.position + new Vector3(0, y, 0);
             pick = createPick.GetComponent<ToolItem>();
             Destroy(ax.gameObject);
+        }
+        // 곡갱이를 들고있는 상태에서 양동이를 드는 경우
+        if (tool[1].activeSelf && isTool[2])
+        {
+            tool[1].SetActive(false);
+            tool[2].SetActive(true);
+            createPick = Instantiate(pickFact);
+            createPick.transform.position = transform.position + new Vector3(0, y, 0);
+            pick = createPick.GetComponent<ToolItem>();
+            Destroy(pail.gameObject);
+        }
+        // 양동이를 들고있는 상태에서 도끼를 드는 경우
+        if (tool[2].activeSelf && isTool[0])
+        {
+            tool[2].SetActive(false);
+            tool[0].SetActive(true);
+            createPail = Instantiate(pailFact);
+            createPail.transform.position = transform.position + new Vector3(0, y, 0);
+            pail = createPail.GetComponent<ToolItem>();
+            Destroy(ax.gameObject);
+        }
+        // 양동이를 들고있는 상태에서 곡갱이 드는 경우
+        if (tool[2].activeSelf && isTool[1])
+        {
+            tool[2].SetActive(false);
+            tool[1].SetActive(true);
+            createPail = Instantiate(pickFact);
+            createPail.transform.position = transform.position + new Vector3(0, y, 0);
+            pail = createPail.GetComponent<ToolItem>();
+            Destroy(pick.gameObject);
         }
     }
 
