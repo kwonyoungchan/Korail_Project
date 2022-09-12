@@ -6,6 +6,9 @@ using UnityEngine;
 public class IngredientItem : MonoBehaviour
 {
     public GameObject[] itemFact = new GameObject[2];
+    public List<GameObject> branch = new List<GameObject>();
+    public List<GameObject> steel = new List<GameObject>();
+
     public float y = 0.5f;
     // 시간
     public float maxTime = 3;
@@ -41,7 +44,7 @@ public class IngredientItem : MonoBehaviour
                 if (axDis < 1.6f)
                 {
                     currentTime += Time.deltaTime;
-                    GameObject.Find("Player").GetComponent<PlayerGetItem>().UseTool(currentTime);
+                    
                     print(currentTime);
                     if (currentTime > maxTime)
                     {
@@ -70,6 +73,7 @@ public class IngredientItem : MonoBehaviour
     }
 
     // 게임오브젝트가 타격을 입을때
+    // 0 이하라면 아이템 생성
     void DamagedObject(int n)
     {
         currentTime = 0;
@@ -77,8 +81,8 @@ public class IngredientItem : MonoBehaviour
         if(hp <= 0)
         {
             Destroy(gameObject);
-            GameObject itme = Instantiate(itemFact[n]);
-            itme.transform.position = transform.position + new Vector3(0, y, 0);
+            GameObject item = Instantiate(itemFact[n]);
+            item.transform.position = transform.position + new Vector3(0, y, 0);
         }
 
     }

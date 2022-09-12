@@ -23,7 +23,7 @@ public class Material : MonoBehaviour
             if (gameObject.name.Contains("Branch"))
             {
                 isIngredient[0] = true;
-                if(player.curArm > 1)
+                if(player.curArm > 0)
                 {
                     player.curArm = 0;
                     isIngredient[0] = false;
@@ -33,7 +33,7 @@ public class Material : MonoBehaviour
             if (gameObject.name.Contains("Steel"))
             {
                 isIngredient[1] = true;
-                if (player.curArm > 1)
+                if (player.curArm > 0)
                 {
                     player.curArm = 0;
                     isIngredient[1] = false;
@@ -46,10 +46,8 @@ public class Material : MonoBehaviour
     {
         if (other.gameObject.name.Contains("Player"))
         {
-            for(int i = 0; i<isIngredient.Length;i++)
-            {
-                isIngredient[i] = false;
-            }
+            isIngredient[0] = false;
+            isIngredient[1] = false;
         }
     }
     private void OnDestroy()
