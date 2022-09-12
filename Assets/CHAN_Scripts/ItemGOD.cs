@@ -25,6 +25,7 @@ public class ItemGOD : MonoBehaviour
     public Items items;
     public bool turn;
     GameObject createItem;
+    Vector3 setRot;
     
     void Start()
     {
@@ -58,14 +59,21 @@ public class ItemGOD : MonoBehaviour
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
                     DoSelect();
+                    createItem.transform.eulerAngles = setRot;
+
+
                     break;
                 case Items.Rail_L:
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail_L"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    //DoSelect();
+                    createItem.transform.eulerAngles = setRot;
                     break;
                 case Items.Rail_R:
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail_R"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    //DoSelect();
+                    createItem.transform.eulerAngles = setRot;
                     break;
             }
         }
@@ -127,10 +135,8 @@ public class ItemGOD : MonoBehaviour
         {
             if (railInfo[i].info == "Rail")
             {
-                if (railInfo[i].rotaion == railRot[i])
-                {
-                    //선로방향 결정
-
+                //선로방향 결정
+                //if (railInfo[i].rotaion == railRot[i])
                     //하고 count 세아린다
                     if (count.Count == 1)
                     {
@@ -142,7 +148,8 @@ public class ItemGOD : MonoBehaviour
                                 ChangeState(Items.Rail_L);
                                 if (i == 0)
                                 {
-                                    createItem.transform.Rotate(0, 180, 0);
+                                    setRot = new Vector3(0, 180, 0);
+                                    //createItem.transform.Rotate(0, 180, 0);
                                     transform.rotation = Quaternion.Euler(0, 180, 0);
                                 }
 
@@ -154,7 +161,8 @@ public class ItemGOD : MonoBehaviour
                                 ChangeState(Items.Rail_R);
                                 if (i == 2)
                                 {
-                                    createItem.transform.Rotate(0, 180, 0);
+                                    setRot = new Vector3(0, 90, 0);
+                                    //createItem.transform.Rotate(0, 180, 0);
                                     transform.rotation = Quaternion.Euler(0, 180, 0);
                                 }
 
@@ -168,7 +176,8 @@ public class ItemGOD : MonoBehaviour
                                 ChangeState(Items.Rail_L);
                                 if (i == 3)
                                 {
-                                    createItem.transform.rotation= Quaternion.Euler(0, 90, 0);
+                                    setRot = new Vector3(0, 90, 0);
+                                    //createItem.transform.rotation= Quaternion.Euler(0, 90, 0);
                                     transform.rotation = Quaternion.Euler(0, 90, 0);
                                 }
                                 
@@ -180,7 +189,8 @@ public class ItemGOD : MonoBehaviour
                                 ChangeState(Items.Rail_R);
                                 if (i == 1)
                                 {
-                                    createItem.transform.Rotate(0, 90, 0);
+                                    setRot = new Vector3(0, 90, 0);
+                                    //createItem.transform.Rotate(0, 90, 0);
                                     transform.rotation = Quaternion.Euler(0, 90, 0);
                                 }
                             }
@@ -188,9 +198,10 @@ public class ItemGOD : MonoBehaviour
                     }
                     else
                     {
-                        transform.rotation = Quaternion.Euler(0, railRot[i], 0);
+                        setRot = new Vector3(0, railRot[i], 0);
+                        //transform.rotation = Quaternion.Euler(0, railRot[i], 0);
                     }    
-                }
+                
                 count.Add(i);
             }
             else if (railInfo[i].info == "Rail_R")
