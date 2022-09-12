@@ -25,7 +25,7 @@ public class ItemGOD : MonoBehaviour
     public Items items;
     public bool turn;
     GameObject createItem;
-    Vector3 setRot;
+    Quaternion setRot;
     
     void Start()
     {
@@ -59,21 +59,21 @@ public class ItemGOD : MonoBehaviour
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
                     DoSelect();
-                    createItem.transform.eulerAngles = setRot;
+                    createItem.transform.rotation = setRot;
 
 
                     break;
                 case Items.Rail_L:
-                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail_L"));
+                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
                     //DoSelect();
-                    createItem.transform.eulerAngles = setRot;
+                    createItem.transform.rotation = setRot;
                     break;
                 case Items.Rail_R:
-                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail_R"));
+                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
                     //DoSelect();
-                    createItem.transform.eulerAngles = setRot;
+                    createItem.transform.rotation = setRot;
                     break;
             }
         }
@@ -148,10 +148,11 @@ public class ItemGOD : MonoBehaviour
                                 ChangeState(Items.Rail_L);
                                 if (i == 0)
                                 {
-                                    setRot = new Vector3(0, 180, 0);
+                                    setRot = Quaternion.Euler(0,180,0);
                                     //createItem.transform.Rotate(0, 180, 0);
                                     transform.rotation = Quaternion.Euler(0, 180, 0);
                                 }
+
 
                             }
 
@@ -161,7 +162,7 @@ public class ItemGOD : MonoBehaviour
                                 ChangeState(Items.Rail_R);
                                 if (i == 2)
                                 {
-                                    setRot = new Vector3(0, 90, 0);
+                                    setRot = Quaternion.Euler(0,180,0);
                                     //createItem.transform.Rotate(0, 180, 0);
                                     transform.rotation = Quaternion.Euler(0, 180, 0);
                                 }
@@ -174,12 +175,16 @@ public class ItemGOD : MonoBehaviour
                             {
                                 Destroy(createItem);
                                 ChangeState(Items.Rail_L);
-                                if (i == 3)
-                                {
-                                    setRot = new Vector3(0, 90, 0);
-                                    //createItem.transform.rotation= Quaternion.Euler(0, 90, 0);
-                                    transform.rotation = Quaternion.Euler(0, 90, 0);
-                                }
+                            if (i == 3)
+                            {
+                                setRot = Quaternion.Euler(0, 180, 0);
+                                //createItem.transform.rotation= Quaternion.Euler(0, 90, 0);
+                                transform.rotation = Quaternion.Euler(0, 90, 0);
+                            }
+                            else
+                            {
+                                setRot = Quaternion.Euler(0, -90, 0);
+                            }
                                 
 
                             }
@@ -187,20 +192,26 @@ public class ItemGOD : MonoBehaviour
                             {
                                 Destroy(createItem);
                                 ChangeState(Items.Rail_R);
-                                if (i == 1)
-                                {
-                                    setRot = new Vector3(0, 90, 0);
-                                    //createItem.transform.Rotate(0, 90, 0);
-                                    transform.rotation = Quaternion.Euler(0, 90, 0);
-                                }
+                            if (i == 3)
+                            {
+                                setRot = Quaternion.Euler(0, 90, 0);
+                                //createItem.transform.Rotate(0, 90, 0);
+                                transform.rotation = Quaternion.Euler(0, 90, 0);
+                            }
+                            else
+                            {
+                                setRot = Quaternion.Euler(0, 0, 0);
+                            }
+                                
+                                
                             }
                         }
                     }
                     else
                     {
-                        setRot = new Vector3(0, railRot[i], 0);
+                        setRot = Quaternion.Euler(0, railRot[i], 0);
                         //transform.rotation = Quaternion.Euler(0, railRot[i], 0);
-                    }    
+                }    
                 
                 count.Add(i);
             }

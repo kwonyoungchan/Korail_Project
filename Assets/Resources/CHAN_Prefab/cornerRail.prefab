@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3283690542093672354}
   m_Layer: 0
-  m_Name: Rail_R
+  m_Name: cornerRail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
