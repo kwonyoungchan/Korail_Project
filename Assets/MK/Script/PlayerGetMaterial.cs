@@ -19,6 +19,7 @@ public class PlayerGetMaterial : MonoBehaviour
         if(GameObject.Find("Branch(Clone)"))
         {
             CheckTrue("Branch", branch, isBranch, 0);
+
         }
         if (GameObject.Find("Steel(Clone)"))
         {
@@ -35,6 +36,16 @@ public class PlayerGetMaterial : MonoBehaviour
             isIngredient = new bool[ingredient.Length];
             isIngredient[i] = ingredient[i].GetComponent<Material>().isIngredient[n];
         }
+        
+    }
 
+    // 배열 속에서 true 찾기
+    public void ArrayCheck(bool[] isIngredient)
+    {
+        // foreach로 개수 파악
+        foreach(bool isMaterial in isIngredient)
+        {
+            Debug.Log(isMaterial);
+        }
     }
 }

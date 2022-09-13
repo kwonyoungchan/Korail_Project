@@ -44,8 +44,7 @@ public class IngredientItem : MonoBehaviour
                 if (axDis < 1.6f)
                 {
                     currentTime += Time.deltaTime;
-                    
-                    print(currentTime);
+
                     if (currentTime > maxTime)
                     {
                         DamagedObject(0);
