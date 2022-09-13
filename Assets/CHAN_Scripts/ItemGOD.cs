@@ -40,51 +40,63 @@ public class ItemGOD : MonoBehaviour
 
     void StateMachine()
     {
-        if (!turn)
+        switch (items)
         {
-            turn = true;
-            switch (items)
-            {
-                case Items.Idle:
-                    if (createItem != null)
-                    {
-                        Destroy(createItem);
-                        break;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                case Items.Rail:
+            case Items.Idle:
+                if (createItem != null)
+                {
+                    Destroy(createItem);
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            case Items.Rail:
+                if (!turn)
+                {
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
-                    DoSelect();
                     createItem.transform.rotation = setRot;
-
-
-                    break;
-                case Items.Rail_L:
+                    turn = true;
+                }
+                DoSelect();
+                break;
+            case Items.Rail_L:
+                if (!turn)
+                {
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
-                    //DoSelect();
                     createItem.transform.rotation = setRot;
-                    break;
-                case Items.Rail_R:
+                    turn = true;
+                }
+                DoSelect();
+                break;
+            case Items.Rail_R:
+                if (!turn)
+                {
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
-                    //DoSelect();
                     createItem.transform.rotation = setRot;
-                    break;
-            }
+                    turn = true;
+                }
+                DoSelect();
+                break;
         }
-           
+
+
     }
+
 
     public void ChangeState(Items item)
     {
         turn = false;
         items = item;
     }
+
+    
+    Vector3[] dir = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
+    [SerializeField]List<int> count = new List<int>();
     void DoSelect()
     {
         //여기서 4방향에서 선로를 찾는다. 
@@ -92,19 +104,18 @@ public class ItemGOD : MonoBehaviour
         //총 4번 쏜다. 
         //4번 반복해서 얻은 정보를 토대로 선로의 방향을 결정
         float[] railRot = { 90, 0, 180, 0 };
-        float[] railRot_R = { 90, 180, -90, 0 };
-        float[] railRot_L = { -90, 0, 90, 180 };
-        List<int> count = new List<int>();
+        //float[] railRot_R = { 90, 180, -90, 0 };
+        //float[] railRot_L = { -90, 0, 90, 180 };
+        //주변 선로 파악 
         
-        Vector3[] dir = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
         for (int i = 0; i < 4; i++)
         {
             Ray ray = new Ray(transform.position, dir[i]);
             RaycastHit hit;
             RailInfo RI = new RailInfo();
+            //여기서 기차 선회를 위한 코드가 작성된다.
             if (Physics.Raycast(ray, out hit))
-            {
-
+            {   
                 if (hit.transform.gameObject.GetComponent<ItemGOD>().items ==ItemGOD.Items.Rail)
                 {
                     RI.info = "Rail";
@@ -127,193 +138,173 @@ public class ItemGOD : MonoBehaviour
                 }
             }
             railInfo.Add(RI);
-            print(railInfo[i].info);
-            print(railInfo[i].rotaion);
         }
         //여기서 선로를 결정하게 됨
         for (int i = 0; i < 4; i++)
         {
             if (railInfo[i].info == "Rail")
             {
-                //선로방향 결정
                 //if (railInfo[i].rotaion == railRot[i])
-                    //하고 count 세아린다
-                    if (count.Count == 1)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            if (count[0] == 1)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_L);
-                                if (i == 0)
-                                {
-                                    setRot = Quaternion.Euler(0,180,0);
-                                    //createItem.transform.Rotate(0, 180, 0);
-                                    transform.rotation = Quaternion.Euler(0, 180, 0);
-                                }
-
-
-                            }
-
-                            else if (count[0] == 3)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_R);
-                                if (i == 2)
-                                {
-                                    setRot = Quaternion.Euler(0,180,0);
-                                    //createItem.transform.Rotate(0, 180, 0);
-                                    transform.rotation = Quaternion.Euler(0, 180, 0);
-                                }
-
-                            }
-                        }
-                        else
-                        {
-                            if (count[0] == 0)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_L);
-                            if (i == 3)
-                            {
-                                setRot = Quaternion.Euler(0, 180, 0);
-                                //createItem.transform.rotation= Quaternion.Euler(0, 90, 0);
-                                transform.rotation = Quaternion.Euler(0, 90, 0);
-                            }
-                            else
-                            {
-                                setRot = Quaternion.Euler(0, -90, 0);
-                            }
-                                
-
-                            }
-                            else if (count[0] == 2)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_R);
-                            if (i == 3)
-                            {
-                                setRot = Quaternion.Euler(0, 90, 0);
-                                //createItem.transform.Rotate(0, 90, 0);
-                                transform.rotation = Quaternion.Euler(0, 90, 0);
-                            }
-                            else
-                            {
-                                setRot = Quaternion.Euler(0, 0, 0);
-                            }
-                                
-                                
-                            }
-                        }
-                    }
-                    else
-                    {
-                        setRot = Quaternion.Euler(0, railRot[i], 0);
-                        //transform.rotation = Quaternion.Euler(0, railRot[i], 0);
-                }    
-                
-                count.Add(i);
-            }
-            else if (railInfo[i].info == "Rail_R")
-            {
-                if (railInfo[i].rotaion == railRot_R[i])
+                //블럭 주변에 선로가 1개 존재하면 
+                //코너 선로 설치를 시작한다.
+                if (count.Count == 1)
                 {
-                    //선로방향 결정
-                    transform.rotation = Quaternion.EulerAngles(0, railRot[i], 0);
-                    //하고 count 세아린다
-                    if (count.Count == 1)
+                    // 북 남 , 발견선로 : 동
+                    if (i % 2 == 0 && count[0] == 1)
                     {
-                        if (i % 2 == 0)
+                        Destroy(createItem);
+                        //만약 북쪽 선로
+                        if (i == 0)
                         {
-                            if (count[0] == 1)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_L);
-                                createItem.transform.Rotate(0, 180, 0);
-                                //-180
-                            }
-                                
-                            else if (count[0] == 3) 
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_R);
-                                createItem.transform.Rotate(0, 180, 0);
-                                //=180
-                            }
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 180, 0);
                         }
+                        //만약 남쪽 선로
                         else
                         {
-                            if (count[0] == 0)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_L);
-                                createItem.transform.Rotate(0, 180, 0);
-                                //180
-                            }
-                            else if (count[0] == 2)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_R);
-                                createItem.transform.Rotate(0, 180, 0);
-                                //180
-                            }
-                                
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 0, 0);
                         }
                     }
-                    
+                    // 북 남 , 발견선로 : 서
+                    else if (i % 2 == 0 && count[0] == 3)
+                    {
+                        Destroy(createItem);
+                        //만약 북
+                        if (i == 0)
+                        {
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 180, 0);
+                        }
+                        //만약 남
+                        else
+                        {
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 90, 0);
+                        }
+                    }
+                    // 동 서 , 발견선로 : 북
+                    else if (i % 2 != 0 && count[0] == 0)
+                    {
+                        Destroy(createItem);
+                        //만약 동
+                        if (i == 1)
+                        {
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 270, 0);
+                        }
+                        //만약 서
+                        else
+                        {
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 180, 0);
+                        }
+                    }
+                    // 동 서 , 발견선로 : 남
+                    else if (i % 2 != 0 && count[0] == 2)
+                    {
+                        Destroy(createItem);
+                        //만약 동
+                        if (i == 1)
+                        {
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 0, 0);
+                        }
+                        //만약 서
+                        else
+                        {
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 90, 0);
+                        }
+                    }
                 }
-                count.Add(i);
-            }
-            else if (railInfo[i].info == "Rail_L")
-            {
-                if (railInfo[i].rotaion == railRot_L[i])
+                else if (count.Count == 2)
                 {
-                    //선로방향 결정
-                    transform.rotation = Quaternion.EulerAngles(0, railRot[i], 0);
-                    //하고 count 세아린다
-                    if (count.Count == 1)
+                    // 북 남 , 발견선로 : 동
+                    if (count[0] % 2 == 0 && count[1] == 1)
                     {
-                        if (i % 2 == 0)
+                        Destroy(createItem);
+                        
+                        //만약 북쪽 선로
+                        if (i == 0)
                         {
-                            if (count[0] == 1)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_L);
-                                createItem.transform.rotation = Quaternion.EulerAngles(0, -180, 0);
-                            }
-
-                            else if (count[0] == 3)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_R);
-                                createItem.transform.rotation = Quaternion.EulerAngles(0, -180, 0);
-                            }
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 180, 0);
                         }
+                        //만약 남쪽 선로
                         else
                         {
-                            if (count[0] == 0)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_L);
-                                createItem.transform.rotation = Quaternion.EulerAngles(0, 180, 0);
-                            }
-                            else if (count[0] == 2)
-                            {
-                                Destroy(createItem);
-                                ChangeState(Items.Rail_R);
-                                createItem.transform.rotation = Quaternion.EulerAngles(0, 180, 0);
-                            }
-
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 0, 0);
                         }
                     }
-                    
+                    // 북 남 , 발견선로 : 서
+                    else if (count[0] % 2 == 0 && count[1] == 3)
+                    {
+                        Destroy(createItem);
+                        
+                        //만약 북
+                        if (i == 0)
+                        {
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 180, 0);
+                        }
+                        //만약 남
+                        else
+                        {
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 90, 0);
+                        }
+                    }
+                    // 동 서 , 발견선로 : 북
+                    else if (count[0] % 2 != 0 && count[1] == 0)
+                    {
+                        Destroy(createItem);
+                        
+                        //만약 동
+                        if (i == 1)
+                        {
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 270, 0);
+                        }
+                        //만약 서
+                        else
+                        {
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 180, 0);
+                        }
+                    }
+                    // 동 서 , 발견선로 : 남
+                    else if (count[0] % 2 != 0 && count[1] == 2)
+                    {
+                        Destroy(createItem);
+                        
+                        //만약 동
+                        if (i == 1)
+                        {
+                            ChangeState(Items.Rail_L);
+                            setRot = Quaternion.Euler(0, 0, 0);
+                        }
+                        //만약 서
+                        else
+                        {
+                            ChangeState(Items.Rail_R);
+                            setRot = Quaternion.Euler(0, 90, 0);
+                        }
+                    }
                 }
-                count.Add(i);
+                else
+                {
+                    setRot = Quaternion.Euler(0, railRot[i], 0);
+                }
+
+                if (!count.Contains(i))
+                { 
+                    count.Add(i);
+                }
             }
-            print(count.Count);
         }
-        
-
+        railInfo.Clear();
+        print(count.Count);
     }
 }
