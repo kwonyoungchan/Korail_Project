@@ -20,6 +20,9 @@ public class PlayerItemDown : MonoBehaviour
     public Hold holdState = Hold.Idle;
     // 팔에 있는 도구 활성화
     public GameObject[] tool = new GameObject[3];
+    // 팔에 있는 mat 활성화
+    public GameObject[] mat;
+
     #region 팔 회전 관련
     // 팔
     public GameObject rArm;
@@ -181,55 +184,69 @@ public class PlayerItemDown : MonoBehaviour
     {
         switch (holdState)
         {
+            // 아무것도 들고 있지 않을 때,
             case Hold.Idle:
                 for(int i = 0; i < tool.Length; i++)
                 {
                     tool[i].SetActive(false);
                 }
                 break;
+            // 도구를 들고 있다가 내려 놓을 때
             case Hold.Change:
+                // 한쪽팔만 들 때
                 if (armState > 0 && armState < 2)
                 {
                     RotArm(rArm, 0);
                 }
+                // 양쪽팔을 들고 있을 때
                 else
                 {
                     RotArm(lArm, 0);
                     RotArm(rArm, 0);
                 }
+                // Idle 상태로 변환
                 holdState = Hold.Idle;
                 armState = 0;
                 break;
+            // 도끼를 들고 있을 때,
             case Hold.Ax:
+                // 도끼 활성화
                 if(armState > 1)
                 {
                     tool[0].SetActive(true);
                     return;
                 }
+                // 팔 돌리기
                 RotArm(lArm, 0);
                 RotArm(rArm, -90);
                 tool[0].SetActive(true);
                 break;
+            // 곡갱이를 들고 있을 때
             case Hold.Pick:
+                // 도구 활성화
                 if (armState > 1)
                 {
                     tool[1].SetActive(true);
                     return;
                 }
+                // 팔 돌리기
                 RotArm(lArm, 0);
                 RotArm(rArm, -90);
                 tool[1].SetActive(true);
                 break;
+            // 양동이를 들고 있을 때,
             case Hold.Pail:
                 if (armState > 2)
                 {
                     tool[2].SetActive(true);
                     return;
                 }
+                // 팔 돌리기
                 RotArm(rArm, -90);
                 RotArm(lArm, -90);
                 tool[2].SetActive(true);
                 break;
+            // 선로를 들고 있을 때
             case Hold.Rail:
                 if (armState > 2)
                 {
@@ -238,6 +255,7 @@ public class PlayerItemDown : MonoBehaviour
                 RotArm(rArm, -90);
                 RotArm(lArm, -90);
                 break;
+            // 나뭇가지를 들고 있을 때
             case Hold.Branch:
                 if (armState > 2)
                 {
@@ -246,6 +264,7 @@ public class PlayerItemDown : MonoBehaviour
                 RotArm(rArm, -90);
                 RotArm(lArm, -90);
                 break;
+            // 철을 들고 있을 때,
             case Hold.Steel:
                 if (armState > 2)
                 {
