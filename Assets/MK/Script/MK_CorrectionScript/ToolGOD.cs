@@ -11,7 +11,8 @@ public class ToolGOD : MonoBehaviour
         Idle,
         Ax,
         Pick,
-        Pail
+        Pail,
+        
     }
     public Tools toolsState;
 

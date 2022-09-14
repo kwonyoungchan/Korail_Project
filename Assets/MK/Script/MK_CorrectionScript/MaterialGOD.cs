@@ -15,6 +15,9 @@ public class MaterialGOD : MonoBehaviour
     }
     public Materials matState = Materials.Idle;
 
+    // 생성된 오브젝트 만들 개수
+    public int branchCount = 0;
+
     // 생성된 게임오브젝트
     GameObject mat;
 
@@ -45,8 +48,19 @@ public class MaterialGOD : MonoBehaviour
                 // 게임오브젝트가 있으면 return
                 if (mat != null) return;
                 // Resources파일에 있는 나뭇가지 생성
-                mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                mat.transform.position = transform.position + new Vector3(0, 1, 0);
+                if (branchCount > 1)
+                {
+                    for (int i = 0; i < branchCount; i++)
+                    {
+                        mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                        mat.transform.position = transform.position + new Vector3(0, 1 + i * 0.3f, 0);
+                    }
+                }
+                else
+                {
+                    mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                    mat.transform.position = transform.position + new Vector3(0, 1, 0);
+                }
                 break;
             case Materials.Steel:
                 // 게임오브젝트가 있으면 return
@@ -59,6 +73,10 @@ public class MaterialGOD : MonoBehaviour
                 if(mat != null)
                 {
                     Destroy(mat);
+                }
+                else
+                {
+                    matState = Materials.Idle;
                 }
                 break;
         }

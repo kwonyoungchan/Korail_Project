@@ -19,11 +19,17 @@ public class PlayerMaterial : MonoBehaviour
     public List<GameObject> steelArray = new List<GameObject>();
     // 아이템 위치
     public Transform itemPos;
+    // MaterialGod 컴포넌트
+    MaterialGOD matGod;
+    // ToolGod 컴포넌트
+    ToolGOD toolGOD;
+    // 플레이어 손 상태 컴포넌트
+    PlayerItemDown playerItem;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerItem = GetComponent<PlayerItemDown>();
     }
 
     // Update is called once per frame
@@ -36,39 +42,65 @@ public class PlayerMaterial : MonoBehaviour
             RaycastHit rayInfo;
             if (Physics.Raycast(pRay, out rayInfo))
             {
-                if(rayInfo.transform.gameObject.GetComponent<MaterialGOD>() == null)
-                {
-                    return;a
-                }
+                matGod = rayInfo.transform.gameObject.GetComponent<MaterialGOD>();
+                toolGOD = rayInfo.transform.gameObject.GetComponent<ToolGOD>();
+                
                 // 손에 무언갈 들고 있다면
-                if (branchArray.Count > 0 || steelArray.Count > 0) 
+                if (branchArray.Count > 0 || steelArray.Count > 0 || matGod.branchCount > 0) 
                 {
-                    if (branchArray.Count > 0 && rayInfo.transform.gameObject.GetComponent<MaterialGOD>().matState == MaterialGOD.Materials.Branch)
+                    if (toolGOD == null)
                     {
-                        
+                        return;
+                    }
+                    // MaterialGod에 있는 branchCount가 0보다 크다면
+                    if (matGod.branchCount > 0)
+                    {
+                        // branchArray의 수를 branchCount만큼 늘린다
+                        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                        for (int i = 0; i < matGod.branchCount; i++)
+                        {
+                            branchArray.Add(branch);
+                        }
+                    }
+                    if (branchArray.Count > 0 && matGod.matState == MaterialGOD.Materials.Branch)
+                    {
                         // Array에 추가하기
                         GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
                         branch.transform.parent = itemPos;
-                        
+
                         branchArray.Add(branch);
-                        for(int i = 0; i < branchArray.Count; i++)
+                        for (int i = 0; i < branchArray.Count; i++)
                         {
-                            branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.5f, 0);
+                            branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                             branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                         }
-                        rayInfo.transform.gameObject.GetComponent<MaterialGOD>().matState = MaterialGOD.Materials.None;
+                        matGod.matState = MaterialGOD.Materials.None;
 
+                    }
+                    // 손에 나무를 들고 있다면
+                    else if (branchArray.Count > 0 && toolGOD.toolsState == ToolGOD.Tools.Idle)
+                    {
+                        if (Input.GetButtonDown("Jump"))
+                        {
+                            matGod.branchCount = branchArray.Count;
+                            matGod.matState = MaterialGOD.Materials.Branch;
+                            for (int i = 0; i < branchArray.Count; i++)
+                            {
+                                Destroy(branchArray[i].gameObject);
+                            }
+                            branchArray.Clear();
+                        }
                     }
                 }
                 // 손에 없고
                 else
                 {
                     // 점프키를 눌렀을 때,
-                    if (Input.GetButtonDown("Jump") && rayInfo.transform.gameObject.GetComponent<MaterialGOD>())
+                    if (Input.GetButtonDown("Jump") && toolGOD)
                     {
                         // 손에 있는 무언가를 든다
                         // 바닥 상태가 Branch라면
-                        if (rayInfo.transform.gameObject.GetComponent<MaterialGOD>().matState == MaterialGOD.Materials.Branch)
+                        if (matGod.matState == MaterialGOD.Materials.Branch)
                         {
                             // Array에 추가하기
                             GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
@@ -78,21 +110,21 @@ public class PlayerMaterial : MonoBehaviour
                             branch.transform.eulerAngles = new Vector3(90, 0, 90);
                             
                             // 플레이어 손상태 변환
-                            GetComponent<PlayerItemDown>().holdState = PlayerItemDown.Hold.Branch;
+                            playerItem.holdState = PlayerItemDown.Hold.Branch;
                             // 바닥상태 변환
-                            rayInfo.transform.gameObject.GetComponent<MaterialGOD>().matState = MaterialGOD.Materials.None;
+                            matGod.matState = MaterialGOD.Materials.None;
                         }
                         // Steel이라면
-                        if (rayInfo.transform.gameObject.GetComponent<MaterialGOD>().matState == MaterialGOD.Materials.Steel)
+                        if (matGod.matState == MaterialGOD.Materials.Steel)
                         {
                             // Array에 추가하기
                             GameObject steel = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
                             steelArray.Add(steel);
                             steel.transform.position = itemPos.position;
                             // 플레이어 손상태 변환
-                            GetComponent<PlayerItemDown>().holdState = PlayerItemDown.Hold.Steel;
+                            playerItem.holdState = PlayerItemDown.Hold.Steel;
                             // 바닥상태 변환
-                            rayInfo.transform.gameObject.GetComponent<MaterialGOD>().matState = MaterialGOD.Materials.None;
+                            matGod.matState = MaterialGOD.Materials.None;
                             
                         }
                     }

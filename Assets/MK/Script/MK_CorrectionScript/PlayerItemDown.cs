@@ -9,7 +9,7 @@ public class PlayerItemDown : MonoBehaviour
     public enum Hold
     {
         Idle,
-        Change,
+        ChangeIdle,
         Ax,
         Pick,
         Pail,
@@ -47,21 +47,27 @@ public class PlayerItemDown : MonoBehaviour
     void Update()
     {
         PlayerFSM();
+        // 레이를 발사하고
+        Ray pRay = new Ray(transform.position, -transform.up);
+        RaycastHit cubeInfo;
         // 스페이스 바를 누르면
-        if (Input.GetButtonDown("Jump"))
+        if (Physics.Raycast(pRay, out cubeInfo))
         {
-            // 레이를 발사하고
-            Ray pRay = new Ray(transform.position, -transform.up);
-            RaycastHit cubeInfo;
-            if(Physics.Raycast(pRay, out cubeInfo))
+
+            if(Input.GetButtonDown("Jump"))
             {
+                if(cubeInfo.transform.gameObject.GetComponent<ToolGOD>() == null)
+                {
+                    return;
+                }
                 // 바닥 상태 : 아무것도 없음
                 if(cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState == ToolGOD.Tools.Idle)
                 {
+                    // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
                     // 손에 무언갈 들고 있을 때,
                     if (armState > 0)
                     {
-                        holdState = Hold.Change;
+                        holdState = Hold.ChangeIdle;
                         // 손에 있는 것에 따른 바닥의 변화
                         // 도끼
                         if (tool[0].activeSelf)
@@ -192,7 +198,7 @@ public class PlayerItemDown : MonoBehaviour
                 }
                 break;
             // 도구를 들고 있다가 내려 놓을 때
-            case Hold.Change:
+            case Hold.ChangeIdle:
                 // 한쪽팔만 들 때
                 if (armState > 0 && armState < 2)
                 {
@@ -208,11 +214,16 @@ public class PlayerItemDown : MonoBehaviour
                 holdState = Hold.Idle;
                 armState = 0;
                 break;
+            #region 도구
             // 도끼를 들고 있을 때,
             case Hold.Ax:
                 // 도끼 활성화
                 if(armState > 1)
                 {
+                    if(lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    {
+                        RotArm(lArm, 0);
+                    }
                     tool[0].SetActive(true);
                     return;
                 }
@@ -226,6 +237,10 @@ public class PlayerItemDown : MonoBehaviour
                 // 도구 활성화
                 if (armState > 1)
                 {
+                    if (lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    {
+                        RotArm(lArm, 0);
+                    }
                     tool[1].SetActive(true);
                     return;
                 }
@@ -238,6 +253,10 @@ public class PlayerItemDown : MonoBehaviour
             case Hold.Pail:
                 if (armState > 2)
                 {
+                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    {
+                        RotArm(lArm, -90);
+                    }
                     tool[2].SetActive(true);
                     return;
                 }
@@ -246,6 +265,8 @@ public class PlayerItemDown : MonoBehaviour
                 RotArm(lArm, -90);
                 tool[2].SetActive(true);
                 break;
+            #endregion
+            #region 선로
             // 선로를 들고 있을 때
             case Hold.Rail:
                 if (armState > 2)
@@ -255,6 +276,8 @@ public class PlayerItemDown : MonoBehaviour
                 RotArm(rArm, -90);
                 RotArm(lArm, -90);
                 break;
+            #endregion
+            #region 재료
             // 나뭇가지를 들고 있을 때
             case Hold.Branch:
                 if (armState > 2)
@@ -273,6 +296,7 @@ public class PlayerItemDown : MonoBehaviour
                 RotArm(rArm, -90);
                 RotArm(lArm, -90);
                 break;
+                #endregion
         }
     }
     // 플레이어 팔이 위로 올라가게 만드는 함수

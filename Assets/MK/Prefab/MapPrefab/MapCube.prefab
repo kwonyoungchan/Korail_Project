@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1377713400102674966}
   - component: {fileID: 2421958257817785177}
   - component: {fileID: 8470321773874906803}
+  - component: {fileID: -3971322621493523818}
   m_Layer: 0
   m_Name: MapCube
   m_TagString: Untagged
@@ -112,3 +113,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolsState: 0
   y: 0.8
+--- !u!114 &-3971322621493523818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887843558590396080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b66341983fe22b4a839cd02fa41ddfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matState: 0
