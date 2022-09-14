@@ -52,40 +52,103 @@ public class PlayerMaterial : MonoBehaviour
                     {
                         return;
                     }
-
-                    // 바닥 상태가 Branch라면
-                    if (branchArray.Count > 0 && matGod.matState == MaterialGOD.Materials.Branch)
+                    #region branch가 손에 있는 경우
+                    if (branchArray.Count > 0)
                     {
-                        // Array에 추가하기
-                        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                        branch.transform.parent = itemPos;
-                        branchArray.Add(branch);
-                        // 손 위치 위로 아이템 쌓게 만들기
-                        for (int i = 0; i < branchArray.Count; i++)
+                        // 바닥 상태가 Branch라면
+                        if (matGod.matState == MaterialGOD.Materials.Branch)
                         {
-                            branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-                            branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
-                        }
-                        matGod.matState = MaterialGOD.Materials.None;
-
-                    }
-                    // 바닥 상태가 idle이라면
-                    else if (branchArray.Count > 0 && toolGOD.toolsState == ToolGOD.Tools.Idle)
-                    {
-                        // 점프키를 눌렀을 때,
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            // 바닥에 손에 있는 개수만큼 쌓임
-                            matGod.branchCount = branchArray.Count;
-                            matGod.matState = MaterialGOD.Materials.Branch;
-                            // 손에 있는 모든 것들이 제거
+                            // Array에 추가하기
+                            MakeMat("MK_Prefab/Branch", branchArray);
+                            // 손 위치 위로 아이템 쌓게 만들기
                             for (int i = 0; i < branchArray.Count; i++)
                             {
-                                Destroy(branchArray[i].gameObject);
+                                branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                             }
-                            branchArray.Clear();
+                            matGod.matState = MaterialGOD.Materials.None;
+
+                        }
+                        // 바닥 상태가 idle이라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                        {
+                            // 점프키를 눌렀을 때,
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                DeleteBranch();
+                            }
+                        }
+                        // 바닥 상태가 Ax라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Ax)
+                        {
+                            // 점프키를 눌렀을 때,
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                playerItem.holdState = PlayerItemDown.Hold.Ax;
+                                toolGOD.toolsState = ToolGOD.Tools.Idle;
+                                DeleteBranch();
+                            }
+                        }
+                        // 바닥 상태가 Pick라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Pick)
+                        {
+                            // 점프키를 눌렀을 때,
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                playerItem.holdState = PlayerItemDown.Hold.Pick;
+                                toolGOD.toolsState = ToolGOD.Tools.Idle;
+                                DeleteBranch();
+                            }
+                        }
+                        // 바닥 상태가 Pail라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Pail)
+                        {
+                            // 점프키를 눌렀을 때,
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                playerItem.holdState = PlayerItemDown.Hold.Pail;
+                                toolGOD.toolsState = ToolGOD.Tools.Idle;
+                                DeleteBranch();
+                            }
                         }
                     }
+                    #endregion
+                    #region Steel가 손에 있는 경우
+                    if (steelArray.Count > 0)
+                    {
+                        // 바닥 상태가 Steel 상태라면
+                        if (matGod.matState == MaterialGOD.Materials.Steel)
+                        {
+                            // Array에 추가하기
+                            MakeMat("MK_Prefab/Steel", steelArray);
+                            // 손 위치 위로 아이템 쌓게 만들기
+                            for (int i = 0; i < steelArray.Count; i++)
+                            {
+                                steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                            }
+                            matGod.matState = MaterialGOD.Materials.None;
+
+                        }
+                        // 바닥 상태가 idle이라면
+                        else if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                        {
+                            // 점프키를 눌렀을 때,
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                // 바닥에 손에 있는 개수만큼 쌓임
+                                matGod.steelCount = steelArray.Count;
+                                matGod.matState = MaterialGOD.Materials.Steel;
+                                // 손에 있는 모든 것들이 제거
+                                for (int i = 0; i < steelArray.Count; i++)
+                                {
+                                    Destroy(steelArray[i].gameObject);
+                                }
+                                steelArray.Clear();
+                            }
+                        }
+                    }
+                    #endregion
                 }
                 // 손에 없고
                 else
@@ -96,30 +159,16 @@ public class PlayerMaterial : MonoBehaviour
                         // 바닥 상태가 Branch라면
                         if (matGod.matState == MaterialGOD.Materials.Branch)
                         {
-
                             // 바닥에 branch가 여러개인 경우
                             if (matGod.branchCount > 0)
                             {
                                 for(int i = 0; i < matGod.branchCount; i++)
                                 {
-                                    // Array에 추가하기
-                                    GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                                    branch.transform.parent = itemPos;
-                                    branchArray.Add(branch);
+                                    MakeMat("MK_Prefab/Branch", branchArray);
                                     branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                    branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
                             }
-                            // 한개인 경우
-                            else
-                            {
-                                // Array에 추가하기
-                                GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                                branch.transform.parent = itemPos;
-                                branchArray.Add(branch);
-                                // 손위로 올린다
-                                branch.transform.position = itemPos.position;
-                            }
-                            
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Branch;
                             // 바닥상태 변환
@@ -128,19 +177,46 @@ public class PlayerMaterial : MonoBehaviour
                         // Steel이라면
                         if (matGod.matState == MaterialGOD.Materials.Steel)
                         {
-                            // Array에 추가하기
-                            GameObject steel = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
-                            steelArray.Add(steel);
-                            steel.transform.position = itemPos.position;
+                            // 바닥에 steel이 여러개인 경우
+                            if (matGod.steelCount > 0)
+                            {
+                                for (int i = 0; i < matGod.branchCount; i++)
+                                {
+                                    MakeMat("MK_Prefab/Steel", steelArray);
+                                    steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                    steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                                }
+                            }
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Steel;
                             // 바닥상태 변환
                             matGod.matState = MaterialGOD.Materials.None;
-                            
                         }
+
                     }
                 }
             }
         }
+    }
+
+    void MakeMat(string s, List<GameObject> matArray)
+    {
+        // Array에 추가하기
+        GameObject mat = Instantiate(Resources.Load<GameObject>(s));
+        mat.transform.parent = itemPos;
+        matArray.Add(mat);
+    }
+
+    void DeleteBranch()
+    {
+        matGod.branchCount = branchArray.Count;
+        matGod.matState = MaterialGOD.Materials.Branch;
+        // 바닥에 손에 있는 개수만큼 쌓임
+        // 손에 있는 모든 것들이 제거
+        for (int i = 0; i < branchArray.Count; i++)
+        {
+            Destroy(branchArray[i].gameObject);
+        }
+        branchArray.Clear();
     }
 }

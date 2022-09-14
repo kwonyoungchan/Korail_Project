@@ -17,6 +17,7 @@ public class MaterialGOD : MonoBehaviour
 
     // 생성된 오브젝트 만들 개수
     public int branchCount = 0;
+    public int steelCount = 0;
 
     // 생성된 게임오브젝트
     List<GameObject> mat = new List<GameObject>();
@@ -28,6 +29,7 @@ public class MaterialGOD : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<PlayerMaterial>();
         branchCount = 1;
+        steelCount = 1;
     }
 
     // Update is called once per frame
