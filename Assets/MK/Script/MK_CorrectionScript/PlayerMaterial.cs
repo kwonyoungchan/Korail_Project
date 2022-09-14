@@ -46,29 +46,21 @@ public class PlayerMaterial : MonoBehaviour
                 toolGOD = rayInfo.transform.gameObject.GetComponent<ToolGOD>();
                 
                 // 손에 무언갈 들고 있다면
-                if (branchArray.Count > 0 || steelArray.Count > 0 || matGod.branchCount > 0) 
+                if (branchArray.Count > 0 || steelArray.Count > 0) 
                 {
                     if (toolGOD == null)
                     {
                         return;
                     }
-                    // MaterialGod에 있는 branchCount가 0보다 크다면
-                    if (matGod.branchCount > 0)
-                    {
-                        // branchArray의 수를 branchCount만큼 늘린다
-                        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                        for (int i = 0; i < matGod.branchCount; i++)
-                        {
-                            branchArray.Add(branch);
-                        }
-                    }
+
+                    // 바닥 상태가 Branch라면
                     if (branchArray.Count > 0 && matGod.matState == MaterialGOD.Materials.Branch)
                     {
                         // Array에 추가하기
                         GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
                         branch.transform.parent = itemPos;
-
                         branchArray.Add(branch);
+                        // 손 위치 위로 아이템 쌓게 만들기
                         for (int i = 0; i < branchArray.Count; i++)
                         {
                             branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -77,13 +69,16 @@ public class PlayerMaterial : MonoBehaviour
                         matGod.matState = MaterialGOD.Materials.None;
 
                     }
-                    // 손에 나무를 들고 있다면
+                    // 바닥 상태가 idle이라면
                     else if (branchArray.Count > 0 && toolGOD.toolsState == ToolGOD.Tools.Idle)
                     {
+                        // 점프키를 눌렀을 때,
                         if (Input.GetButtonDown("Jump"))
                         {
+                            // 바닥에 손에 있는 개수만큼 쌓임
                             matGod.branchCount = branchArray.Count;
                             matGod.matState = MaterialGOD.Materials.Branch;
+                            // 손에 있는 모든 것들이 제거
                             for (int i = 0; i < branchArray.Count; i++)
                             {
                                 Destroy(branchArray[i].gameObject);
@@ -96,18 +91,17 @@ public class PlayerMaterial : MonoBehaviour
                 else
                 {
                     // 점프키를 눌렀을 때,
-                    if (Input.GetButtonDown("Jump") && toolGOD)
+                    if (Input.GetButtonDown("Jump"))
                     {
-                        // 손에 있는 무언가를 든다
                         // 바닥 상태가 Branch라면
                         if (matGod.matState == MaterialGOD.Materials.Branch)
                         {
                             // Array에 추가하기
                             GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
                             branchArray.Add(branch);
+                            // 손위로 올린다
                             branch.transform.parent = itemPos;
                             branch.transform.position = itemPos.position;
-                            branch.transform.eulerAngles = new Vector3(90, 0, 90);
                             
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Branch;
