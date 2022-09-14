@@ -9,11 +9,11 @@ public class Material : MonoBehaviour
     public bool[] isIngredient = new bool[2] { false, false};
 
     // 플레이어 찾기
-    PlayerGetItem player;
+    PlayerItemDown player;
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerGetItem>();
+        player = GameObject.Find("Player").GetComponent<PlayerItemDown>();
     }
     // trigger에 플레이어 인식
     private void OnTriggerStay(Collider other)
@@ -23,21 +23,21 @@ public class Material : MonoBehaviour
             if (gameObject.name.Contains("Branch"))
             {
                 isIngredient[0] = true;
-                if(player.curArm > 0)
+                if(player.armState > 0)
                 {
-                    player.curArm = 0;
+                    player.armState = 0;
                     isIngredient[0] = false;
-                    Destroy(gameObject);
+                    
                 }
             }
             if (gameObject.name.Contains("Steel"))
             {
                 isIngredient[1] = true;
-                if (player.curArm > 0)
+                if (player.armState > 0)
                 {
-                    player.curArm = 0;
+                    player.armState = 0;
                     isIngredient[1] = false;
-                    Destroy(gameObject);
+                   
                 }
             }
         }

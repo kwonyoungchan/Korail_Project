@@ -6,8 +6,6 @@ using UnityEngine;
 public class IngredientItem : MonoBehaviour
 {
     public GameObject[] itemFact = new GameObject[2];
-    public List<GameObject> branch = new List<GameObject>();
-    public List<GameObject> steel = new List<GameObject>();
 
     public float y = 0.5f;
     // 시간
@@ -28,7 +26,7 @@ public class IngredientItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.Find("Player").GetComponent<PlayerGetItem>().armState <= 0)
+        if(GameObject.Find("Player").GetComponent<PlayerItemDown>().armState <= 0)
         {
             return;
         }
@@ -80,8 +78,11 @@ public class IngredientItem : MonoBehaviour
         if(hp <= 0)
         {
             Destroy(gameObject);
-            GameObject item = Instantiate(itemFact[n]);
-            item.transform.position = transform.position + new Vector3(0, y, 0);
+            // GOD에 있는 State 변경
+            if (n == 0)
+                GetComponentInParent<MaterialGOD>().matState = MaterialGOD.Materials.Branch;
+            if(n == 1)
+                GetComponentInParent<MaterialGOD>().matState = MaterialGOD.Materials.Steel;
         }
 
     }
