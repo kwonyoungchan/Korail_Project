@@ -96,12 +96,29 @@ public class PlayerMaterial : MonoBehaviour
                         // 바닥 상태가 Branch라면
                         if (matGod.matState == MaterialGOD.Materials.Branch)
                         {
-                            // Array에 추가하기
-                            GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                            branchArray.Add(branch);
-                            // 손위로 올린다
-                            branch.transform.parent = itemPos;
-                            branch.transform.position = itemPos.position;
+
+                            // 바닥에 branch가 여러개인 경우
+                            if (matGod.branchCount > 0)
+                            {
+                                for(int i = 0; i < matGod.branchCount; i++)
+                                {
+                                    // Array에 추가하기
+                                    GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                                    branch.transform.parent = itemPos;
+                                    branchArray.Add(branch);
+                                    branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                }
+                            }
+                            // 한개인 경우
+                            else
+                            {
+                                // Array에 추가하기
+                                GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                                branch.transform.parent = itemPos;
+                                branchArray.Add(branch);
+                                // 손위로 올린다
+                                branch.transform.position = itemPos.position;
+                            }
                             
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Branch;
