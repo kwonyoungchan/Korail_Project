@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,15 +13,13 @@ public class connectRail : MonoBehaviour
     //연결된 선로들을 저장하는 리스트를 생성한다.
     [SerializeField]public List<GameObject> connectedRails = new List<GameObject>();
     //게임을 시작할 때, start rail를 리스트에 추가한다.
-    [SerializeField]GameObject StartRail;
+    [SerializeField]GameObject[] StartRail;
     [SerializeField]GameObject EndRail;
-
-    
+    public bool stageClear;
 
     void Start()
     {
-        
-        connectedRails.Add(StartRail);
+        connectedRails.Add(StartRail[0]);
     }
 
     // Update is called once per frame
@@ -53,6 +52,9 @@ public class connectRail : MonoBehaviour
                 else if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
                 {
                     print("Clear!!");
+                    stageClear = true; ;
+
+
                 }
             }
         }
