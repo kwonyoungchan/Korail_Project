@@ -61,7 +61,7 @@ public class PlayerMaterial : MonoBehaviour
     {
         // 기차 위치
         matTrain = GameObject.Find("Train").transform;
-        rail = GameObject.Find("Train").GetComponent<MixedItem>();
+        rail = matTrain.GetComponent<MixedItem>();
 
         // 플레이어가 레이를 발사한다
         Ray pRay = new Ray(rayPos.position, -transform.up);
