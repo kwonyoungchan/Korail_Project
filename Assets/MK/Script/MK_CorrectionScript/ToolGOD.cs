@@ -22,11 +22,6 @@ public class ToolGOD : MonoBehaviour
     // 아이템 생성 확인
     GameObject toolItem;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

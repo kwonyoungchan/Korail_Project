@@ -24,12 +24,9 @@ public class MaterialGOD : MonoBehaviour
     // 생성된 게임오브젝트
     List<GameObject> mat = new List<GameObject>();
 
-    // 플레이어의 PlayerMaterial 가져오기
-    PlayerMaterial player;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerMaterial>();
         branchCount = 1;
         steelCount = 1;
         railCount = 1; 

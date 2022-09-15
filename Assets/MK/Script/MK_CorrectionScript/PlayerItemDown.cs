@@ -22,6 +22,8 @@ public class PlayerItemDown : MonoBehaviour
     public GameObject[] tool = new GameObject[3];
     // 팔에 있는 mat 활성화
     public GameObject[] mat;
+    // 레이 발사 위치
+    public Transform rayPos;
 
     #region 팔 회전 관련
     // 팔
@@ -52,7 +54,7 @@ public class PlayerItemDown : MonoBehaviour
     {
         PlayerFSM();
         // 레이를 발사하고
-        Ray pRay = new Ray(transform.position+new Vector3(-0.1f, 0, 0), -transform.up);
+        Ray pRay = new Ray(rayPos.position, -transform.up);
         RaycastHit cubeInfo;
         // 스페이스 바를 누르면
         if (Input.GetButtonDown("Jump"))

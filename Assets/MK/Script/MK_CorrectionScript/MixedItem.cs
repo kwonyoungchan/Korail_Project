@@ -21,7 +21,7 @@ public class MixedItem : MonoBehaviour
 
     // 나무랑 철 위치
     [SerializeField]
-    public Transform[] matPos = new Transform[3];
+    Transform[] matPos = new Transform[3];
 
     // 기차 위에 재료 리스트
     public List<GameObject> branchArray = new List<GameObject>();

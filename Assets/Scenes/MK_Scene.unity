@@ -29100,6 +29100,7 @@ MonoBehaviour:
   mat:
   - {fileID: 0}
   - {fileID: 0}
+  rayPos: {fileID: 1484928845}
   rArm: {fileID: 1268717909}
   lArm: {fileID: 481395698}
   rotSpeed: 3
@@ -29122,6 +29123,7 @@ MonoBehaviour:
   itemPos: {fileID: 1239695162}
   bPos: {fileID: 2131013714}
   sPos: {fileID: 1595558742}
+  rayPos: {fileID: 1484928845}
 --- !u!4 &1432732480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3169612993104095171, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
@@ -34051,7 +34053,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638699063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 8.41}
+  m_LocalPosition: {x: 5.87, y: 1, z: 8.41}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
