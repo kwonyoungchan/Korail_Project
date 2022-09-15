@@ -37,6 +37,9 @@ public class PlayerItemDown : MonoBehaviour
 
     int hand;
 
+    // ToolGod 컴포넌트
+    ToolGOD toolGOD;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,15 +56,16 @@ public class PlayerItemDown : MonoBehaviour
         // 스페이스 바를 누르면
         if (Physics.Raycast(pRay, out cubeInfo))
         {
+            toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
 
-            if(Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))
             {
-                if(cubeInfo.transform.gameObject.GetComponent<ToolGOD>() == null)
+                if(toolGOD == null)
                 {
                     return;
                 }
                 // 바닥 상태 : 아무것도 없음
-                if(cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState == ToolGOD.Tools.Idle)
+                if(toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {
                     // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
                     // 손에 무언갈 들고 있을 때,
@@ -72,19 +76,19 @@ public class PlayerItemDown : MonoBehaviour
                         // 도끼
                         if (tool[0].activeSelf)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Ax;
+                            toolGOD.toolsState = ToolGOD.Tools.Ax;
                             return;
                         }
                         // 곡갱이
                         if (tool[1].activeSelf)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Pick;
+                            toolGOD.toolsState = ToolGOD.Tools.Pick;
                             return;
                         }
                         // 양동이
                         if (tool[2].activeSelf)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Pail;
+                            toolGOD.toolsState = ToolGOD.Tools.Pail;
                             return;
                         }
                     }
@@ -95,7 +99,7 @@ public class PlayerItemDown : MonoBehaviour
                     }
                 }
                 // 바닥 상태 : 도끼
-                if (cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState == ToolGOD.Tools.Ax)
+                if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                 {
                     // 손에 무언갈 들고 있을 때
                     if (armState > 0)
@@ -104,13 +108,13 @@ public class PlayerItemDown : MonoBehaviour
                         // 곡갱이를 들고 있다면
                         if(hand == 1)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Pick;
+                            toolGOD.toolsState = ToolGOD.Tools.Pick;
                             holdState = Hold.Ax;
                         }
                         // 양동이를 들고 있다면
                         if(hand == 2)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Pail;
+                            toolGOD.toolsState = ToolGOD.Tools.Pail;
                             holdState = Hold.Ax;
                         }
 
@@ -120,11 +124,11 @@ public class PlayerItemDown : MonoBehaviour
                         // 플레이어 상태를 변환한다
                         holdState = Hold.Ax;
                         // 레이의 상태도 변화
-                        cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Idle;
+                        toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
                 // 바닥 상태 : 곡갱이
-                if (cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState == ToolGOD.Tools.Pick)
+                if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                 {
                     // 손에 무언가 있을 때
                     if (armState > 0)
@@ -133,13 +137,13 @@ public class PlayerItemDown : MonoBehaviour
                         // 도끼를 들고 있다면
                         if (hand == 0)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Ax;
+                            toolGOD.toolsState = ToolGOD.Tools.Ax;
                             holdState = Hold.Pick;
                         }
                         // 양동이를 들고 있다면
                         if (hand == 2)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Pail;
+                            toolGOD.toolsState = ToolGOD.Tools.Pail;
                             holdState = Hold.Pick;
                         }
 
@@ -149,11 +153,11 @@ public class PlayerItemDown : MonoBehaviour
                         // 플레이어 상태를 변환한다
                         holdState = Hold.Pick;
                         // 레이의 상태도 변화
-                        cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Idle;
+                        toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
                 // 바닥 상태 : 양동이
-                if (cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState == ToolGOD.Tools.Pail)
+                if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                 {
                     // 손에 무언가 있을 때
                     if (armState > 0)
@@ -162,13 +166,13 @@ public class PlayerItemDown : MonoBehaviour
                         // 도끼를 들고 있다면
                         if (hand == 0)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Ax;
+                            toolGOD.toolsState = ToolGOD.Tools.Ax;
                             holdState = Hold.Pail;
                         }
                         // 곡갱이를 들고 있다면
                         if (hand == 1)
                         {
-                            cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Pick;
+                            toolGOD.toolsState = ToolGOD.Tools.Pick;
                             holdState = Hold.Pail;
                         }
 
@@ -178,7 +182,7 @@ public class PlayerItemDown : MonoBehaviour
                         // 플레이어 상태를 변환한다
                         holdState = Hold.Pail;
                         // 레이의 상태도 변화
-                        cubeInfo.transform.gameObject.GetComponent<ToolGOD>().toolsState = ToolGOD.Tools.Idle;
+                        toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
             }
@@ -282,6 +286,14 @@ public class PlayerItemDown : MonoBehaviour
             case Hold.Branch:
                 if (armState > 2)
                 {
+                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    {
+                        RotArm(lArm, -90);
+                    }
+                    for(int i = 0; i < tool.Length; i++)
+                    {
+                        tool[i].SetActive(false);
+                    }
                     return;
                 }
                 RotArm(rArm, -90);
@@ -291,6 +303,14 @@ public class PlayerItemDown : MonoBehaviour
             case Hold.Steel:
                 if (armState > 2)
                 {
+                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    {
+                        RotArm(lArm, -90);
+                    }
+                    for (int i = 0; i < tool.Length; i++)
+                    {
+                        tool[i].SetActive(false);
+                    }
                     return;
                 }
                 RotArm(rArm, -90);
