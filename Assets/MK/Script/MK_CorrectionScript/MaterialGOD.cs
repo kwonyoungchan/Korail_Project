@@ -11,6 +11,7 @@ public class MaterialGOD : MonoBehaviour
         Idle,
         Branch,
         Steel,
+        Rail,
         None
     }
     public Materials matState = Materials.Idle;
@@ -18,6 +19,7 @@ public class MaterialGOD : MonoBehaviour
     // 생성된 오브젝트 만들 개수
     public int branchCount = 0;
     public int steelCount = 0;
+    public int railCount = 0;
 
     // 생성된 게임오브젝트
     List<GameObject> mat = new List<GameObject>();
@@ -30,6 +32,7 @@ public class MaterialGOD : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerMaterial>();
         branchCount = 1;
         steelCount = 1;
+        railCount = 1; 
     }
 
     // Update is called once per frame
@@ -55,9 +58,7 @@ public class MaterialGOD : MonoBehaviour
                 {
                     for (int i = 0; i < branchCount; i++)
                     {
-                        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-                        mat.Insert(i, branch);
-                        mat[i].transform.position = transform.position + new Vector3(0, 1 + i * 0.2f, 0);
+                        CreateMat("MK_Prefab/Branch", i);
                     }
                 }
                 else
@@ -69,11 +70,42 @@ public class MaterialGOD : MonoBehaviour
                 }
                 break;
             case Materials.Steel:
-/*                // 게임오브젝트가 있으면 return
-                if (mat != null) return;
-                // Resources파일에 있는 철 생성
-                mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
-                mat.transform.position = transform.position + new Vector3(0, 1, 0);*/
+                // 게임오브젝트가 있으면 return
+                if (mat.Count == steelCount) return;
+                // Resources파일에 있는 나뭇가지 생성
+                if (steelCount > 1)
+                {
+                    for (int i = 0; i < steelCount; i++)
+                    {
+                        CreateMat("MK_Prefab/Steel", i);
+                    }
+                }
+                else
+                {
+                    steelCount = 1;
+                    GameObject steel = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
+                    mat.Add(steel);
+                    steel.transform.position = transform.position + new Vector3(0, 1, 0);
+                }
+                break;
+            case Materials.Rail:
+                // 게임오브젝트가 있으면 return
+                if (mat.Count == railCount) return;
+                // Resources파일에 있는 나뭇가지 생성
+                if (railCount > 1)
+                {
+                    for (int i = 0; i < railCount; i++)
+                    {
+                        CreateMat("CHAN_Prefab/Rail", i);
+                    }
+                }
+                else
+                {
+                    railCount = 1;
+                    GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    mat.Add(rail);
+                    rail.transform.position = transform.position + new Vector3(0, 1, 0);
+                }
                 break;
             case Materials.None:
                 if(mat.Count > 0)
@@ -90,5 +122,11 @@ public class MaterialGOD : MonoBehaviour
                 }
                 break;
         }
+    }
+    void CreateMat(string s, int i)
+    {
+        GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
+        mat.Insert(i, ingredient);
+        mat[i].transform.position = transform.position + new Vector3(0, 1 + i * 0.2f, 0);
     }
 }
