@@ -39,6 +39,7 @@ public class PlayerItemDown : MonoBehaviour
 
     // ToolGod 컴포넌트
     ToolGOD toolGOD;
+    MaterialGOD matGOD;
 
     // Start is called before the first frame update
     void Start()
@@ -51,21 +52,18 @@ public class PlayerItemDown : MonoBehaviour
     {
         PlayerFSM();
         // 레이를 발사하고
-        Ray pRay = new Ray(transform.position, -transform.up);
+        Ray pRay = new Ray(transform.position+new Vector3(-0.1f, 0, 0), -transform.up);
         RaycastHit cubeInfo;
         // 스페이스 바를 누르면
-        if (Physics.Raycast(pRay, out cubeInfo))
+        if (Input.GetButtonDown("Jump"))
         {
-            toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
 
-            if (Input.GetButtonDown("Jump"))
+            if (Physics.Raycast(pRay, out cubeInfo))
             {
-                if(toolGOD == null)
-                {
-                    return;
-                }
+                toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
+
                 // 바닥 상태 : 아무것도 없음
-                if(toolGOD.toolsState == ToolGOD.Tools.Idle)
+                if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {
                     // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
                     // 손에 무언갈 들고 있을 때,
@@ -275,6 +273,14 @@ public class PlayerItemDown : MonoBehaviour
             case Hold.Rail:
                 if (armState > 2)
                 {
+                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    {
+                        RotArm(lArm, -90);
+                    }
+                    for (int i = 0; i < tool.Length; i++)
+                    {
+                        tool[i].SetActive(false);
+                    }
                     return;
                 }
                 RotArm(rArm, -90);

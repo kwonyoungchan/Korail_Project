@@ -54,7 +54,7 @@ public class IngredientItem : MonoBehaviour
         { 
             pickDis = Vector3.Distance(pick.transform.position, transform.position);
 
-            if (gameObject.name.Contains("Mine"))
+            if (gameObject.name.Contains("Iron"))
             {
                 if (pickDis < 1.6f)
                 {
