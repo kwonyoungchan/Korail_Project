@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PutDownItems : MonoBehaviour
 {
-
+    [SerializeField] Transform body;
     // 플레이어가 현재 들고 있는 아이템의 정보를 알아야 한다.
     int n = -1;
     void Start()
@@ -23,7 +23,7 @@ public class PutDownItems : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //사각형의 위치는 Raycasthit으로 결정한다.
-            Ray ray = new Ray(transform.position, -transform.up);
+            Ray ray = new Ray(body.transform.position, -transform.up);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {

@@ -4183,7 +4183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rails: {fileID: 6229227235868882493, guid: 272e892a8b59bae4db5b5f9d71180b5e, type: 3}
   rails: []
-  count: 40
+  count: 100
   player: {fileID: 451463788}
 --- !u!1001 &451594973
 PrefabInstance:
@@ -5294,6 +5294,10 @@ PrefabInstance:
       propertyPath: TrainSpawn
       value: 
       objectReference: {fileID: 2144369659}
+    - target: {fileID: 5529417374954917075, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
+      propertyPath: departTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
 --- !u!1001 &535453155
@@ -21553,6 +21557,10 @@ PrefabInstance:
       propertyPath: TrainSpawn
       value: 
       objectReference: {fileID: 2144369659}
+    - target: {fileID: 5529417374954917075, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: departTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
 --- !u!1001 &2117377518
@@ -22052,5 +22060,9 @@ PrefabInstance:
       propertyPath: TrainSpawn
       value: 
       objectReference: {fileID: 2144369659}
+    - target: {fileID: 5529417374954917075, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
+      propertyPath: departTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}

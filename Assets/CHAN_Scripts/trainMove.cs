@@ -91,7 +91,7 @@ public class trainMove : MonoBehaviour
         float distance = Vector3.Distance(trainPos, railPos);
         //만약 기차와 rail 사이 거리가 일정거리 이하 좁혀졌을 때
         //다음 레일을 결정시킴
-        if (distance < 0.05f)
+        if (distance < 0.1f)
         {
             //만약 기차가 선로쪽으로 이동을 완료했다면, 다음 선로쪽으로방향을 설정한다.
             railCount++;

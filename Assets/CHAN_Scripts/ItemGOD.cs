@@ -29,7 +29,7 @@ public class ItemGOD : MonoBehaviour
     Quaternion setRot;
     Renderer rd;
     Color defaultColor;
-    [SerializeField] connectRail cr;
+    
     
     void Start()
     {
@@ -102,7 +102,6 @@ public class ItemGOD : MonoBehaviour
 
 
     }
-
     public void ChangeState(Items item)
     {
         turn = false;
