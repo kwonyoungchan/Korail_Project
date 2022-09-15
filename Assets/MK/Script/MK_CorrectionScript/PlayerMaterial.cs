@@ -11,11 +11,15 @@ using UnityEngine;
 // 점프키를 누르면 
 // 스테이트가 변경된다
 #endregion
+
+// + 09.15 문제사항
+// : 플레이어가 손에 나무를 들고 있을 때, 바닥 상태도 Branch라면 바닥 상태의 개수에 따라 손에 들고 있는 개수 변경됨
 public class PlayerMaterial : MonoBehaviour
 {
     // 리스트
     // 나뭇가지
     public List<GameObject> branchArray = new List<GameObject>();
+    // 철
     public List<GameObject> steelArray = new List<GameObject>();
     // 아이템 위치
     public Transform itemPos;
@@ -35,7 +39,7 @@ public class PlayerMaterial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindWithTag("Branch"))
+        if (GameObject.FindWithTag("Branch") || GameObject.FindWithTag("Steel"))
         {
             // 플레이어가 레이를 발사한다
             Ray pRay = new Ray(transform.position, -transform.up);
@@ -159,8 +163,9 @@ public class PlayerMaterial : MonoBehaviour
                         // 바닥 상태가 Branch라면
                         if (matGod.matState == MaterialGOD.Materials.Branch)
                         {
-                            // 바닥에 branch가 여러개인 경우
-                            if (matGod.branchCount > 0)
+                            // 바닥에 branch가 여러개인 경우,
+                            // 만약 바닥에 branch가 3개 이하인 경우
+                            if (matGod.branchCount > 0 && matGod.branchCount < 4)
                             {
                                 for(int i = 0; i < matGod.branchCount; i++)
                                 {
@@ -168,6 +173,18 @@ public class PlayerMaterial : MonoBehaviour
                                     branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
+                            }
+                            // 아니라면 3개만 만들기
+                            else
+                            {
+                                for(int i = 0; i < 3; i++)
+                                {
+                                    MakeMat("MK_Prefab/Branch", branchArray);
+                                    branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                    branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                                }
+                                // 바닥에 있는 나무가지 개수
+                                matGod.branchCount -= 3;
                             }
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Branch;
