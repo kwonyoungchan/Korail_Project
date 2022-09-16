@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // 1. 사용자 입력값 받기
         h = Input.GetAxisRaw("Horizontal");

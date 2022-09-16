@@ -261,4 +261,3 @@ MonoBehaviour:
   items: 0
   turn: 0
   isConnected: 0
-  cr: {fileID: 0}
