@@ -26,7 +26,7 @@ public class ToolGOD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ToolFSM();
+        //ToolFSM();
     }
     
     // 재료에 따른 상태머신

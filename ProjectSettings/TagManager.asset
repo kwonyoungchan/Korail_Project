@@ -8,6 +8,7 @@ TagManager:
   - Branch
   - Steel
   - RPos
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - player
+  - aaa
   - 
   - 
   - 
