@@ -55,7 +55,7 @@ public class PlayerItemDown : MonoBehaviour
     {
         PlayerFSM();
         // 레이를 발사하고
-        Ray pRay = new Ray(rayPos.position, -transform.up);
+        Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
         RaycastHit cubeInfo;
         // 스페이스 바를 누르면
         if (Input.GetButtonDown("Jump"))
@@ -230,9 +230,9 @@ public class PlayerItemDown : MonoBehaviour
             // 도끼를 들고 있을 때,
             case Hold.Ax:
                 // 도끼 활성화
-                if(armState > 1)
+                if (armState > 1)
                 {
-                    if(lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
                     {
                         RotArm(lArm, 0);
                     }

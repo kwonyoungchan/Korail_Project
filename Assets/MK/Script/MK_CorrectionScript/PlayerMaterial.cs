@@ -57,7 +57,7 @@ public class PlayerMaterial : MonoBehaviour
         rail = matTrain.GetComponent<MixedItem>();
 
         // 플레이어가 레이를 발사한다
-        Ray pRay = new Ray(rayPos.position, -transform.up);
+        Ray pRay = new Ray(rayPos.position + new Vector3(0.2f, 0, 0), -transform.up);
         RaycastHit rayInfo;
         if (Physics.Raycast(pRay, out rayInfo))
         {
@@ -167,7 +167,7 @@ public class PlayerMaterial : MonoBehaviour
                         // 점프키를 눌렀을 때,
                         if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                         {
-                            matGod.branchCount = steelArray.Count;
+                            matGod.steelCount = steelArray.Count;
                             matGod.matState = MaterialGOD.Materials.Steel;
                             DeleteMat(steelArray);
                         }
@@ -288,7 +288,7 @@ public class PlayerMaterial : MonoBehaviour
                         // 플레이어 손상태 변환
                         playerItem.holdState = PlayerItemDown.Hold.Rail;
                         rail.railCount = 0;
-                        
+
                     }
                 }
 
@@ -335,7 +335,7 @@ public class PlayerMaterial : MonoBehaviour
                         playerItem.holdState = PlayerItemDown.Hold.Steel;
                         // 바닥상태 변환
                         matGod.matState = MaterialGOD.Materials.None;
-                        
+
                     }
                     #endregion
                     #region Rail
@@ -358,7 +358,7 @@ public class PlayerMaterial : MonoBehaviour
                         // 바닥상태 변환
                         matGod.matState = MaterialGOD.Materials.None;
                     }
-                    if(itemGOD.items == ItemGOD.Items.Rail)
+                    if (itemGOD.items == ItemGOD.Items.Rail)
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
@@ -371,6 +371,7 @@ public class PlayerMaterial : MonoBehaviour
                 }
             }
         }
+        
     }
 
     void MakeMat(string s, List<GameObject> matArray)
