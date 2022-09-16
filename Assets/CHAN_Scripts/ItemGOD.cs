@@ -41,6 +41,7 @@ public class ItemGOD : MonoBehaviour
     
     void Update()
     {
+        return;
         StateMachine();
         //오브젝트가 레일리스트 제일 마지막에 있을 경우  제거 가능하도록 isconnected =false
         if (gameObject == connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1])

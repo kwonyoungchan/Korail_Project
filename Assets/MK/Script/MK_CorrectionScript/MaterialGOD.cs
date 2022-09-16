@@ -35,7 +35,7 @@ public class MaterialGOD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MaterialFSM();
+        //MaterialFSM();
     }
 
     // MaterialÀÇ µû¸¥ FSM
