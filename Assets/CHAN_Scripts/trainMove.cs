@@ -104,7 +104,6 @@ public class trainMove : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            print(hit.transform.name);
             //만약 지금 기차가 선로가 아닌곳에 있다면 
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Idle)
             {

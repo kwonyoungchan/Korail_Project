@@ -19,6 +19,7 @@ public class ItemGOD : MonoBehaviour
         Idle,
         StartRail,
         Rail,
+        CornerRail,
         EndRail
 
     }
@@ -84,7 +85,18 @@ public class ItemGOD : MonoBehaviour
             case Items.Rail:
                 if (!turn)
                 {
+                    Destroy(createItem);
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    createItem.transform.rotation = setRot;
+                    turn = true;
+                }
+                break;
+            case Items.CornerRail:
+                if (!turn)
+                {
+                    Destroy(createItem);
+                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
                     createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
                     createItem.transform.rotation = setRot;
                     turn = true;
@@ -102,9 +114,10 @@ public class ItemGOD : MonoBehaviour
 
 
     }
-    public void ChangeState(Items item)
+    public void ChangeState(Items item,Quaternion Rot= default)
     {
         turn = false;
+        setRot = Rot;
         items = item;
     }
 
