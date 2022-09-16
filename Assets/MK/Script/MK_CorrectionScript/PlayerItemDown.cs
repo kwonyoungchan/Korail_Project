@@ -42,6 +42,7 @@ public class PlayerItemDown : MonoBehaviour
     // ToolGod 컴포넌트
     ToolGOD toolGOD;
     MaterialGOD matGOD;
+    ItemGOD itemGOD;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +64,12 @@ public class PlayerItemDown : MonoBehaviour
             if (Physics.Raycast(pRay, out cubeInfo))
             {
                 toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
+                matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
+                itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
+                if (matGOD.matState != MaterialGOD.Materials.Idle || holdState == Hold.Rail)
+                {
+                    return;
+                }
 
                 // 바닥 상태 : 아무것도 없음
                 if (toolGOD.toolsState == ToolGOD.Tools.Idle)
@@ -99,20 +106,20 @@ public class PlayerItemDown : MonoBehaviour
                     }
                 }
                 // 바닥 상태 : 도끼
-                if (toolGOD.toolsState == ToolGOD.Tools.Ax)
+                else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                 {
                     // 손에 무언갈 들고 있을 때
                     if (armState > 0)
                     {
                         hand = CheckHand();
                         // 곡갱이를 들고 있다면
-                        if(hand == 1)
+                        if (hand == 1)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pick;
                             holdState = Hold.Ax;
                         }
                         // 양동이를 들고 있다면
-                        if(hand == 2)
+                        if (hand == 2)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pail;
                             holdState = Hold.Ax;
@@ -128,7 +135,7 @@ public class PlayerItemDown : MonoBehaviour
                     }
                 }
                 // 바닥 상태 : 곡갱이
-                if (toolGOD.toolsState == ToolGOD.Tools.Pick)
+                else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                 {
                     // 손에 무언가 있을 때
                     if (armState > 0)
@@ -157,7 +164,7 @@ public class PlayerItemDown : MonoBehaviour
                     }
                 }
                 // 바닥 상태 : 양동이
-                if (toolGOD.toolsState == ToolGOD.Tools.Pail)
+                else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                 {
                     // 손에 무언가 있을 때
                     if (armState > 0)
@@ -185,6 +192,7 @@ public class PlayerItemDown : MonoBehaviour
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
+                
             }
         }
     }
@@ -204,7 +212,7 @@ public class PlayerItemDown : MonoBehaviour
             // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
                 // 한쪽팔만 들 때
-                if (armState > 0 && armState < 2)
+                 if (armState > 0 && armState < 2)
                 {
                     RotArm(rArm, 0);
                 }

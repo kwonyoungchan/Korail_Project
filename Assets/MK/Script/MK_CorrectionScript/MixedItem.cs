@@ -8,8 +8,6 @@ using UnityEngine;
 public class MixedItem : MonoBehaviour
 {
     // 필요속성 : 나무, 철, 레일공장, 일정시간
-    // 레일공장
-    public GameObject railFact;
     // 제작 시간
     public float createTime = 3;
     // 나무개수
@@ -19,9 +17,11 @@ public class MixedItem : MonoBehaviour
     public int steelCount;
     public int railCount;
 
+    public GameObject train;
+
     // 나무랑 철 위치
     [SerializeField]
-    Transform[] matPos = new Transform[3];
+    Transform[] matPos = new Transform[2];
 
     // 기차 위에 재료 리스트
     public List<GameObject> branchArray = new List<GameObject>();
@@ -39,12 +39,13 @@ public class MixedItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        matPos[2] = GameObject.FindWithTag("RPos").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(railCount != railArray.Count)
+        if (railCount != railArray.Count)
         {
             for(int i = 0; i < railArray.Count; i++)
             {
@@ -59,8 +60,8 @@ public class MixedItem : MonoBehaviour
             for(int i = 0; i< branchCount; i++)
             {
                 CreateMat("MK_Prefab/Branch", i, matPos[0], branchArray);
+                bCount++;
             }
-            bCount++;
         }
         if (steelCount > 0 && sCount <= 0)
         {
@@ -68,8 +69,8 @@ public class MixedItem : MonoBehaviour
             for (int i = 0; i < steelCount; i++)
             {
                 CreateMat("MK_Prefab/Steel", i, matPos[1], steelArray);
+                sCount++;
             }
-            sCount++;
         }
         // 기차 위에 철과 나무가 있다면,
         if (branchArray.Count > 0 && steelArray.Count > 0)
@@ -96,13 +97,10 @@ public class MixedItem : MonoBehaviour
                 // 카운트 감소
                 branchCount -= 1;
                 steelCount -= 1;
+                bCount--;
+                sCount--;
                 currentTime = 0;
             }
-        }
-        else if(GameObject.Find("Rail") && (branchArray.Count > 0 || steelArray.Count > 0))
-        {
-            bCount = 0;
-            sCount = 0;
         }
     }
     void CreateMat(string s, int i, Transform pos, List<GameObject> mat)
