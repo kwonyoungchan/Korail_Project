@@ -52,19 +52,20 @@ public class PutDownItems : MonoBehaviour
                 if (n == -1)
                 {
                     if (HasItems.instance.rails.Count > 0
-                        &&hit.transform.gameObject.GetComponent<ItemGOD>().items!=ItemGOD.Items.Rail)
+                        && hit.transform.gameObject.GetComponent<ItemGOD>().items != ItemGOD.Items.Rail)
                     {
                         hit.transform.gameObject.GetComponent<ItemGOD>()
                        .ChangeState(ItemGOD.Items.Rail);
                         HasItems.instance.RemoveRail();
-                        
+
 
                     }
                 }
                 else
                 {
                     //만약 ray를 쐈는데 그 오브젝트가 리스트의 마지막 부분인경우? 
-                    if (hit.transform.gameObject.GetComponent<ItemGOD>().items == ItemGOD.Items.Rail)
+                    if (hit.transform.gameObject.GetComponent<ItemGOD>().items == ItemGOD.Items.Rail||
+                        hit.transform.gameObject.GetComponent<ItemGOD>().items == ItemGOD.Items.CornerRail)
                     {
                         hit.transform.gameObject.GetComponent<ItemGOD>()
                            .ChangeState(ItemGOD.Items.Idle);

@@ -119,7 +119,7 @@ public class connectRail : MonoBehaviour
             if (detect[0] == Vector3.forward)
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 180, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 90, 0));
                 //아래는 레일의 방향을 바꿈
                 connectedRails[connectedRails.Count - 1].GetComponent<ItemGOD>().
                 ChangeState(ItemGOD.Items.Rail, Quaternion.Euler(0, 90, 0));
@@ -127,7 +127,7 @@ public class connectRail : MonoBehaviour
             else
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 180, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 90, 0));
             }
             
         }
@@ -139,7 +139,7 @@ public class connectRail : MonoBehaviour
             if (detect[0] == Vector3.back)
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 90, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 0, 0));
 
                 connectedRails[connectedRails.Count - 1].GetComponent<ItemGOD>().
                 ChangeState(ItemGOD.Items.Rail, Quaternion.Euler(0, 90, 0));
@@ -147,7 +147,7 @@ public class connectRail : MonoBehaviour
             else
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 90, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 0, 0));
             }
             // 아래는 코너레일로 바꿈
            
@@ -161,14 +161,14 @@ public class connectRail : MonoBehaviour
             if (detect[0] == Vector3.back)
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 0, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 270, 0));
                 connectedRails[connectedRails.Count - 1].GetComponent<ItemGOD>().
                 ChangeState(ItemGOD.Items.Rail, Quaternion.Euler(0, 90, 0));
             }
             else
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 0, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 270, 0));
             }
             // 아래는 코너레일로 바꿈
 
@@ -180,7 +180,7 @@ public class connectRail : MonoBehaviour
             if (detect[0] == Vector3.forward)
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 270, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 180, 0));
                 //아래는 레일의 방향을 바꿈
                 connectedRails[connectedRails.Count - 1].GetComponent<ItemGOD>().
                     ChangeState(ItemGOD.Items.Rail, Quaternion.Euler(0, 90, 0));
@@ -188,7 +188,7 @@ public class connectRail : MonoBehaviour
             else
             {
                 connectedRails[connectedRails.Count - 2].GetComponent<ItemGOD>().
-                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 270, 0));
+                ChangeState(ItemGOD.Items.CornerRail, Quaternion.Euler(0, 180, 0));
             }
             // 아래는 코너레일로 바꿈
 
