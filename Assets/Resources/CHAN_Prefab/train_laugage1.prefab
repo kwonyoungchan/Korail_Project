@@ -266,7 +266,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5529417374954917072}
-  - component: {fileID: 5529417374954917075}
   - component: {fileID: 223430482}
   m_Layer: 0
   m_Name: train_laugage1
@@ -295,23 +294,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5529417374954917075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5529417374954917074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a7be5859c95064c99d0a4dca67db73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrainSpawn: {fileID: 0}
-  rayPos: {fileID: 5529417373789184642}
-  departTime: 80
-  trainSpeed: 1
-  num: 1
 --- !u!114 &223430482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +310,7 @@ MonoBehaviour:
   branchCount: 0
   steelCount: 0
   railCount: 0
+  train: {fileID: 0}
   matPos:
   - {fileID: 8098390211832519618}
   - {fileID: 2932938090225254520}

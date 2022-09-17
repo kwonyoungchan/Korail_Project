@@ -57,7 +57,11 @@ public class connectRail : MonoBehaviour
                 else if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
                 {
                     print("Clear!!");
-                    stageClear = true; ;
+                    if (!stageClear)
+                    { 
+                        connectedRails.Add(hit.transform.gameObject);
+                    }
+                    stageClear = true; 
 
 
                 }
@@ -106,7 +110,6 @@ public class connectRail : MonoBehaviour
             {
                 detect[i] = Vector3.back;
             }
-            print(i+": "+detect[i]);
         }
         // 여기서부터 앞에서 구한 두개의 벡터를 비교한다.
 

@@ -12,56 +12,74 @@ public class trainMove : MonoBehaviour
     // 속성
     // 기차의 속도, 방향, 기차 오브젝트, 기차 생성 위치, 기차 출발 타이머
     // 게임이 시작될 대, 메인 기차는 start 블럭에, 나머지 짐칸일 경우, 메인기차의 왼쪽으로 위치시킨다. 
-    Vector3 dir;
-    [SerializeField] Transform TrainSpawn;
-    [SerializeField] Transform rayPos;
-    [SerializeField] float departTime;
-    [SerializeField] float trainSpeed;
-    [SerializeField] int num;  
+     Vector3[] dir;
+    [SerializeField] Transform[] rayPos;
+    [SerializeField] int gap;
+    [SerializeField] public Transform TrainSpawn;
+    [SerializeField] GameObject[] trains;
     float trainTimer;
     bool depart;
     bool isDie;
-    int railCount;
+    int[] railCount;
+    public bool isEnding;
+    public float trainSpeed;
+    public float departTime;
+
     void Start()
     {
         // 여기서 기차는 시각선로에서 시작되도록 설정 한다.
-        //train = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Train"));
-        transform.position = TrainSpawn.position+(Vector3.left*num);
+        transform.position = DefineBlocks.instance.StartBlocks[0].transform.position;
+        for (int i = 0; i < trains.Length; i++)
+        { 
+            trains[i].transform.position = transform.position+(Vector3.left*i*gap);
+        }
+        railCount = new int[trains.Length];
+        dir = new Vector3[trains.Length];
+        
     }
 
     
     void Update()
     {
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
+
         if (!depart)
         {
             ReadyToDepart();
         }
         else
         {
-            //만약 리스트상에 선로 오브젝트가 없으면 기차는 그냥 직진만 하도록 한다.
-            if (connectRail.instance.connectedRails.Count > railCount)
+            for (int i = 0; i < trains.Length; i++)
             {
-                //기차의 방향은 리스트에서 저장된 선로의 위치를 목표 방향으로 잡는다. 
-                CheckTrainPos();
-                if (!isDie)
-                { dir = (connectRail.instance.connectedRails[railCount].transform.position - transform.position).normalized; }
-                //여기서 y좌표는 무시한다.
-                dir.y = transform.position.y;
-                RotateTrain(dir);
+                //만약 리스트상에 선로 오브젝트가 없으면 기차는 그냥 직진만 하도록 한다.
+                if (connectRail.instance.connectedRails.Count > railCount[i])
+                {
+                    //기차의 방향은 리스트에서 저장된 선로의 위치를 목표 방향으로 잡는다. 
+                    CheckTrainPos(railCount[i],trains[i].transform.position,i);
+                    if (!isDie)
+                    { dir[i] = (connectRail.instance.connectedRails[railCount[i]].transform.position - trains[i].transform.position).normalized; }
+                    //여기서 y좌표는 무시한다.
+                    dir[i].y = trains[i].transform.position.y;
+                    RotateTrain(dir[i], trains[i].transform);
+                }
+                else
+                {
+                    dir[i] = trains[i].transform.forward;
+                }
+                RailChecker(rayPos[i].position);
+                if (connectRail.instance.stageClear)
+                {
+                    trainSpeed = 10;
+                    if (isEnding)
+                    {
+                        trainSpeed = 0;
+                    }
+                }
+                trains[i].transform.position += dir[i] * trainSpeed * Time.deltaTime;
             }
-            else
-            {
-                dir = transform.forward;
-            }
-            if (connectRail.instance.stageClear)
-            {
-                trainSpeed = 10;
-            }
-            transform.position += dir * trainSpeed * Time.deltaTime;
-            //만약 기차가 도착 선로로 도착한다면 게임 클리어 
-            OutOfRail();
-        }   
+        }
+        
+       
     }
 
     //  기차 출발 타이머
@@ -70,23 +88,26 @@ public class trainMove : MonoBehaviour
         trainTimer += Time.deltaTime;
         if (trainTimer > departTime)
         {
-            railCount++;
+            for (int i = 0; i < railCount.Length; i++)
+            {
+                railCount[i]++;
+            }
             depart = true;
         }
     }
-    void RotateTrain(Vector3 dir)
+    void RotateTrain(Vector3 dir, Transform trainPos)
     {
         //방향이 설정되면 기차는 선로쪽으로 방향을 전환한다.
         //선회 조건은 dir.rotation y 와 기차의 rotation.y 의 차이가 음수거나 양수일때
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), trainSpeed*5 * Time.deltaTime);
+        trainPos.rotation = Quaternion.Lerp(trainPos.rotation, Quaternion.LookRotation(dir), trainSpeed*5 * Time.deltaTime);
         //이때 일정시간 간격으로 선회를 한다. (선회와 이동은 독립적으로 작용한다.)
         //회전속도는 어떻게 정의할 것인가?
         // 이동속도와 비례해서 회전하도록 만든다.
     }
-    void CheckTrainPos()
+    void CheckTrainPos(int count, Vector3 trainPosition,int i)
     {
-        Vector3 trainPos = new Vector3(transform.position.x ,0, transform.position.z);
-        Vector3 railPos = new Vector3(connectRail.instance.connectedRails[railCount].transform.position.x, 0, connectRail.instance.connectedRails[railCount].transform.position.z);
+        Vector3 trainPos = new Vector3(trainPosition.x ,0, trainPosition.z);
+        Vector3 railPos = new Vector3(connectRail.instance.connectedRails[count].transform.position.x, 0, connectRail.instance.connectedRails[count].transform.position.z);
 
         float distance = Vector3.Distance(trainPos, railPos);
         //만약 기차와 rail 사이 거리가 일정거리 이하 좁혀졌을 때
@@ -94,13 +115,13 @@ public class trainMove : MonoBehaviour
         if (distance < 0.1f)
         {
             //만약 기차가 선로쪽으로 이동을 완료했다면, 다음 선로쪽으로방향을 설정한다.
-            railCount++;
+            railCount[i]++;
         }
     }
     //기차 탈선됐을 때 죽는 처리하는 기능
-    void OutOfRail()
+     void RailChecker(Vector3 rayPosition)
     {
-        Ray ray = new Ray(rayPos.position, -transform.up);
+        Ray ray = new Ray(rayPosition, -transform.up);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
@@ -111,7 +132,14 @@ public class trainMove : MonoBehaviour
                 isDie = true;
                 Destroy(gameObject, 1);
             }
+            if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
+            {
+                //만약 기차가 도착 선로로 도착한다면 게임 클리어 
+                isEnding = true;
+            }
         }
     }
+
+
 
 }

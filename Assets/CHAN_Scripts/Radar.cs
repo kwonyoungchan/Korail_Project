@@ -9,6 +9,8 @@ public class Radar : MonoBehaviour
     [SerializeField]Collider[] blocks;
     [SerializeField] GameObject TileMap;
     [SerializeField] List<Collider> detectBlocks = new List<Collider>();
+    [SerializeField] GameObject[] StartBlock;
+    [SerializeField] GameObject[] EndBlock;
     void Start()
     {
         //시작시 모든 블럭의 스크립트를 끈다.
@@ -18,9 +20,10 @@ public class Radar : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        OnSpecialBlock();
+
         for (int i = 0; i < detectBlocks.Count; i++)
         {
             fuck(detectBlocks[i].transform.gameObject, false);
@@ -52,4 +55,20 @@ public class Radar : MonoBehaviour
         GO.GetComponent<MaterialGOD>().enabled = B;
         GO.GetComponent<ToolGOD>().enabled = B;
     }
+
+    //시작지점과 도착지점의 블럭은 항상 켜둔다.
+    void OnSpecialBlock()
+    {
+        DefineBlocks Blocks = DefineBlocks.instance;
+        for (int i = 0; i < Blocks.StartBlocks.Length; i++)
+        {
+            fuck(Blocks.StartBlocks[i], true);
+        }
+        for (int i = 0; i < Blocks.EndBlocks.Length; i++)
+        {
+            fuck(Blocks.EndBlocks[i], true);
+        }
+    }
 }
+
+
