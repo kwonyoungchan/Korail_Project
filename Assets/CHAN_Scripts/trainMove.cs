@@ -16,7 +16,6 @@ public class trainMove : MonoBehaviour
     [SerializeField] Transform[] rayPos;
     [SerializeField] int gap;
     [SerializeField] float RotScale;
-    [SerializeField] public Transform TrainSpawn;
     [SerializeField] GameObject[] trains;
     float trainTimer;
     bool depart;
