@@ -26,7 +26,7 @@ public class IngredientItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.Find("Player").GetComponent<PlayerItemDown>().armState <= 0)
+        if(GameObject.Find("Player").GetComponent<PlayerItemDown>().num <= 0)
         {
             return;
         }
@@ -39,7 +39,7 @@ public class IngredientItem : MonoBehaviour
             axDis = Vector3.Distance(ax.transform.position, transform.position);
             if (gameObject.name.Contains("Tree"))
             {
-                if (axDis < 1.6f)
+                if (axDis < 0.8f)
                 {
                     currentTime += Time.deltaTime;
 
@@ -56,7 +56,7 @@ public class IngredientItem : MonoBehaviour
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 1.6f)
+                if (pickDis < 0.8f)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
