@@ -5,7 +5,7 @@ using UnityEngine;
 // PutDownItem ����
 public class PlayerItemDown : MonoBehaviour
 {
-    // ������ ���� Ȯ��
+    // 아이템 정보 확인
     public enum Hold
     {
         Idle,
@@ -16,28 +16,29 @@ public class PlayerItemDown : MonoBehaviour
         Mat,
     }
     public Hold holdState = Hold.Idle;
-    // �ȿ� �ִ� ���� Ȱ��ȭ
+    // 팔에 있는 도구 활성화
     public GameObject[] tool = new GameObject[3];
-    // �ȿ� �ִ� mat Ȱ��ȭ
+    // 팔에 있는 mat 활성화
     public GameObject[] mat;
-    // ���� �߻� ��ġ
+    // 레이 발사 위치
     public Transform rayPos;
 
-    #region �� ȸ�� ����
-    // ��
+    #region 팔 회전 관련
+    // 팔
     public GameObject rArm;
     public GameObject lArm;
 
-    // ȸ�� �ӵ�
+    // 회전 속도 
     public float rotSpeed = 3;
 
-    // �� ����
+    // 팔 상태
+    [HideInInspector]
     public int num;
     #endregion
 
     int hand;
 
-    // ToolGod ������Ʈ
+    // ToolGod 컴포넌트
     ToolGOD toolGOD;
     MaterialGOD matGOD;
     ItemGOD itemGOD;
@@ -51,11 +52,12 @@ public class PlayerItemDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         PlayerFSM();
-        // ���̸� �߻��ϰ�
-        Ray pRay = new Ray(rayPos.position, -transform.up);
+        // 레이를 발사하고
+        Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
         RaycastHit cubeInfo;
-        // �����̽� �ٸ� ������
+        // 스페이스 바를 누르면
         if (Input.GetButtonDown("Jump"))
         {
 
@@ -69,54 +71,54 @@ public class PlayerItemDown : MonoBehaviour
                     return;
                 }
 
-                // �ٴ� ���� : �ƹ��͵� ����
+                // 바닥 상태 : 아무것도 없음
                 if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {
-                    // ���� ���� : �տ� ���Ḧ ���� ���� ����, �߻�
-                    // �տ� ������ ���� ���� ��,
+                    // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
+                    // 손에 무언갈 들고 있을 때,
                     if (num > 0)
                     {
                         holdState = Hold.ChangeIdle;
-                        // �տ� �ִ� �Ϳ� ���� �ٴ��� ��ȭ
-                        // ����
+                        // 손에 있는 것에 따른 바닥의 변화
+                        // 도끼
                         if (tool[0].activeSelf)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Ax;
                             return;
                         }
-                        // ���
+                        // 곡갱이
                         if (tool[1].activeSelf)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pick;
                             return;
                         }
-                        // �絿��
+                        // 양동이
                         if (tool[2].activeSelf)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pail;
                             return;
                         }
                     }
-                    // ���� �������� ��
+                    // 손이 비어있을 때
                     else
                     {
                         holdState = Hold.Idle;
                     }
                 }
-                // �ٴ� ���� : ����
+                // 바닥 상태 : 도끼
                 else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                 {
-                    // �տ� ������ ���� ���� ��
+                    // 손에 무언갈 들고 있을 때
                     if (num > 0)
                     {
                         hand = CheckHand();
-                        // ��̸� ���� �ִٸ�
+                        // 곡갱이를 들고 있다면
                         if (hand == 1)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pick;
                             holdState = Hold.Ax;
                         }
-                        // �絿�̸� ���� �ִٸ�
+                        // 양동이를 들고 있다면
                         if (hand == 2)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pail;
@@ -126,26 +128,26 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     else
                     {
-                        // �÷��̾� ���¸� ��ȯ�Ѵ�
+                        // 플레이어 상태를 변환한다
                         holdState = Hold.Ax;
-                        // ������ ���µ� ��ȭ
+                        // 레이의 상태도 변화
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
-                // �ٴ� ���� : ���
+                // 바닥 상태 : 곡갱이
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                 {
-                    // �տ� ������ ���� ��
+                    // 손에 무언가 있을 때
                     if (num > 0)
                     {
                         hand = CheckHand();
-                        // ������ ���� �ִٸ�
+                        // 도끼를 들고 있다면
                         if (hand == 0)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Ax;
                             holdState = Hold.Pick;
                         }
-                        // �絿�̸� ���� �ִٸ�
+                        // 양동이를 들고 있다면
                         if (hand == 2)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pail;
@@ -155,26 +157,26 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     else
                     {
-                        // �÷��̾� ���¸� ��ȯ�Ѵ�
+                        // 플레이어 상태를 변환한다
                         holdState = Hold.Pick;
-                        // ������ ���µ� ��ȭ
+                        // 레이의 상태도 변화
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
-                // �ٴ� ���� : �絿��
+                // 바닥 상태 : 양동이
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                 {
-                    // �տ� ������ ���� ��
+                    // 손에 무언가 있을 때
                     if (num > 0)
                     {
                         hand = CheckHand();
-                        // ������ ���� �ִٸ�
+                        // 도끼를 들고 있다면
                         if (hand == 0)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Ax;
                             holdState = Hold.Pail;
                         }
-                        // ��̸� ���� �ִٸ�
+                        // 곡갱이를 들고 있다면
                         if (hand == 1)
                         {
                             toolGOD.toolsState = ToolGOD.Tools.Pick;
@@ -184,9 +186,9 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     else
                     {
-                        // �÷��̾� ���¸� ��ȯ�Ѵ�
+                        // 플레이어 상태를 변환한다
                         holdState = Hold.Pail;
-                        // ������ ���µ� ��ȭ
+                        // 레이의 상태도 변화
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
                 }
@@ -195,96 +197,96 @@ public class PlayerItemDown : MonoBehaviour
         }
     }
 
-    // �÷��̾� ����
+    // 플레이어 상태
     void PlayerFSM()
     {
         switch (holdState)
         {
-            // �ƹ��͵� ���� ���� ���� ��,
+            // 아무것도 들고 있지 않을 때,
             case Hold.Idle:
-                for(int i = 0; i < tool.Length; i++)
+                for (int i = 0; i < tool.Length; i++)
                 {
                     tool[i].SetActive(false);
                 }
 
                 break;
-            // ������ ���� �ִٰ� ���� ���� ��
+            // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
-                // �����ȸ� �� ��
-                 if (num > 0 && num < 2)
+                // 한쪽팔만 들 때
+                if (num > 0 && num < 2)
                 {
-                    RotArm(rArm, 0);
+                    RotArm(rArm, -85, 0);
                 }
-                // �������� ���� ���� ��
+                // 양쪽팔을 들고 있을 때
                 else
                 {
-                    RotArm(lArm, 0);
-                    RotArm(rArm, 0);
+                    RotArm(lArm, -80, 0);
+                    RotArm(rArm, -85, 0);
                 }
-                // Idle ���·� ��ȯ
+                // Idle 상태로 변환
                 holdState = Hold.Idle;
                 num = 0;
                 break;
-            #region ����
-            // ������ ���� ���� ��,
+            #region 도구
+            // 도끼를 들고 있을 때,
             case Hold.Ax:
-                // ���� Ȱ��ȭ
-                if(num > 1)
+                // 도끼 활성화
+                if (num > 1)
                 {
-                    if(lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, 0))
                     {
-                        RotArm(lArm, 0);
+                        RotArm(lArm, -80, 0);
                     }
                     tool[0].SetActive(true);
                     return;
                 }
-                // �� ������
-                RotArm(lArm, 0);
-                RotArm(rArm, -90);
+                // 팔 돌리기
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
                 tool[0].SetActive(true);
                 break;
-            // ��̸� ���� ���� ��
+            // 곡갱이를 들고 있을 때
             case Hold.Pick:
-                // ���� Ȱ��ȭ
+                // 도구 활성화
                 if (num > 1)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, 0))
                     {
-                        RotArm(lArm, 0);
+                        RotArm(lArm, -80, 0);
                     }
                     tool[1].SetActive(true);
                     return;
                 }
-                // �� ������
-                RotArm(lArm, 0);
-                RotArm(rArm, -90);
+                // 팔 돌리기
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
                 tool[1].SetActive(true);
                 break;
-            // �絿�̸� ���� ���� ��,
+            // 양동이를 들고 있을 때,
             case Hold.Pail:
                 if (num > 2)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
                     {
-                        RotArm(lArm, -90);
+                        RotArm(lArm, -80, -90);
                     }
                     tool[2].SetActive(true);
                     return;
                 }
-                // �� ������
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                // 팔 돌리기
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 tool[2].SetActive(true);
                 break;
             #endregion
-            #region ����
-            // ���θ� ���� ���� ��
+            #region 재료
+            // 선로를 들고 있을 때
             case Hold.Mat:
                 if (num > 2)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
                     {
-                        RotArm(lArm, -90);
+                        RotArm(lArm, -80, -90);
                     }
                     for (int i = 0; i < tool.Length; i++)
                     {
@@ -292,22 +294,22 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     return;
                 }
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 break;
-            #endregion
+                #endregion
         }
     }
-    // �÷��̾� ���� ���� �ö󰡰� ������ �Լ�
-    void RotArm(GameObject arm, float rotAngle)
+    // 플레이어 팔이 위로 올라가게 만드는 함수
+    void RotArm(GameObject arm, float rotX, float rotAngle)
     {
-        // �� ȸ�� ��Ű��
-        arm.transform.localEulerAngles = new Vector3(rotAngle, 0, 0);
-        // �� ȸ�� ����
+        // 팔 회전 시키기
+        arm.transform.localEulerAngles = new Vector3(rotX, 0, rotAngle);
+        // 팔 회전 상태
         num++;
     }
 
-    // �÷��̾� �տ� ���� �ִ� �� Ȯ��
+    // 플레이어 손에 들고 있는 것 확인
     int CheckHand()
     {
         for (int i = 0; i < tool.Length; i++)
