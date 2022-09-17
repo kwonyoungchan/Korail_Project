@@ -84,8 +84,8 @@ public class PlayerMaterial : MonoBehaviour
                 }
                 else
                 {
-
                     // 바닥 상태가 Branch라면
+                    // 바닥에 Branch의 개수에 따라 손에 올라오는 수가 달라짐
                     if (matGod.matState == MaterialGOD.Materials.Branch)
                     {
                         // Array에 추가하기
@@ -109,19 +109,19 @@ public class PlayerMaterial : MonoBehaviour
                             DeleteMat(branchArray);
                         }
                         // 바닥 상태가 Ax라면
-                        else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
+                        if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                         {
                             ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch);
                             DeleteMat(branchArray);
                         }
                         // 바닥 상태가 Pick라면
-                        else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
+                        if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                         {
                             ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch);
                             DeleteMat(branchArray);
                         }
                         // 바닥 상태가 Pail라면
-                        else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
+                        if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                         {
                             ChangeState(PlayerItemDown.Hold.Pail, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch);
                             DeleteMat(branchArray);
@@ -286,7 +286,7 @@ public class PlayerMaterial : MonoBehaviour
                             railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                         }
                         // 플레이어 손상태 변환
-                        playerItem.holdState = PlayerItemDown.Hold.Rail;
+                        playerItem.holdState = PlayerItemDown.Hold.Mat;
                         rail.railCount = 0;
 
                     }
@@ -311,7 +311,7 @@ public class PlayerMaterial : MonoBehaviour
                             }
                         }
                         // 플레이어 손상태 변환
-                        playerItem.holdState = PlayerItemDown.Hold.Branch;
+                        playerItem.holdState = PlayerItemDown.Hold.Mat;
                         // 바닥상태 변환
                         matGod.matState = MaterialGOD.Materials.None;
                     }
@@ -332,7 +332,7 @@ public class PlayerMaterial : MonoBehaviour
                             }
                         }
                         // 플레이어 손상태 변환
-                        playerItem.holdState = PlayerItemDown.Hold.Steel;
+                        playerItem.holdState = PlayerItemDown.Hold.Mat;
                         // 바닥상태 변환
                         matGod.matState = MaterialGOD.Materials.None;
 
@@ -354,7 +354,7 @@ public class PlayerMaterial : MonoBehaviour
                             }
                         }
                         // 플레이어 손상태 변환
-                        playerItem.holdState = PlayerItemDown.Hold.Rail;
+                        playerItem.holdState = PlayerItemDown.Hold.Mat;
                         // 바닥상태 변환
                         matGod.matState = MaterialGOD.Materials.None;
                     }
@@ -390,6 +390,7 @@ public class PlayerMaterial : MonoBehaviour
         {
             Destroy(matArray[i].gameObject);
         }
+        playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
         matArray.Clear();
     }
     // 상태 변화
@@ -410,7 +411,7 @@ public class PlayerMaterial : MonoBehaviour
         {
             railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
         }
-        playerItem.holdState = PlayerItemDown.Hold.Rail;
+        playerItem.holdState = PlayerItemDown.Hold.Mat;
     }
     public void RemoveRail()
     {

@@ -11,9 +11,7 @@ public class PlayerItemDown : MonoBehaviour
         Ax,
         Pick,
         Pail,
-        Rail,
-        Branch,
-        Steel
+        Mat,
     }
     public Hold holdState = Hold.Idle;
     // 팔에 있는 도구 활성화
@@ -66,7 +64,7 @@ public class PlayerItemDown : MonoBehaviour
                 toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
                 matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
                 itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
-                if (matGOD.matState != MaterialGOD.Materials.Idle || holdState == Hold.Rail)
+                if (matGOD.matState != MaterialGOD.Materials.Idle || holdState == Hold.Mat)
                 {
                     return;
                 }
@@ -208,6 +206,7 @@ public class PlayerItemDown : MonoBehaviour
                 {
                     tool[i].SetActive(false);
                 }
+                
                 break;
             // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
@@ -278,9 +277,9 @@ public class PlayerItemDown : MonoBehaviour
                 tool[2].SetActive(true);
                 break;
             #endregion
-            #region 선로
+            #region 재료
             // 선로를 들고 있을 때
-            case Hold.Rail:
+            case Hold.Mat:
                 if (num > 2)
                 {
                     if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
@@ -297,42 +296,6 @@ public class PlayerItemDown : MonoBehaviour
                 RotArm(lArm, -80, -90);
                 break;
             #endregion
-            #region 재료
-            // 나뭇가지를 들고 있을 때
-            case Hold.Branch:
-                if (num > 2)
-                {
-                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
-                    {
-                        RotArm(lArm, -80, -90);
-                    }
-                    for(int i = 0; i < tool.Length; i++)
-                    {
-                        tool[i].SetActive(false);
-                    }
-                    return;
-                }
-                RotArm(rArm, -85, 90);
-                RotArm(lArm, -80, -90);
-                break;
-            // 철을 들고 있을 때,
-            case Hold.Steel:
-                if (num > 2)
-                {
-                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
-                    {
-                        RotArm(lArm, -80, -90);
-                    }
-                    for (int i = 0; i < tool.Length; i++)
-                    {
-                        tool[i].SetActive(false);
-                    }
-                    return;
-                }
-                RotArm(rArm, -85, -90);
-                RotArm(lArm, -80, -90);
-                break;
-                #endregion
         }
     }
     // 플레이어 팔이 위로 올라가게 만드는 함수
