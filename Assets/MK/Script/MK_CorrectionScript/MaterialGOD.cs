@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¿ï¿½ ï¿½ï¿½ï¿½ï¿½ cube(ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½È¯ï¿½ï¿½
+// ÇÃ·¹ÀÌ¾îÀÇ ¸í·É¿¡ µû¶ó cube(¸Ê)ÀÇ »óÅÂ¸¦ ÀüÈ¯ÇÔ
 public class MaterialGOD : MonoBehaviour
 {
-    // Materialï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­
+    // Material¿¡ µû¸¥ »óÅÂ º¯È­
     public enum Materials
     {
         Idle,
@@ -16,45 +16,43 @@ public class MaterialGOD : MonoBehaviour
     }
     public Materials matState = Materials.Idle;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // »ý¼ºµÈ ¿ÀºêÁ§Æ® ¸¸µé °³¼ö
     public int branchCount = 0;
     public int steelCount = 0;
     public int railCount = 0;
 
-    int preBCount;
-
     float y = 0.55f;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
-    public List<GameObject> mat = new List<GameObject>();
+    // »ý¼ºµÈ °ÔÀÓ¿ÀºêÁ§Æ®
+    List<GameObject> mat = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         branchCount = 1;
         steelCount = 1;
-        railCount = 1;
+        railCount = 1; 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //MaterialFSM();
+        MaterialFSM();
     }
 
-    // Materialï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ FSM
+    // MaterialÀÇ µû¸¥ FSM
     void MaterialFSM()
     {
         switch (matState)
         {
-            // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½á°¡ ï¿½Æ´ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            // ¾Æ¹«°Íµµ ¾ÈÇÔ(À§¿¡ Àç·á°¡ ¾Æ´Ñ ´Ù¸¥ °ÍÀÌ ÀÖ´Â °æ¿ì)
             case Materials.Idle:
                 break;
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ³ª¹«°¡Áö¶ó¸é
             case Materials.Branch:
-                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ return
+                // °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é return
                 if (mat.Count == branchCount) return;
-                // Resourcesï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                // ResourcesÆÄÀÏ¿¡ ÀÖ´Â ³ª¹µ°¡Áö »ý¼º
                 if (branchCount > 1)
                 {
                     for (int i = 0; i < branchCount; i++)
@@ -67,13 +65,13 @@ public class MaterialGOD : MonoBehaviour
                     branchCount = 1;
                     GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
                     mat.Add(branch);
-                    branch.transform.position = transform.position + new Vector3(0, 1, 0);
+                    branch.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.Steel:
-                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ return
+                // °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é return
                 if (mat.Count == steelCount) return;
-                // Resourcesï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                // ResourcesÆÄÀÏ¿¡ ÀÖ´Â ³ª¹µ°¡Áö »ý¼º
                 if (steelCount > 1)
                 {
                     for (int i = 0; i < steelCount; i++)
@@ -86,13 +84,13 @@ public class MaterialGOD : MonoBehaviour
                     steelCount = 1;
                     GameObject steel = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
                     mat.Add(steel);
-                    steel.transform.position = transform.position + new Vector3(0, 1, 0);
+                    steel.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.Rail:
-                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ return
+                // °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é return
                 if (mat.Count == railCount) return;
-                // Resourcesï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                // ResourcesÆÄÀÏ¿¡ ÀÖ´Â ³ª¹µ°¡Áö »ý¼º
                 if (railCount > 1)
                 {
                     for (int i = 0; i < railCount; i++)
@@ -105,14 +103,14 @@ public class MaterialGOD : MonoBehaviour
                     railCount = 1;
                     GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     mat.Add(rail);
-                    rail.transform.position = transform.position + new Vector3(0, 1, 0);
+                    rail.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.None:
                 if(mat.Count > 0)
                 {
-                    for (int i = 0; i < mat.Count; i++)
-                    {
+                    for (int i = 0; i < mat.Count; i++) 
+                    { 
                         Destroy(mat[i]);
                     }
                     mat.Clear();
@@ -124,10 +122,10 @@ public class MaterialGOD : MonoBehaviour
                 break;
         }
     }
-    public void CreateMat(string s, int i)
+    void CreateMat(string s, int i)
     {
         GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
         mat.Insert(i, ingredient);
-        mat[i].transform.position = transform.position + new Vector3(0, 1 + i * 0.2f, 0);
+        mat[i].transform.position = transform.position + new Vector3(0, y + i * 0.2f, 0);
     }
 }
