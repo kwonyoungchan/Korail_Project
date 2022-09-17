@@ -34351,6 +34351,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: gap
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: RotScale
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
       propertyPath: TrainSpawn
       value: 
       objectReference: {fileID: 2144369659}
