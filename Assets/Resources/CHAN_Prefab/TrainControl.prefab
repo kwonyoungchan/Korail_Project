@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 6448478618529776305}
   - {fileID: 6448478617574229669}
   - {fileID: 6448478619153652139}
+  railCount: 
   isEnding: 0
   trainSpeed: 0.5
   departTime: 5

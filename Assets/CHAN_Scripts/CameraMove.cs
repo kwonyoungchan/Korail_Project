@@ -21,7 +21,10 @@ public class CameraMove : MonoBehaviour
     {
         //카메라이동은 기차의 x축방향 이동에만 관여한다.
         Vector3 pos = Vector3.zero;
-        pos.x = TrainPos.position.x;
-        transform.position = pos+setPos;
+        if (!TrainPos.gameObject.activeSelf)
+        {
+            pos.x = TrainPos.position.x;
+        }
+        transform.position = pos + setPos;
     }
 }

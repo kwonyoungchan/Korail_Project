@@ -34354,6 +34354,10 @@ PrefabInstance:
       propertyPath: TrainSpawn
       value: 
       objectReference: {fileID: 2144369659}
+    - target: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: trainSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1567805645146434430, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
       propertyPath: m_Name
       value: TrainControl

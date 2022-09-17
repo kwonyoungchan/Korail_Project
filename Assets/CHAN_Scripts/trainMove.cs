@@ -15,12 +15,13 @@ public class trainMove : MonoBehaviour
      Vector3[] dir;
     [SerializeField] Transform[] rayPos;
     [SerializeField] int gap;
+    [SerializeField] float RotScale;
     [SerializeField] public Transform TrainSpawn;
     [SerializeField] GameObject[] trains;
     float trainTimer;
     bool depart;
-    bool isDie;
-    int[] railCount;
+    bool[] isDie;
+    [SerializeField] int[] railCount;
     public bool isEnding;
     public float trainSpeed;
     public float departTime;
@@ -32,8 +33,10 @@ public class trainMove : MonoBehaviour
         for (int i = 0; i < trains.Length; i++)
         { 
             trains[i].transform.position = transform.position+(Vector3.left*i*gap);
+            trains[i].transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         railCount = new int[trains.Length];
+        isDie = new bool[trains.Length];
         dir = new Vector3[trains.Length];
         
     }
@@ -51,31 +54,35 @@ public class trainMove : MonoBehaviour
         {
             for (int i = 0; i < trains.Length; i++)
             {
-                //만약 리스트상에 선로 오브젝트가 없으면 기차는 그냥 직진만 하도록 한다.
-                if (connectRail.instance.connectedRails.Count > railCount[i])
+                if (trains[i].activeSelf)
                 {
-                    //기차의 방향은 리스트에서 저장된 선로의 위치를 목표 방향으로 잡는다. 
-                    CheckTrainPos(railCount[i],trains[i].transform.position,i);
-                    if (!isDie)
-                    { dir[i] = (connectRail.instance.connectedRails[railCount[i]].transform.position - trains[i].transform.position).normalized; }
-                    //여기서 y좌표는 무시한다.
-                    dir[i].y = trains[i].transform.position.y;
-                    RotateTrain(dir[i], trains[i].transform);
-                }
-                else
-                {
-                    dir[i] = trains[i].transform.forward;
-                }
-                RailChecker(rayPos[i].position);
-                if (connectRail.instance.stageClear)
-                {
-                    trainSpeed = 10;
-                    if (isEnding)
+                    
+                    //만약 리스트상에 선로 오브젝트가 없으면 기차는 그냥 직진만 하도록 한다.
+                    if (connectRail.instance.connectedRails.Count > railCount[i])
                     {
-                        trainSpeed = 0;
+                        //기차의 방향은 리스트에서 저장된 선로의 위치를 목표 방향으로 잡는다. 
+                        if (!isDie[i])
+                        { dir[i] = (connectRail.instance.connectedRails[railCount[i]].transform.position - trains[i].transform.position).normalized; }
+                        CheckTrainPos(railCount[i], trains[i].transform.position, i);
+                        //여기서 y좌표는 무시한다.
+                        dir[i].y = trains[i].transform.position.y;
+                        RotateTrain(dir[i], trains[i].transform);
                     }
+                    else
+                    {
+                        dir[i] = trains[i].transform.forward;
+                    }
+                    RailChecker(rayPos[i].position, i);
+                    if (connectRail.instance.stageClear)
+                    {
+                        trainSpeed = 10;
+                        if (isEnding)
+                        {
+                            trainSpeed = 0;
+                        }
+                    }
+                    trains[i].transform.position += dir[i] * trainSpeed * Time.deltaTime;
                 }
-                trains[i].transform.position += dir[i] * trainSpeed * Time.deltaTime;
             }
         }
         
@@ -99,7 +106,7 @@ public class trainMove : MonoBehaviour
     {
         //방향이 설정되면 기차는 선로쪽으로 방향을 전환한다.
         //선회 조건은 dir.rotation y 와 기차의 rotation.y 의 차이가 음수거나 양수일때
-        trainPos.rotation = Quaternion.Lerp(trainPos.rotation, Quaternion.LookRotation(dir), trainSpeed*5 * Time.deltaTime);
+        trainPos.rotation = Quaternion.Lerp(trainPos.rotation, Quaternion.LookRotation(dir), trainSpeed *RotScale*Time.deltaTime);
         //이때 일정시간 간격으로 선회를 한다. (선회와 이동은 독립적으로 작용한다.)
         //회전속도는 어떻게 정의할 것인가?
         // 이동속도와 비례해서 회전하도록 만든다.
@@ -119,7 +126,7 @@ public class trainMove : MonoBehaviour
         }
     }
     //기차 탈선됐을 때 죽는 처리하는 기능
-     void RailChecker(Vector3 rayPosition)
+     void RailChecker(Vector3 rayPosition,int i)
     {
         Ray ray = new Ray(rayPosition, -transform.up);
         RaycastHit hit;
@@ -129,8 +136,8 @@ public class trainMove : MonoBehaviour
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Idle)
             {
                 //기차가 터진다
-                isDie = true;
-                Destroy(gameObject, 1);
+                isDie[i] = true;
+                trains[i].transform.gameObject.SetActive(false);
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
