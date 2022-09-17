@@ -32,7 +32,7 @@ public class PlayerItemDown : MonoBehaviour
     public float rotSpeed = 3;
 
     // �� ����
-    public int armState;
+    public int num;
     #endregion
 
     int hand;
@@ -74,7 +74,7 @@ public class PlayerItemDown : MonoBehaviour
                 {
                     // ���� ���� : �տ� ���Ḧ ���� ���� ����, �߻�
                     // �տ� ������ ���� ���� ��,
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         holdState = Hold.ChangeIdle;
                         // �տ� �ִ� �Ϳ� ���� �ٴ��� ��ȭ
@@ -107,7 +107,7 @@ public class PlayerItemDown : MonoBehaviour
                 else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                 {
                     // �տ� ������ ���� ���� ��
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         hand = CheckHand();
                         // ��̸� ���� �ִٸ�
@@ -136,7 +136,7 @@ public class PlayerItemDown : MonoBehaviour
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                 {
                     // �տ� ������ ���� ��
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         hand = CheckHand();
                         // ������ ���� �ִٸ�
@@ -165,7 +165,7 @@ public class PlayerItemDown : MonoBehaviour
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                 {
                     // �տ� ������ ���� ��
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         hand = CheckHand();
                         // ������ ���� �ִٸ�
@@ -211,7 +211,7 @@ public class PlayerItemDown : MonoBehaviour
             // ������ ���� �ִٰ� ���� ���� ��
             case Hold.ChangeIdle:
                 // �����ȸ� �� ��
-                 if (armState > 0 && armState < 2)
+                 if (num > 0 && num < 2)
                 {
                     RotArm(rArm, 0);
                 }
@@ -223,13 +223,13 @@ public class PlayerItemDown : MonoBehaviour
                 }
                 // Idle ���·� ��ȯ
                 holdState = Hold.Idle;
-                armState = 0;
+                num = 0;
                 break;
             #region ����
             // ������ ���� ���� ��,
             case Hold.Ax:
                 // ���� Ȱ��ȭ
-                if(armState > 1)
+                if(num > 1)
                 {
                     if(lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
                     {
@@ -246,7 +246,7 @@ public class PlayerItemDown : MonoBehaviour
             // ��̸� ���� ���� ��
             case Hold.Pick:
                 // ���� Ȱ��ȭ
-                if (armState > 1)
+                if (num > 1)
                 {
                     if (lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
                     {
@@ -262,7 +262,7 @@ public class PlayerItemDown : MonoBehaviour
                 break;
             // �絿�̸� ���� ���� ��,
             case Hold.Pail:
-                if (armState > 2)
+                if (num > 2)
                 {
                     if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
                     {
@@ -304,7 +304,7 @@ public class PlayerItemDown : MonoBehaviour
         // �� ȸ�� ��Ű��
         arm.transform.localEulerAngles = new Vector3(rotAngle, 0, 0);
         // �� ȸ�� ����
-        armState++;
+        num++;
     }
 
     // �÷��̾� �տ� ���� �ִ� �� Ȯ��

@@ -26,7 +26,7 @@ public class IngredientItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.Find("Player").GetComponent<PlayerItemDown>().armState <= 0)
+        if(GameObject.Find("Player").GetComponent<PlayerItemDown>().num <= 0)
         {
             return;
         }

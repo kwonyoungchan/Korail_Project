@@ -14068,7 +14068,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &671887365 stripped
 Transform:
@@ -20774,7 +20774,7 @@ Transform:
   m_Children:
   - {fileID: 1988053919}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &958447186 stripped
 Transform:
@@ -30958,7 +30958,7 @@ GameObject:
   - component: {fileID: 1445578801}
   m_Layer: 0
   m_Name: RPos
-  m_TagString: Untagged
+  m_TagString: RPos
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31523,6 +31523,10 @@ PrefabInstance:
     - target: {fileID: 7887843558590396080, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
       propertyPath: m_Name
       value: MapCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470321773874906803, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
+      propertyPath: toolsState
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
@@ -36981,7 +36985,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &1735943790 stripped
 Transform:
@@ -46100,6 +46104,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1022065495014899644, guid: cefb36bf269ff6946864c60a32869cd9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880527195026823744, guid: cefb36bf269ff6946864c60a32869cd9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880527195026823744, guid: cefb36bf269ff6946864c60a32869cd9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880527195026823744, guid: cefb36bf269ff6946864c60a32869cd9, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
