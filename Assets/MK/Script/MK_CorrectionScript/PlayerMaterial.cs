@@ -404,6 +404,7 @@ public class PlayerMaterial : MonoBehaviour
     public void AddRail()
     {
         GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+        rail.gameObject.transform.parent = itemPos;
         railArray.Add(rail);
         for(int i = 0; i < railArray.Count; i++)
         {

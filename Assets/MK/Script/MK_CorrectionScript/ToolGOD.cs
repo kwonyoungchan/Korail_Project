@@ -55,7 +55,7 @@ public class ToolGOD : MonoBehaviour
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Ax"));
-                toolItem.transform.position = transform.position + new Vector3(0, y, 0);
+                toolItem.transform.position = transform.position + new Vector3(0, 0.55f, 0);
                 break;
             case Tools.Pick:
                 if (toolItem)
