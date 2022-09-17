@@ -70,7 +70,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
         print(System.Reflection.MethodBase.GetCurrentMethod().Name);
         //SceneManager.LoadScene("LobbyScene");
-        PhotonNetwork.LoadLevel("LobbyScene");
+        PhotonNetwork.LoadLevel("MainLobby");
     }
 }
 

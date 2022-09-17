@@ -280,7 +280,7 @@ public class PlayerItemDown : MonoBehaviour
             #region ����
             // ���θ� ���� ���� ��
             case Hold.Mat:
-                if (num > 2)
+                if (armState > 2)
                 {
                     if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
                     {
