@@ -107,7 +107,12 @@ public class PlayerMaterial : MonoBehaviour
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                print("1∞≥ ¿ÃªÛ");
+                                if (branchArray.Count + matGod.branchCount == matGod.mat.Count) return;
+                                for(int i = 0; i < branchArray.Count + matGod.branchCount; i++)
+                                {
+                                    matGod.CreateMat("MK_Prefab/Branch", i);
+                                }
+                                
                             }
                         }
 

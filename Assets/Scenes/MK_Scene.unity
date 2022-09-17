@@ -19907,6 +19907,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1988053919}
     m_Modifications:
+    - target: {fileID: -3971322621493523818, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
+      propertyPath: matState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2201691128530709105, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -25610,6 +25614,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1988053919}
     m_Modifications:
+    - target: {fileID: -3971322621493523818, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
+      propertyPath: matState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2201691128530709105, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34374,6 +34382,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1988053919}
     m_Modifications:
+    - target: {fileID: -3971322621493523818, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
+      propertyPath: matState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2201691128530709105, guid: 456e085ab880b2c43af5f35ce5e0c2e3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35591,7 +35603,7 @@ MonoBehaviour:
   branchCount: 0
   steelCount: 0
   railCount: 0
-  train: {fileID: 0}
+  train: {fileID: 747020081}
   matPos:
   - {fileID: 2131013714}
   - {fileID: 1595558742}

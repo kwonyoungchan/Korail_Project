@@ -21,10 +21,12 @@ public class MaterialGOD : MonoBehaviour
     public int steelCount = 0;
     public int railCount = 0;
 
+    int preBCount;
+
     float y = 0.55f;
 
     // 생성된 게임오브젝트
-    List<GameObject> mat = new List<GameObject>();
+    public List<GameObject> mat = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -122,7 +124,7 @@ public class MaterialGOD : MonoBehaviour
                 break;
         }
     }
-    void CreateMat(string s, int i)
+    public void CreateMat(string s, int i)
     {
         GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
         mat.Insert(i, ingredient);
