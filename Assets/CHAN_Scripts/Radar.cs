@@ -21,29 +21,29 @@ public class Radar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //for (int i = 0; i < detectBlocks.Count; i++)
-        //{
-        //    fuck(detectBlocks[i].transform.gameObject, false);
-        //}
-        //detectBlocks.Clear();
-        //// blocks 배열에 주변 콜라이더 정보가 들어온다.
-        //blocks = Physics.OverlapSphere(transform.position, 2, 1 << 7);
-        
-        ////검출한 콜라이더의 정보를 리스트에 저장한다.
-        ////저장하기전에 List.
-        //for (int i = 0; i < blocks.Length; i++)
-        //{
-        //    if (!detectBlocks.Contains(blocks[i])&& blocks[i].name != "Player")
-        //    {
-        //        detectBlocks.Add(blocks[i]);
-        //        fuck(blocks[i].transform.gameObject, true);
-        //    }
-        //    //리스트의 목록이 검출블록에 없다면 그 리스트의 인자 삭제
-        //    // 들어온배열의 오브젝트는 관련 스크립트를 킨다.
-        //    //blocks[i].transform.gameObject.GetComponent<MaterialGOD>().enabled = true;
-        //    //blocks[i].transform.gameObject.GetComponent<ToolGOD>().enabled = true;
-        //}
-       
+        for (int i = 0; i < detectBlocks.Count; i++)
+        {
+            fuck(detectBlocks[i].transform.gameObject, false);
+        }
+        detectBlocks.Clear();
+        // blocks 배열에 주변 콜라이더 정보가 들어온다.
+        blocks = Physics.OverlapSphere(transform.position, 2, 1 << 7);
+
+        //검출한 콜라이더의 정보를 리스트에 저장한다.
+        //저장하기전에 List.
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (!detectBlocks.Contains(blocks[i]) && blocks[i].name != "Player")
+            {
+                detectBlocks.Add(blocks[i]);
+                fuck(blocks[i].transform.gameObject, true);
+            }
+            //리스트의 목록이 검출블록에 없다면 그 리스트의 인자 삭제
+            // 들어온배열의 오브젝트는 관련 스크립트를 킨다.
+            //blocks[i].transform.gameObject.GetComponent<MaterialGOD>().enabled = true;
+            //blocks[i].transform.gameObject.GetComponent<ToolGOD>().enabled = true;
+        }
+
         //영역에 벗어나면 스크립트를 끈다.
     }
     void fuck(GameObject GO ,bool B)
