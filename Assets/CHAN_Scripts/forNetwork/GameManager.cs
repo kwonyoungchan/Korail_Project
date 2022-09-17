@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         //OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         PhotonNetwork.SendRate = 60;
-        //자리 계산 ( 360/maxPlayer)
         // 1. spawnPos의 갯수를 할당
         spawnPos = new Vector3[PhotonNetwork.CurrentRoom.MaxPlayers];
         float angle = 360.0f / spawnPos.Length;
@@ -46,36 +45,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     //현재 방에 있는 Player를 담아놓자.
     public List<PhotonView> players = new List<PhotonView>();
-    public void AddPlayer(PhotonView pv)
-    {
-        players.Add(pv);
-        //만약에 인원이 다 들어왔으면
-        if (players.Count == PhotonNetwork.CurrentRoom.MaxPlayers)
-        {
-            //턴 변경S
-            ChangeTurn();
-        }
-        //턴 변경해주세요~
+ 
 
-    }
-    //턴 변경시 호출해주는 함수
-    public int turnIdx = -1;
 
-    public void ChangeTurn()
-    {
-        //방장이 아니라면 함수를 나가라!
-        if (PhotonNetwork.IsMasterClient == false) return;
-        //이전 차례였던 애들 총을 쏘지 못하게 한다.
-        if (turnIdx > -1)
-        {
-            players[turnIdx].RPC("SetMyTurn", RpcTarget.All, false);
-        }
-        //이번엔 너의 차례다.
-        turnIdx++;
-        turnIdx %= players.Count;
-        players[turnIdx].RPC("SetMyTurn", RpcTarget.All, true); ;
-
-    }
 
 }
 

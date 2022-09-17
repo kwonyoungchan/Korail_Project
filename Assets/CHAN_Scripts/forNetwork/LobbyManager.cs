@@ -115,6 +115,7 @@ namespace Assets.Scripts
         void DeleteRoomListUI()
         {
             foreach (Transform tr in trListContent)
+
             {
                 Destroy(tr.gameObject);
             }
