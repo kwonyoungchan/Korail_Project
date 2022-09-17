@@ -197,8 +197,12 @@ public class PlayerItemDown : MonoBehaviour
             // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
                 // 한쪽팔만 들 때
-                RotArm(lArm, -80, 0);
-                RotArm(rArm, -85, 0);
+                if(lArm.transform.localEulerAngles != new Vector3(-80, 0, 0) || rArm.transform.localEulerAngles != new Vector3(-85, 0, 0))
+                {
+                    RotArm(lArm, -80, 0);
+                    RotArm(rArm, -85, 0);
+
+                }
                 // Idle 상태로 변환
                 holdState = Hold.Idle;
                 break;
