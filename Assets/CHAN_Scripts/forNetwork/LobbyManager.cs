@@ -94,7 +94,7 @@ namespace Assets.Scripts
         {
             base.OnJoinedRoom();
             print(System.Reflection.MethodBase.GetCurrentMethod().Name);
-            PhotonNetwork.LoadLevel("GameScene");
+            PhotonNetwork.LoadLevel("ProtoType");
 
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
