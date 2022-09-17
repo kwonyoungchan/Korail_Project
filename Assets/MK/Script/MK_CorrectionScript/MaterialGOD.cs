@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ÇÃ·¹ÀÌ¾îÀÇ ¸í·É¿¡ µû¶ó cube(¸Ê)ÀÇ »óÅÂ¸¦ ÀüÈ¯ÇÔ
+// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¿ï¿½ ï¿½ï¿½ï¿½ï¿½ cube(ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½È¯ï¿½ï¿½
 public class MaterialGOD : MonoBehaviour
 {
-    // Material¿¡ µû¸¥ »óÅÂ º¯È­
+    // Materialï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­
     public enum Materials
     {
         Idle,
@@ -16,20 +16,24 @@ public class MaterialGOD : MonoBehaviour
     }
     public Materials matState = Materials.Idle;
 
-    // »ý¼ºµÈ ¿ÀºêÁ§Æ® ¸¸µé °³¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public int branchCount = 0;
     public int steelCount = 0;
     public int railCount = 0;
 
-    // »ý¼ºµÈ °ÔÀÓ¿ÀºêÁ§Æ®
-    List<GameObject> mat = new List<GameObject>();
+    int preBCount;
+
+    float y = 0.55f;
+
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public List<GameObject> mat = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         branchCount = 1;
         steelCount = 1;
-        railCount = 1; 
+        railCount = 1;
     }
 
     // Update is called once per frame
@@ -38,19 +42,19 @@ public class MaterialGOD : MonoBehaviour
         //MaterialFSM();
     }
 
-    // MaterialÀÇ µû¸¥ FSM
+    // Materialï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ FSM
     void MaterialFSM()
     {
         switch (matState)
         {
-            // ¾Æ¹«°Íµµ ¾ÈÇÔ(À§¿¡ Àç·á°¡ ¾Æ´Ñ ´Ù¸¥ °ÍÀÌ ÀÖ´Â °æ¿ì)
+            // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½á°¡ ï¿½Æ´ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½)
             case Materials.Idle:
                 break;
-            // ³ª¹«°¡Áö¶ó¸é
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             case Materials.Branch:
-                // °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é return
+                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ return
                 if (mat.Count == branchCount) return;
-                // ResourcesÆÄÀÏ¿¡ ÀÖ´Â ³ª¹µ°¡Áö »ý¼º
+                // Resourcesï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (branchCount > 1)
                 {
                     for (int i = 0; i < branchCount; i++)
@@ -67,9 +71,9 @@ public class MaterialGOD : MonoBehaviour
                 }
                 break;
             case Materials.Steel:
-                // °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é return
+                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ return
                 if (mat.Count == steelCount) return;
-                // ResourcesÆÄÀÏ¿¡ ÀÖ´Â ³ª¹µ°¡Áö »ý¼º
+                // Resourcesï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (steelCount > 1)
                 {
                     for (int i = 0; i < steelCount; i++)
@@ -86,9 +90,9 @@ public class MaterialGOD : MonoBehaviour
                 }
                 break;
             case Materials.Rail:
-                // °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é return
+                // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ return
                 if (mat.Count == railCount) return;
-                // ResourcesÆÄÀÏ¿¡ ÀÖ´Â ³ª¹µ°¡Áö »ý¼º
+                // Resourcesï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (railCount > 1)
                 {
                     for (int i = 0; i < railCount; i++)
@@ -107,8 +111,8 @@ public class MaterialGOD : MonoBehaviour
             case Materials.None:
                 if(mat.Count > 0)
                 {
-                    for (int i = 0; i < mat.Count; i++) 
-                    { 
+                    for (int i = 0; i < mat.Count; i++)
+                    {
                         Destroy(mat[i]);
                     }
                     mat.Clear();
@@ -120,7 +124,7 @@ public class MaterialGOD : MonoBehaviour
                 break;
         }
     }
-    void CreateMat(string s, int i)
+    public void CreateMat(string s, int i)
     {
         GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
         mat.Insert(i, ingredient);
