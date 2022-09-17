@@ -64,7 +64,7 @@ public class PlayerItemDown : MonoBehaviour
                 toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
                 matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
                 itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
-                
+                if (matGOD.matState != MaterialGOD.Materials.Idle) return;
                 // 바닥 상태 : 아무것도 없음
                 if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {
@@ -176,19 +176,6 @@ public class PlayerItemDown : MonoBehaviour
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
 
-                }
-                else
-                {
-                    if (matGOD.matState == MaterialGOD.Materials.Branch)
-                    {
-                        if (holdState == Hold.Ax)
-                        {
-                            if (Input.GetButtonDown("Jump"))
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Ax;
-                            }
-                        }
-                    }
                 }
                 
             }

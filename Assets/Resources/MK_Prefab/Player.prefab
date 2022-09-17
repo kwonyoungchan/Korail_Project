@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 1022065495014899644}
   - component: {fileID: 1022065495014899645}
   - component: {fileID: 1022065495014899617}
-  - component: {fileID: 1022065495014899616}
+  - component: {fileID: 211203229181198302}
   - component: {fileID: 1022065495014899646}
   - component: {fileID: 1022065495014899647}
   m_Layer: 0
@@ -196,7 +196,8 @@ MonoBehaviour:
   lArm: {fileID: 1970592345917189127}
   rotSpeed: 3
   num: 0
---- !u!114 &1022065495014899616
+  f: 0
+--- !u!114 &211203229181198302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

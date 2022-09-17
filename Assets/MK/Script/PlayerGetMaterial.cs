@@ -34,7 +34,7 @@ public class PlayerGetMaterial : MonoBehaviour
         for (int i = 0; i < ingredient.Length; i++)
         {
             isIngredient = new bool[ingredient.Length];
-            isIngredient[i] = ingredient[i].GetComponent<Material>().isIngredient[n];
+            isIngredient[i] = ingredient[i].GetComponent<MK_Material>().isIngredient[n];
         }
         
     }

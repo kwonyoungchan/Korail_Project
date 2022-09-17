@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 선로 재료로 사용되는 나무 or 철과 플레이어 간의 교류
-public class Material : MonoBehaviour
+public class MK_Material : MonoBehaviour
 {
     // 플레이어가 인식되면 true값을 반환
     public bool[] isIngredient = new bool[2] { false, false};

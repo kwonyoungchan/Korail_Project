@@ -275,7 +275,6 @@ public class PlayerMaterial : MonoBehaviour
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
-
                             ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail);
                             DeleteMat(railArray);
                         }
@@ -424,14 +423,14 @@ public class PlayerMaterial : MonoBehaviour
         {
             Destroy(matArray[i].gameObject);
         }
-        playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+        // playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
         matArray.Clear();
     }
     // 상태 변화
     void ChangeState(PlayerItemDown.Hold player, ToolGOD.Tools tool, List<GameObject> mat, MaterialGOD.Materials mats)
     {
-        toolGOD.toolsState = tool;
         playerItem.holdState = player;
+        toolGOD.toolsState = tool;
         matGod.branchCount = mat.Count;
         matGod.matState = mats;
     }
