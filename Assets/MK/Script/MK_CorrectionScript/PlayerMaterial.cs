@@ -110,6 +110,7 @@ public class PlayerMaterial : MonoBehaviour
                             DeleteMat(branchArray);
                         }
                     }
+                    // 나무를 들고있을때
                     // 바닥 상태가 Ax라면
                     if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                     {
@@ -429,8 +430,8 @@ public class PlayerMaterial : MonoBehaviour
     // 상태 변화
     void ChangeState(PlayerItemDown.Hold player, ToolGOD.Tools tool, List<GameObject> mat, MaterialGOD.Materials mats)
     {
-        playerItem.holdState = player;
         toolGOD.toolsState = tool;
+        playerItem.holdState = player;
         matGod.branchCount = mat.Count;
         matGod.matState = mats;
     }

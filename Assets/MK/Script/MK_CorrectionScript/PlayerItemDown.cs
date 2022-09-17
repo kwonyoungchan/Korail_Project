@@ -51,7 +51,6 @@ public class PlayerItemDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         PlayerFSM();
         // 레이를 발사하고
         Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
@@ -65,7 +64,7 @@ public class PlayerItemDown : MonoBehaviour
                 toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
                 matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
                 itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
-                if (matGOD.matState != MaterialGOD.Materials.Idle || holdState == Hold.Mat) return;
+                
                 // 바닥 상태 : 아무것도 없음
                 if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {
@@ -177,6 +176,19 @@ public class PlayerItemDown : MonoBehaviour
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
 
+                }
+                else
+                {
+                    if (matGOD.matState == MaterialGOD.Materials.Branch)
+                    {
+                        if (holdState == Hold.Ax)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                toolGOD.toolsState = ToolGOD.Tools.Ax;
+                            }
+                        }
+                    }
                 }
                 
             }
