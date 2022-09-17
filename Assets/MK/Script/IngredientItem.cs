@@ -17,29 +17,25 @@ public class IngredientItem : MonoBehaviour
     float axDis;
     float pickDis;
 
+    PlayerItemDown player;
+
     // Start is called before the first frame update
     void Start()
     {
         hp = maxHP;
+        player = GameObject.Find("Player").GetComponent<PlayerItemDown>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.Find("Player").GetComponent<PlayerItemDown>().armState <= 0)
-        {
-            return;
-        }
-        // 플레이어가 아이템을 들고 있을 때
-        GameObject ax = GameObject.Find("ArmAx");
-        GameObject pick = GameObject.Find("ArmPick");
 
-        if (ax != null) 
+        if (player.holdState == PlayerItemDown.Hold.Ax) 
         { 
-            axDis = Vector3.Distance(ax.transform.position, transform.position);
+            axDis = Vector3.Distance(player.transform.position, transform.position);
             if (gameObject.name.Contains("Tree"))
             {
-                if (axDis < 1.6f)
+                if (axDis < 2f)
                 {
                     currentTime += Time.deltaTime;
 
@@ -50,13 +46,13 @@ public class IngredientItem : MonoBehaviour
                 }
             }
         }
-        if (pick != null)
+        if (player.holdState == PlayerItemDown.Hold.Pick)
         { 
-            pickDis = Vector3.Distance(pick.transform.position, transform.position);
+            pickDis = Vector3.Distance(player.transform.position, transform.position);
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 1.6f)
+                if (pickDis < 2f)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// PutDownItem ï¿½ï¿½ï¿½ï¿½
+// PutDownItem ¿ªÇÒ
 public class PlayerItemDown : MonoBehaviour
 {
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+    // ¾ÆÀÌÅÛ Á¤º¸ È®ÀÎ
     public enum Hold
     {
         Idle,
@@ -16,28 +14,30 @@ public class PlayerItemDown : MonoBehaviour
         Mat,
     }
     public Hold holdState = Hold.Idle;
-    // ï¿½È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
+    // ÆÈ¿¡ ÀÖ´Â µµ±¸ È°¼ºÈ­
     public GameObject[] tool = new GameObject[3];
-    // ï¿½È¿ï¿½ ï¿½Ö´ï¿½ mat È°ï¿½ï¿½È­
+    // ÆÈ¿¡ ÀÖ´Â mat È°¼ºÈ­
     public GameObject[] mat;
-    // ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½Ä¡
+    // ·¹ÀÌ ¹ß»ç À§Ä¡
     public Transform rayPos;
 
-    #region ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    // ï¿½ï¿½
+    #region ÆÈ È¸Àü °ü·Ã
+    // ÆÈ
     public GameObject rArm;
     public GameObject lArm;
 
-    // È¸ï¿½ï¿½ ï¿½Óµï¿½
+    // È¸Àü ¼Óµµ 
     public float rotSpeed = 3;
 
-    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    public int armState;
+    // ÆÈ »óÅÂ
+    [HideInInspector]
+    public int num = 1;
     #endregion
 
+    public int f;
     int hand;
 
-    // ToolGod ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    // ToolGod ÄÄÆ÷³ÍÆ®
     ToolGOD toolGOD;
     MaterialGOD matGOD;
     ItemGOD itemGOD;
@@ -45,17 +45,17 @@ public class PlayerItemDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerFSM();
-        // ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ß»ï¿½ï¿½Ï°ï¿½
-        Ray pRay = new Ray(rayPos.position, -transform.up);
+        // ·¹ÀÌ¸¦ ¹ß»çÇÏ°í
+        Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
         RaycastHit cubeInfo;
-        // ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ½ºÆäÀÌ½º ¹Ù¸¦ ´©¸£¸é
         if (Input.GetButtonDown("Jump"))
         {
 
@@ -64,250 +64,205 @@ public class PlayerItemDown : MonoBehaviour
                 toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
                 matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
                 itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
-                if (matGOD.matState != MaterialGOD.Materials.Idle || holdState == Hold.Mat)
-                {
-                    return;
-                }
-
-                // ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½
+                
+                // ¹Ù´Ú »óÅÂ : ¾Æ¹«°Íµµ ¾øÀ½
                 if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {
-                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½á¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ß»ï¿½
-                    // ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½,
-                    if (armState > 0)
+                    // ¿À·ù »çÇ× : ¼Õ¿¡ Àç·á¸¦ µé°í ÀÖÀ» °æ¿ì, ¹ß»ý
+                    // ¼Õ¿¡ ¹«¾ð°¥ µé°í ÀÖÀ» ¶§,
+                    // ¼Õ¿¡ ÀÖ´Â °Í¿¡ µû¸¥ ¹Ù´ÚÀÇ º¯È­
+                    // µµ³¢
+                    if (tool[0].activeSelf)
                     {
                         holdState = Hold.ChangeIdle;
-                        // ï¿½Õ¿ï¿½ ï¿½Ö´ï¿½ ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù´ï¿½ï¿½ï¿½ ï¿½ï¿½È­
-                        // ï¿½ï¿½ï¿½ï¿½
-                        if (tool[0].activeSelf)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Ax;
-                            return;
-                        }
-                        // ï¿½î°»ï¿½ï¿½
-                        if (tool[1].activeSelf)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Pick;
-                            return;
-                        }
-                        // ï¿½çµ¿ï¿½ï¿½
-                        if (tool[2].activeSelf)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Pail;
-                            return;
-                        }
+                        toolGOD.toolsState = ToolGOD.Tools.Ax;
+                        return;
                     }
-                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                    // °î°»ÀÌ
+                    else if (tool[1].activeSelf)
+                    {
+                        holdState = Hold.ChangeIdle;
+                        toolGOD.toolsState = ToolGOD.Tools.Pick;
+                        return;
+                    }
+                    // ¾çµ¿ÀÌ
+                    else if (tool[2].activeSelf)
+                    {
+                        holdState = Hold.ChangeIdle;
+                        toolGOD.toolsState = ToolGOD.Tools.Pail;
+                        return;
+                    }
                     else
                     {
-                        holdState = Hold.Idle;
+                        holdState = Hold.ChangeIdle;
                     }
+
                 }
-                // ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½
+                // ¹Ù´Ú »óÅÂ : µµ³¢
                 else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                 {
-                    // ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-                    if (armState > 0)
+                    // ¼Õ¿¡ ¹«¾ð°¥ µé°í ÀÖÀ» ¶§
+                    hand = CheckHand();
+                    // °î°»ÀÌ¸¦ µé°í ÀÖ´Ù¸é
+                    if (hand == 1)
                     {
-                        hand = CheckHand();
-                        // ï¿½î°»ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
-                        if (hand == 1)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Pick;
-                            holdState = Hold.Ax;
-                        }
-                        // ï¿½çµ¿ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
-                        if (hand == 2)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Pail;
-                            holdState = Hold.Ax;
-                        }
-
+                        toolGOD.toolsState = ToolGOD.Tools.Pick;
+                        holdState = Hold.Ax;
+                    }
+                    // ¾çµ¿ÀÌ¸¦ µé°í ÀÖ´Ù¸é
+                    else if (hand == 2)
+                    {
+                        toolGOD.toolsState = ToolGOD.Tools.Pail;
+                        holdState = Hold.Ax;
                     }
                     else
                     {
-                        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½
+                        // ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ º¯È¯ÇÑ´Ù
                         holdState = Hold.Ax;
-                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½ï¿½È­
+                        // ·¹ÀÌÀÇ »óÅÂµµ º¯È­
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
+
                 }
-                // ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½î°»ï¿½ï¿½
+                // ¹Ù´Ú »óÅÂ : °î°»ÀÌ
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                 {
-                    // ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-                    if (armState > 0)
-                    {
-                        hand = CheckHand();
-                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
-                        if (hand == 0)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Ax;
-                            holdState = Hold.Pick;
-                        }
-                        // ï¿½çµ¿ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
-                        if (hand == 2)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Pail;
-                            holdState = Hold.Pick;
-                        }
 
+                    hand = CheckHand();
+                    // µµ³¢¸¦ µé°í ÀÖ´Ù¸é
+                    if (hand == 0)
+                    {
+                        toolGOD.toolsState = ToolGOD.Tools.Ax;
+                        holdState = Hold.Pick;
+                    }
+                    // ¾çµ¿ÀÌ¸¦ µé°í ÀÖ´Ù¸é
+                    else if (hand == 2)
+                    {
+                        toolGOD.toolsState = ToolGOD.Tools.Pail;
+                        holdState = Hold.Pick;
                     }
                     else
                     {
-                        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½
+                        // ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ º¯È¯ÇÑ´Ù
                         holdState = Hold.Pick;
-                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½ï¿½È­
+                        // ·¹ÀÌÀÇ »óÅÂµµ º¯È­
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
+
                 }
-                // ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½çµ¿ï¿½ï¿½
+                // ¹Ù´Ú »óÅÂ : ¾çµ¿ÀÌ
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                 {
-                    // ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-                    if (armState > 0)
-                    {
-                        hand = CheckHand();
-                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
-                        if (hand == 0)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Ax;
-                            holdState = Hold.Pail;
-                        }
-                        // ï¿½î°»ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
-                        if (hand == 1)
-                        {
-                            toolGOD.toolsState = ToolGOD.Tools.Pick;
-                            holdState = Hold.Pail;
-                        }
+                    // ¼Õ¿¡ ¹«¾ð°¡ ÀÖÀ» ¶§
 
+                    hand = CheckHand();
+                    // µµ³¢¸¦ µé°í ÀÖ´Ù¸é
+                    if (hand == 0)
+                    {
+                        toolGOD.toolsState = ToolGOD.Tools.Ax;
+                        holdState = Hold.Pail;
+                    }
+                    // °î°»ÀÌ¸¦ µé°í ÀÖ´Ù¸é
+                    else if (hand == 1)
+                    {
+                        toolGOD.toolsState = ToolGOD.Tools.Pick;
+                        holdState = Hold.Pail;
                     }
                     else
                     {
-                        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½
+                        // ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ º¯È¯ÇÑ´Ù
                         holdState = Hold.Pail;
-                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½ï¿½È­
+                        // ·¹ÀÌÀÇ »óÅÂµµ º¯È­
                         toolGOD.toolsState = ToolGOD.Tools.Idle;
                     }
-                }
 
+                }
+                else
+                {
+                    if (matGOD.matState == MaterialGOD.Materials.Branch)
+                    {
+                        if (holdState == Hold.Ax)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                toolGOD.toolsState = ToolGOD.Tools.Ax;
+                            }
+                        }
+                    }
+                }
+                
             }
         }
     }
 
-    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ÇÃ·¹ÀÌ¾î »óÅÂ
     void PlayerFSM()
     {
         switch (holdState)
         {
-            // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½,
+            // ¾Æ¹«°Íµµ µé°í ÀÖÁö ¾ÊÀ» ¶§,
             case Hold.Idle:
                 for(int i = 0; i < tool.Length; i++)
                 {
                     tool[i].SetActive(false);
                 }
-
                 break;
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+            // µµ±¸¸¦ µé°í ÀÖ´Ù°¡ ³»·Á ³õÀ» ¶§
             case Hold.ChangeIdle:
-                // ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½ ï¿½ï¿½ ï¿½ï¿½
-                 if (armState > 0 && armState < 2)
-                {
-                    RotArm(rArm, 0);
-                }
-                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-                else
-                {
-                    RotArm(lArm, 0);
-                    RotArm(rArm, 0);
-                }
-                // Idle ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
+                // ÇÑÂÊÆÈ¸¸ µé ¶§
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
+                // Idle »óÅÂ·Î º¯È¯
                 holdState = Hold.Idle;
-                armState = 0;
                 break;
-            #region ï¿½ï¿½ï¿½ï¿½
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½,
+            #region µµ±¸
+            // µµ³¢¸¦ µé°í ÀÖÀ» ¶§,
             case Hold.Ax:
-                // ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
-                if(armState > 1)
-                {
-                    if(lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
-                    {
-                        RotArm(lArm, 0);
-                    }
-                    tool[0].SetActive(true);
-                    return;
-                }
-                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-                RotArm(lArm, 0);
-                RotArm(rArm, -90);
+                // µµ³¢ È°¼ºÈ­
+                // ÆÈ µ¹¸®±â
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
                 tool[0].SetActive(true);
                 break;
-            // ï¿½î°»ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+            // °î°»ÀÌ¸¦ µé°í ÀÖÀ» ¶§
             case Hold.Pick:
-                // ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
-                if (armState > 1)
-                {
-                    if (lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
-                    {
-                        RotArm(lArm, 0);
-                    }
-                    tool[1].SetActive(true);
-                    return;
-                }
-                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-                RotArm(lArm, 0);
-                RotArm(rArm, -90);
+                // µµ±¸ È°¼ºÈ­
+                // ÆÈ µ¹¸®±â
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
                 tool[1].SetActive(true);
                 break;
-            // ï¿½çµ¿ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½,
+            // ¾çµ¿ÀÌ¸¦ µé°í ÀÖÀ» ¶§,
             case Hold.Pail:
-                if (armState > 2)
-                {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
-                    {
-                        RotArm(lArm, -90);
-                    }
-                    tool[2].SetActive(true);
-                    return;
-                }
-                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                // ÆÈ µ¹¸®±â
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 tool[2].SetActive(true);
                 break;
             #endregion
-            #region ï¿½ï¿½ï¿½ï¿½
-            // ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+            #region Àç·á
+            // ¼±·Î¸¦ µé°í ÀÖÀ» ¶§
             case Hold.Mat:
-                if (armState > 2)
+                for (int i = 0; i < tool.Length; i++)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
-                    {
-                        RotArm(lArm, -90);
-                    }
-                    for (int i = 0; i < tool.Length; i++)
-                    {
-                        tool[i].SetActive(false);
-                    }
-                    return;
+                    tool[i].SetActive(false);
                 }
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 break;
             #endregion
         }
     }
-    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¡°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
-    void RotArm(GameObject arm, float rotAngle)
+    // ÇÃ·¹ÀÌ¾î ÆÈÀÌ À§·Î ¿Ã¶ó°¡°Ô ¸¸µå´Â ÇÔ¼ö
+    void RotArm(GameObject arm, float rotX, float rotAngle)
     {
-        // ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½
-        arm.transform.localEulerAngles = new Vector3(rotAngle, 0, 0);
-        // ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-        armState++;
+        // ÆÈ È¸Àü ½ÃÅ°±â
+        arm.transform.localEulerAngles = new Vector3(rotX, 0, rotAngle);
+        // ÆÈ È¸Àü »óÅÂ
+        // num++;
     }
 
-    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ È®ï¿½ï¿½
+    // ÇÃ·¹ÀÌ¾î ¼Õ¿¡ µé°í ÀÖ´Â °Í È®ÀÎ
     int CheckHand()
     {
         for (int i = 0; i < tool.Length; i++)
