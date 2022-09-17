@@ -82,21 +82,34 @@ public class PlayerMaterial : MonoBehaviour
                         DeleteMat(branchArray);
                     }
                 }
+                // 손에 무언갈 들고 있고 기차와의 거리와 멀면
                 else
                 {
-                    // 바닥 상태가 Branch라면
-                    // 바닥에 Branch의 개수에 따라 손에 올라오는 수가 달라짐
+                    // 바닥 상태가 Branch일때
+                    // 바닥의 branch의 수가 1보다 크면
+                    // 손에 있는 branch 수 만큼 쌓임
+                    // 아니라면 흡수됨
                     if (matGod.matState == MaterialGOD.Materials.Branch)
                     {
-                        // Array에 추가하기
-                        MakeMat("MK_Prefab/Branch", branchArray);
-                        // 손 위치 위로 아이템 쌓게 만들기
-                        for (int i = 0; i < branchArray.Count; i++)
+                        if (matGod.branchCount <= 1)
                         {
-                            branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-                            branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                            // Array에 추가하기
+                            MakeMat("MK_Prefab/Branch", branchArray);
+                            // 손 위치 위로 아이템 쌓게 만들기
+                            for (int i = 0; i < branchArray.Count; i++)
+                            {
+                                branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                            }
+                            matGod.matState = MaterialGOD.Materials.None;
                         }
-                        matGod.matState = MaterialGOD.Materials.None;
+                        else
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                print("1개 이상");
+                            }
+                        }
 
                     }
                     if (Input.GetButtonDown("Jump"))
