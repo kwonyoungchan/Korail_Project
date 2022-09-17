@@ -23,9 +23,9 @@ public class Material : MonoBehaviour
             if (gameObject.name.Contains("Branch"))
             {
                 isIngredient[0] = true;
-                if(player.armState > 0)
+                if(player.num > 0)
                 {
-                    player.armState = 0;
+                    player.num = 0;
                     isIngredient[0] = false;
                     
                 }
@@ -33,9 +33,9 @@ public class Material : MonoBehaviour
             if (gameObject.name.Contains("Steel"))
             {
                 isIngredient[1] = true;
-                if (player.armState > 0)
+                if (player.num > 0)
                 {
-                    player.armState = 0;
+                    player.num = 0;
                     isIngredient[1] = false;
                    
                 }

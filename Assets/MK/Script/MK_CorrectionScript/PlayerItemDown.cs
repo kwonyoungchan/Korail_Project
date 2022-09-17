@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // PutDownItem 역할
@@ -34,7 +32,8 @@ public class PlayerItemDown : MonoBehaviour
     public float rotSpeed = 3;
 
     // 팔 상태
-    public int armState;
+    [HideInInspector]
+    public int num;
     #endregion
 
     int hand;
@@ -53,9 +52,10 @@ public class PlayerItemDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         PlayerFSM();
         // 레이를 발사하고
-        Ray pRay = new Ray(rayPos.position, -transform.up);
+        Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
         RaycastHit cubeInfo;
         // 스페이스 바를 누르면
         if (Input.GetButtonDown("Jump"))
@@ -76,7 +76,7 @@ public class PlayerItemDown : MonoBehaviour
                 {
                     // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
                     // 손에 무언갈 들고 있을 때,
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         holdState = Hold.ChangeIdle;
                         // 손에 있는 것에 따른 바닥의 변화
@@ -109,7 +109,7 @@ public class PlayerItemDown : MonoBehaviour
                 else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
                 {
                     // 손에 무언갈 들고 있을 때
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         hand = CheckHand();
                         // 곡갱이를 들고 있다면
@@ -138,7 +138,7 @@ public class PlayerItemDown : MonoBehaviour
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
                 {
                     // 손에 무언가 있을 때
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         hand = CheckHand();
                         // 도끼를 들고 있다면
@@ -167,7 +167,7 @@ public class PlayerItemDown : MonoBehaviour
                 else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                 {
                     // 손에 무언가 있을 때
-                    if (armState > 0)
+                    if (num > 0)
                     {
                         hand = CheckHand();
                         // 도끼를 들고 있다면
@@ -212,80 +212,80 @@ public class PlayerItemDown : MonoBehaviour
             // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
                 // 한쪽팔만 들 때
-                 if (armState > 0 && armState < 2)
+                 if (num > 0 && num < 2)
                 {
-                    RotArm(rArm, 0);
+                    RotArm(rArm, -85, 0);
                 }
                 // 양쪽팔을 들고 있을 때
                 else
                 {
-                    RotArm(lArm, 0);
-                    RotArm(rArm, 0);
+                    RotArm(lArm, -80, 0);
+                    RotArm(rArm, -85, 0);
                 }
                 // Idle 상태로 변환
                 holdState = Hold.Idle;
-                armState = 0;
+                num = 0;
                 break;
             #region 도구
             // 도끼를 들고 있을 때,
             case Hold.Ax:
                 // 도끼 활성화
-                if(armState > 1)
+                if (num > 1)
                 {
-                    if(lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, 0))
                     {
-                        RotArm(lArm, 0);
+                        RotArm(lArm, -80, 0);
                     }
                     tool[0].SetActive(true);
                     return;
                 }
                 // 팔 돌리기
-                RotArm(lArm, 0);
-                RotArm(rArm, -90);
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
                 tool[0].SetActive(true);
                 break;
             // 곡갱이를 들고 있을 때
             case Hold.Pick:
                 // 도구 활성화
-                if (armState > 1)
+                if (num > 1)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(0, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, 0))
                     {
-                        RotArm(lArm, 0);
+                        RotArm(lArm, -80, 0);
                     }
                     tool[1].SetActive(true);
                     return;
                 }
                 // 팔 돌리기
-                RotArm(lArm, 0);
-                RotArm(rArm, -90);
+                RotArm(lArm, -80, 0);
+                RotArm(rArm, -85, 0);
                 tool[1].SetActive(true);
                 break;
             // 양동이를 들고 있을 때,
             case Hold.Pail:
-                if (armState > 2)
+                if (num > 2)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
                     {
-                        RotArm(lArm, -90);
+                        RotArm(lArm, -80, - 90);
                     }
                     tool[2].SetActive(true);
                     return;
                 }
                 // 팔 돌리기
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 tool[2].SetActive(true);
                 break;
             #endregion
             #region 선로
             // 선로를 들고 있을 때
             case Hold.Rail:
-                if (armState > 2)
+                if (num > 2)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
                     {
-                        RotArm(lArm, -90);
+                        RotArm(lArm, -80, -90);
                     }
                     for (int i = 0; i < tool.Length; i++)
                     {
@@ -293,18 +293,18 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     return;
                 }
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 break;
             #endregion
             #region 재료
             // 나뭇가지를 들고 있을 때
             case Hold.Branch:
-                if (armState > 2)
+                if (num > 2)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
                     {
-                        RotArm(lArm, -90);
+                        RotArm(lArm, -80, -90);
                     }
                     for(int i = 0; i < tool.Length; i++)
                     {
@@ -312,16 +312,16 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     return;
                 }
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                RotArm(rArm, -85, 90);
+                RotArm(lArm, -80, -90);
                 break;
             // 철을 들고 있을 때,
             case Hold.Steel:
-                if (armState > 2)
+                if (num > 2)
                 {
-                    if (lArm.transform.localEulerAngles != new Vector3(-90, 0, 0))
+                    if (lArm.transform.localEulerAngles != new Vector3(-80, 0, -90))
                     {
-                        RotArm(lArm, -90);
+                        RotArm(lArm, -80, -90);
                     }
                     for (int i = 0; i < tool.Length; i++)
                     {
@@ -329,19 +329,19 @@ public class PlayerItemDown : MonoBehaviour
                     }
                     return;
                 }
-                RotArm(rArm, -90);
-                RotArm(lArm, -90);
+                RotArm(rArm, -85, -90);
+                RotArm(lArm, -80, -90);
                 break;
                 #endregion
         }
     }
     // 플레이어 팔이 위로 올라가게 만드는 함수
-    void RotArm(GameObject arm, float rotAngle)
+    void RotArm(GameObject arm, float rotX, float rotAngle)
     {
         // 팔 회전 시키기
-        arm.transform.localEulerAngles = new Vector3(rotAngle, 0, 0);
+        arm.transform.localEulerAngles = new Vector3(rotX, 0, rotAngle);
         // 팔 회전 상태
-        armState++;
+        num++;
     }
 
     // 플레이어 손에 들고 있는 것 확인

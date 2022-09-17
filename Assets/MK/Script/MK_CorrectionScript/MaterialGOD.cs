@@ -21,6 +21,8 @@ public class MaterialGOD : MonoBehaviour
     public int steelCount = 0;
     public int railCount = 0;
 
+    float y = 0.55f;
+
     // 생성된 게임오브젝트
     List<GameObject> mat = new List<GameObject>();
 
@@ -63,7 +65,7 @@ public class MaterialGOD : MonoBehaviour
                     branchCount = 1;
                     GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
                     mat.Add(branch);
-                    branch.transform.position = transform.position + new Vector3(0, 1, 0);
+                    branch.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.Steel:
@@ -82,7 +84,7 @@ public class MaterialGOD : MonoBehaviour
                     steelCount = 1;
                     GameObject steel = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
                     mat.Add(steel);
-                    steel.transform.position = transform.position + new Vector3(0, 1, 0);
+                    steel.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.Rail:
@@ -101,7 +103,7 @@ public class MaterialGOD : MonoBehaviour
                     railCount = 1;
                     GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     mat.Add(rail);
-                    rail.transform.position = transform.position + new Vector3(0, 1, 0);
+                    rail.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.None:
@@ -124,6 +126,6 @@ public class MaterialGOD : MonoBehaviour
     {
         GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
         mat.Insert(i, ingredient);
-        mat[i].transform.position = transform.position + new Vector3(0, 1 + i * 0.2f, 0);
+        mat[i].transform.position = transform.position + new Vector3(0, y + i * 0.2f, 0);
     }
 }
