@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class trainMove : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class trainMove : MonoBehaviour
     [SerializeField] int gap;
     [SerializeField] float RotScale;
     [SerializeField] GameObject[] trains;
+    [SerializeField] Text SpeedText;
     float trainTimer;
     bool depart;
     bool[] isDie;
@@ -44,7 +46,7 @@ public class trainMove : MonoBehaviour
     void Update()
     {
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
-
+        
         if (!depart)
         {
             ReadyToDepart();
@@ -84,8 +86,9 @@ public class trainMove : MonoBehaviour
                 }
             }
         }
-        
-       
+        SpeedText.text = trainSpeed.ToString("0.00")+" "+ "m/s";
+
+
     }
 
     //  기차 출발 타이머

@@ -29,7 +29,7 @@ public class CameraMove : MonoBehaviour
         {
             if (TrainPos.position.x > triggerPos.position.x)
             {
-                pos.x = Mathf.Lerp(pos.x, TrainPos.position.x, 10 * Time.deltaTime);
+                pos.x = Mathf.Lerp(pos.x, TrainPos.position.x, 5 * Time.deltaTime);
             }
         }
         Camera.main.transform.position = pos + setPos;
