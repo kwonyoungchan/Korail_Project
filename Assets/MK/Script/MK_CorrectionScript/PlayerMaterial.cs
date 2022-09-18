@@ -43,6 +43,8 @@ public class PlayerMaterial : MonoBehaviour
     Transform matTrain;
     MixedItem rail;
 
+    int n;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,9 @@ public class PlayerMaterial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // RailTrain과의 거리가 가까우면 
+        GameObject railtrain = GameObject.Find("train_laugage2");
+        float dis = Vector3.Distance(railtrain.transform.position, transform.position);
 
         // 기차 위치
         matTrain = GameObject.Find("train_laugage1").transform;
@@ -72,9 +77,9 @@ public class PlayerMaterial : MonoBehaviour
             if (branchArray.Count > 0)
             {
                 // 기차와의 거리 판별
-                float dis = Vector3.Distance(transform.position, matTrain.position);
+                float dis1 = Vector3.Distance(transform.position, matTrain.position);
                 // 기차와의 거리가 가까우면
-                if (dis < 1.5f)
+                if (dis1 < 1.5f)
                 {
                     if (Input.GetButtonDown("Jump"))
                     {
@@ -147,7 +152,7 @@ public class PlayerMaterial : MonoBehaviour
             else if (steelArray.Count > 0)
             {
                 // 기차와의 거리 판별
-                float dis = Vector3.Distance(transform.position, matTrain.position);
+                float dis1 = Vector3.Distance(transform.position, matTrain.position);
                 // 기차와의 거리가 가까우면
                 if (dis < 1.5f)
                 {
@@ -218,99 +223,114 @@ public class PlayerMaterial : MonoBehaviour
             #region rail이 손에 있는 경우
             else if (railArray.Count > 0)
             {
-                // 레일의 마지막인 경우
-                if (connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1])
+                GameObject train_main = GameObject.Find("train_main");
+                float mainDis = Vector3.Distance(train_main.transform.position, transform.position);
+
+
+                float railDis = Vector3.Distance(connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count -1].transform.position, transform.position);
+                // 레일이 마지막이 아닌 경우
+                if (itemGOD.items == ItemGOD.Items.Rail || itemGOD.items == ItemGOD.Items.CornerRail)
                 {
-                    if (itemGOD.items != ItemGOD.Items.Rail)
+                    // 키를 누르면
+                    if (Input.GetButtonDown("Jump"))
                     {
+                        // 제거
+                        itemGOD.ChangeState(ItemGOD.Items.Idle);
+                        connectRail.instance.connectedRails.RemoveAt(connectRail.instance.connectedRails.Count - 1);
+                        AddRail();
+                    }
+                    
+                }
+                else
+                {
+                    if (railDis < 2 && railDis > 0.5f && rayInfo.transform.gameObject != connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1].gameObject)
+                    {
+
                         // 키를 누르면
                         if (Input.GetButtonDown("Jump"))
                         {
-                            // 제거
+                            // 손에서 제거
                             itemGOD.ChangeState(ItemGOD.Items.Rail);
                             RemoveRail();
                         }
+
                     }
-                    else
+                    if (rayInfo.transform.gameObject == connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1].gameObject)
                     {
                         // 키를 누르면
                         if (Input.GetButtonDown("Jump"))
                         {
                             // 제거
                             itemGOD.ChangeState(ItemGOD.Items.Idle);
+                            connectRail.instance.connectedRails.RemoveAt(connectRail.instance.connectedRails.Count - 1);
                             AddRail();
                         }
-                        #region 레일 설치 x
+                    }
+                    if (mainDis < 1.6 && n <= 0)
+                    {
+                        // 키를 누르면
+                        if (Input.GetButtonDown("Jump"))
+                        {
+                            // 손에서 제거
+                            itemGOD.ChangeState(ItemGOD.Items.Rail);
+                            RemoveRail();
+                        }
+                        n = 1;
 
                     }
+                    else if (itemGOD.items == ItemGOD.Items.Idle)
+                    {
+                        // 바닥 상태가 idle이라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                matGod.railCount = railArray.Count;
+                                matGod.matState = MaterialGOD.Materials.Rail;
+                                DeleteMat(railArray);
+                            }
+
+                        }
+                        // 바닥 상태가 Ax라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Ax)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
+                                DeleteMat(railArray);
+                            }
+                        }
+                        // 바닥 상태가 Pick라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Pick)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
+                                DeleteMat(railArray);
+                            }
+                        }
+                        // 바닥 상태가 Pail라면
+                        if (toolGOD.toolsState == ToolGOD.Tools.Pail)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
+                                DeleteMat(railArray);
+                            }
+                        }
+
+                    }
+
+
                 }
-                else
-                {
-                    // 바닥 상태가 Rail라면 => 레일 설치 x
-                    if (matGod.matState == MaterialGOD.Materials.Idle)
-                    {
-                        // Array에 추가하기
-                        MakeMat("CHAN_Prefab/Rail", railArray);
-                        // 손 위치 위로 아이템 쌓게 만들기
-                        for (int i = 0; i < railArray.Count; i++)
-                        {
-                            railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-                            railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
-                        }
-                        matGod.matState = MaterialGOD.Materials.None;
-
-                    }
-
-                    // 바닥 상태가 idle이라면
-                    if (toolGOD.toolsState == ToolGOD.Tools.Idle)
-                    {
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            matGod.branchCount = railArray.Count;
-                            matGod.matState = MaterialGOD.Materials.Rail;
-                            DeleteMat(railArray);
-                        }
-
-                    }
-                    // 바닥 상태가 Ax라면
-                    if (toolGOD.toolsState == ToolGOD.Tools.Ax)
-                    {
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
-                            DeleteMat(railArray);
-                        }
-                    }
-                    // 바닥 상태가 Pick라면
-                    if (toolGOD.toolsState == ToolGOD.Tools.Pick)
-                    {
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
-                            DeleteMat(railArray);
-                        }
-                    }
-                    // 바닥 상태가 Pail라면
-                    if (toolGOD.toolsState == ToolGOD.Tools.Pail)
-                    {
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
-                            DeleteMat(railArray);
-                        }
-                    }
-
-                    #endregion
-                }
-
+                
             }
             #endregion
+
             // 손에 없고
             else
             {
-                // RailTrain과의 거리가 가까우면 
-                GameObject railtrain = GameObject.Find("train_laugage2");
-                float dis = Vector3.Distance(railtrain.transform.position, transform.position);
+
                 if (dis < 1.5f && rail.railCount > 0)
                 {
                     if (Input.GetButtonDown("Jump"))
@@ -382,7 +402,7 @@ public class PlayerMaterial : MonoBehaviour
                     // 점프키를 눌렀을 때,
                     else if (matGod.matState == MaterialGOD.Materials.Rail)
                     {
-                        ChangeToolGod();
+                        //ChangeToolGod();
                         // rail
                         // 바닥에 rail이 여러개인 경우
                         if (matGod.railCount > 0)
@@ -400,12 +420,14 @@ public class PlayerMaterial : MonoBehaviour
                         // 바닥상태 변환
                         matGod.matState = MaterialGOD.Materials.None;
                     }
-                    if (itemGOD.items == ItemGOD.Items.Rail)
+                    if(itemGOD.items ==ItemGOD.Items.Rail || itemGOD.items == ItemGOD.Items.CornerRail)
                     {
+                        // 키를 누르면
                         if (Input.GetButtonDown("Jump"))
                         {
                             // 제거
                             itemGOD.ChangeState(ItemGOD.Items.Idle);
+                            connectRail.instance.connectedRails.RemoveAt(connectRail.instance.connectedRails.Count - 1);
                             AddRail();
                         }
                     }
@@ -481,9 +503,9 @@ public class PlayerMaterial : MonoBehaviour
             GameObject rail = railArray[railArray.Count - 1];
             railArray.RemoveAt(railArray.Count - 1);
             Destroy(rail);
-            if(railArray.Count <= 0)
+            if(railArray.Count > 0)
             {
-                playerItem.holdState = PlayerItemDown.Hold.Idle;
+                playerItem.holdState = PlayerItemDown.Hold.Mat;
             }
         }
         
