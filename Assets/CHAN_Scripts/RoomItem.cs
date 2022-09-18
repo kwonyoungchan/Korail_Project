@@ -53,6 +53,6 @@ public class RoomItem : MonoBehaviour
         //desc 설정
         roomDesc.text = (string)info.CustomProperties["desc"];
         //map_id 설정
-        map_id = (int)info.CustomProperties["map_id"];
+        //map_id = (int)info.CustomProperties["map_id"];
     }
 }
