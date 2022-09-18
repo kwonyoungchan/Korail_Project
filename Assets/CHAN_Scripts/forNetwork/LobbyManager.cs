@@ -74,7 +74,7 @@ namespace Assets.Scripts
             roomOptions.IsVisible = true;
             // 커스텀 정보를 셋팅
             ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable(); ;
-            hash["desc"] = "여긴 초보방" + Random.Range(1, 1000);
+            hash["desc"] =Random.Range(1, 1000);
             //hash["map_id"] = Random.Range(0, mapThumbs.Length);
             hash["room_name"] = roomName.text;
             hash["password"] = inputPassword.text;
@@ -215,7 +215,6 @@ namespace Assets.Scripts
         void TurnCreateBtn(bool B)
         {
             roomName.transform.gameObject.SetActive(B);
-            inputPassword.transform.gameObject.SetActive(B);
             totalNum.transform.gameObject.SetActive(B);
             create.transform.gameObject.SetActive(B);
             

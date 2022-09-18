@@ -33,7 +33,7 @@ public class trainMove : MonoBehaviour
     void Start()
     {
         // 여기서 기차는 시각선로에서 시작되도록 설정 한다.
-        transform.position = DefineBlocks.instance.StartBlocks[0].transform.position;
+        transform.position = DefineBlocks.instance.StartBlocks[1].transform.position;
         for (int i = 0; i < trains.Length; i++)
         { 
             trains[i].transform.position = transform.position+(Vector3.left*i*gap);
