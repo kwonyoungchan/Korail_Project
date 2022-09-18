@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class trainMove : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class trainMove : MonoBehaviour
     public bool isEnding;
     public float trainSpeed;
     public float departTime;
+    float time;
+    float setTime = 2;
 
     void Start()
     {
@@ -140,11 +143,20 @@ public class trainMove : MonoBehaviour
                 //기차가 터진다
                 isDie[i] = true;
                 trains[i].transform.gameObject.SetActive(false);
+
+
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
                 //만약 기차가 도착 선로로 도착한다면 게임 클리어 
                 isEnding = true;
+                //clear씬
+                time += Time.deltaTime;
+                if (time > setTime)
+                {
+                    SceneManager.LoadScene("ClearScene");
+                }
+                
             }
         }
     }
