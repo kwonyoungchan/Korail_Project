@@ -20,7 +20,11 @@ public class connectRail : MonoBehaviour
 
     void Start()
     {
-        connectedRails.Add(StartRail[0]);
+        for (int i =0; i < DefineBlocks.instance.StartBlocks.Length; i++)
+        {
+            connectedRails.Add(DefineBlocks.instance.StartBlocks[DefineBlocks.instance.StartBlocks.Length -1- i]);
+        }
+        
         defaultdir = Vector3.right;
     }
 
