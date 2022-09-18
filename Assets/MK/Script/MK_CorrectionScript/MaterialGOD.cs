@@ -24,7 +24,7 @@ public class MaterialGOD : MonoBehaviour
     float y = 0.55f;
 
     // 생성된 게임오브젝트
-    List<GameObject> mat = new List<GameObject>();
+    public List<GameObject> mat = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +55,7 @@ public class MaterialGOD : MonoBehaviour
                 // Resources파일에 있는 나뭇가지 생성
                 if (branchCount > 1)
                 {
+
                     for (int i = 0; i < branchCount; i++)
                     {
                         CreateMat("MK_Prefab/Branch", i);
