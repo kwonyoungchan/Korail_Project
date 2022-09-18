@@ -102,7 +102,7 @@ public class trainMove : MonoBehaviour
         {
             for (int i = 0; i < railCount.Length; i++)
             {
-                railCount[i] = connectRail.instance.connectedRails.Count - 1;
+                railCount[i] = DefineBlocks.instance.StartBlocks.Length - 1;
             }
             depart = true;
         }

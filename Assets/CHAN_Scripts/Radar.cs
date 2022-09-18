@@ -13,6 +13,7 @@ public class Radar : MonoBehaviour
     [SerializeField] GameObject[] EndBlock;
     void Start()
     {
+        TileMap = GameObject.Find("Tilemap");
         //시작시 모든 블럭의 스크립트를 끈다.
         for (int i = 0; i < TileMap.transform.childCount; i++)
         {
