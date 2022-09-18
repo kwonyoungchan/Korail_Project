@@ -14,7 +14,7 @@ public class RoomItem : MonoBehaviour
     // 맵 id
     int map_id;
     // 클릭이 됐을 때 호출되는 함수를 가지고 있는 변수
-    public Action<string, int> OnclickAction;
+    public Action<string> OnclickAction;
 
     void Start()
     {
@@ -37,7 +37,7 @@ public class RoomItem : MonoBehaviour
         if (OnclickAction != null)
         {
             // onClickAction을 실행하겠다.
-            OnclickAction(name, map_id);
+            OnclickAction(name);
         }
         ////1. InputRoomName 게임 오브젝트 찾자
         //GameObject go = GameObject.Find("InputRoomName");

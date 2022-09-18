@@ -70,13 +70,13 @@ namespace Assets.Scripts
             // 커스텀 정보를 셋팅
             ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable(); ;
             hash["desc"] = "여긴 초보방" + Random.Range(1, 1000);
-            hash["map_id"] = Random.Range(0, mapThumbs.Length);
+            //hash["map_id"] = Random.Range(0, mapThumbs.Length);
             hash["room_name"] = roomName.text;
             hash["password"] = inputPassword.text;
             roomOptions.CustomRoomProperties = hash;
             //print((string)hash["desc"]+ ", " + (float)hash[1]);
             //custom 정보를 공개하는 설정
-            roomOptions.CustomRoomPropertiesForLobby = new string[] { "desc", "map_id", "room_name", "password" };
+            roomOptions.CustomRoomPropertiesForLobby = new string[] { "desc", "room_name", "password" };
             // 방을 만든다.
             PhotonNetwork.CreateRoom(roomName.text + inputPassword.text, roomOptions, TypedLobby.Default);
         }
@@ -172,27 +172,27 @@ namespace Assets.Scripts
                 //item.OnclickAction = (room) => { roomName.text = room; };
 
                 string desc = (string)info.CustomProperties["desc"];
-                int mapId = (int)info.CustomProperties["map_id"];
-                print(desc + " , " + mapId);
+                //int mapId = (int)info.CustomProperties["map_id"];
+                //print(desc + " , " + mapId);
             }
         }
         //이전 썸네일 Id
         //초기에는 이전의 맵 id가 없으므로 -1
-        int prevMap_id = -1;
-        void SetRoomName(string room, int map_id)
+        //int prevMap_id = -1;
+        void SetRoomName(string room /*,int map_id*/)
         {
             //룸네일 설정
             roomName.text = room;
             // 이전 맵 썸네일을 모두 비활성화
             // 만약에 이전 맵 썸네일이 활성화되어 있다면
             //맵 썸네일 설정
-            if (prevMap_id > -1)
-            {
-                mapThumbs[prevMap_id].SetActive(false);
-            }
-            mapThumbs[map_id].SetActive(true);
-            //이전의 맵 id 저장
-            prevMap_id = map_id;
+            //if (prevMap_id > -1)
+            //{
+            //    mapThumbs[prevMap_id].SetActive(false);
+            //}
+            //mapThumbs[map_id].SetActive(true);
+            ////이전의 맵 id 저장
+            //prevMap_id = map_id;
         }
         //방생성 설정창 나오도록 하는 함수
         public void OnClickedCreateRoom()
