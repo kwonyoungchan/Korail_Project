@@ -48,5 +48,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   EndBlocks:
   - {fileID: 0}
+  StartStation: {fileID: 2374142079316593513, guid: d1d00cdcf94a5cf4a902b61a9de135aa, type: 3}
+  EndStation: {fileID: 2374142079316593513, guid: d1d00cdcf94a5cf4a902b61a9de135aa, type: 3}
