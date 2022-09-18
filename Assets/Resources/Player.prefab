@@ -186,7 +186,7 @@ MonoBehaviour:
   holdState: 0
   tool:
   - {fileID: 8862676340123679111}
-  - {fileID: 8862676340123679111}
+  - {fileID: 0}
   - {fileID: 7595792603955614642}
   mat:
   - {fileID: 0}
