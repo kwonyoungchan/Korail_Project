@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // 플레이어가 도끼나 곡갱이를 들고 있으면 HP가 1씩 까인다
 public class IngredientItem : MonoBehaviour
@@ -9,7 +10,7 @@ public class IngredientItem : MonoBehaviour
 
     public float y = 0.5f;
     // 시간
-    public float maxTime = 3;
+    float maxTime = 1;
     float currentTime = 0;
     // 체력
     int maxHP = 3;
@@ -23,16 +24,19 @@ public class IngredientItem : MonoBehaviour
     void Start()
     {
         hp = maxHP;
-        player = GameObject.Find("Player").GetComponent<PlayerItemDown>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "ProtoType")
+            player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
         if (player.holdState == PlayerItemDown.Hold.Ax) 
         { 
             axDis = Vector3.Distance(player.transform.position, transform.position);
+            
             if (gameObject.name.Contains("Tree"))
             {
                 if (axDis < 2f)
