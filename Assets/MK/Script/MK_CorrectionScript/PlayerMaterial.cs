@@ -54,6 +54,10 @@ public class PlayerMaterial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            AddRail();
+        }
         // RailTrain과의 거리가 가까우면 
         GameObject railtrain = GameObject.Find("train_laugage2");
         float dis = Vector3.Distance(railtrain.transform.position, transform.position);
@@ -510,5 +514,6 @@ public class PlayerMaterial : MonoBehaviour
         }
         
     }
+
 
 }
