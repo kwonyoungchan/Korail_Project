@@ -52,7 +52,7 @@ MonoBehaviour:
   - {fileID: 6448478618219358453}
   - {fileID: 6448478617717880827}
   gap: 1
-  TrainSpawn: {fileID: 0}
+  RotScale: 2
   trains:
   - {fileID: 6448478618529776305}
   - {fileID: 6448478617574229669}
@@ -60,7 +60,7 @@ MonoBehaviour:
   railCount: 
   isEnding: 0
   trainSpeed: 0.5
-  departTime: 5
+  departTime: 80
 --- !u!1001 &1567805643293021561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68,6 +68,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1567805645146434428}
     m_Modifications:
+    - target: {fileID: 4446306246945821641, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 4446306246945821641, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
+      propertyPath: m_TagString
+      value: RPos
+      objectReference: {fileID: 0}
     - target: {fileID: 5529417374954917072, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -115,6 +123,14 @@ PrefabInstance:
     - target: {fileID: 5529417374954917074, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
       propertyPath: m_Name
       value: train_laugage2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201002985324880949, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.308
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201002985324880949, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.158
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
@@ -216,6 +232,22 @@ PrefabInstance:
       propertyPath: train
       value: 
       objectReference: {fileID: 6448478619153652139}
+    - target: {fileID: 223430482, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: matPos.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 223430482, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: matPos.Array.data[2]
+      value: 
+      objectReference: {fileID: 4427624792156244495}
+    - target: {fileID: 2932938090225254520, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932938090225254520, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5529417374954917072, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -264,8 +296,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: train_laugage1
       objectReference: {fileID: 0}
+    - target: {fileID: 8098390211832519618, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098390211832519618, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+--- !u!4 &4427624792156244495 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2932938090225254520, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
+  m_PrefabInstance: {fileID: 1567805644935350903}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6448478617574229669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5529417374954917074, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
