@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// ÇÃ·¹ÀÌ¾î°¡ µµ³¢³ª °î°»ÀÌ¸¦ µé°í ÀÖÀ¸¸é HP°¡ 1¾¿ ±îÀÎ´Ù
+// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½î°»ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HPï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½
 public class IngredientItem : MonoBehaviour
 {
     public GameObject[] itemFact = new GameObject[2];
 
     public float y = 0.5f;
-    // ½Ã°£
+    // ï¿½Ã°ï¿½
     float maxTime = 1;
     float currentTime = 0;
-    // Ã¼·Â
+    // Ã¼ï¿½ï¿½
     int maxHP = 3;
     int hp;
     float axDis;
@@ -34,12 +34,12 @@ public class IngredientItem : MonoBehaviour
         if (scene.name == "ProtoType")
             player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
         if (player.holdState == PlayerItemDown.Hold.Ax) 
-        { 
+        {
             axDis = Vector3.Distance(player.transform.position, transform.position);
-            
+
             if (gameObject.name.Contains("Tree"))
             {
-                if (axDis < 2f)
+                if (axDis < 1.5f)
                 {
                     currentTime += Time.deltaTime;
 
@@ -51,12 +51,12 @@ public class IngredientItem : MonoBehaviour
             }
         }
         if (player.holdState == PlayerItemDown.Hold.Pick)
-        { 
+        {
             pickDis = Vector3.Distance(player.transform.position, transform.position);
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 2f)
+                if (pickDis < 1.5f)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
@@ -66,11 +66,11 @@ public class IngredientItem : MonoBehaviour
                 }
             }
         }
-       
+
     }
 
-    // °ÔÀÓ¿ÀºêÁ§Æ®°¡ Å¸°ÝÀ» ÀÔÀ»¶§
-    // 0 ÀÌÇÏ¶ó¸é ¾ÆÀÌÅÛ »ý¼º
+    // ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // 0 ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void DamagedObject(int n)
     {
         currentTime = 0;
@@ -78,7 +78,7 @@ public class IngredientItem : MonoBehaviour
         if(hp <= 0)
         {
             Destroy(gameObject);
-            // GOD¿¡ ÀÖ´Â State º¯°æ
+            // GODï¿½ï¿½ ï¿½Ö´ï¿½ State ï¿½ï¿½ï¿½ï¿½
             if (n == 0)
                 GetComponentInParent<MaterialGOD>().matState = MaterialGOD.Materials.Branch;
             if(n == 1)
