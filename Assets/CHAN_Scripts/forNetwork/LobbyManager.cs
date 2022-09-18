@@ -20,11 +20,15 @@ namespace Assets.Scripts
         public InputField totalNum;
         // 생성 
         public Button create;
-        int flag=1;
+        int flag = 1;
         [Header("여기는 방입장 버튼관련 설정 모음")]
         //
         //  방입장
+        public Button SelectSection;
+        public GameObject SelectRooms;
         public Button btnJoin;
+        public Button btnJoinRandomly;
+        public Button btnBack;
         //접속 Button
 
         //방의 정보들
@@ -53,7 +57,8 @@ namespace Assets.Scripts
             totalNum.onValueChanged.AddListener(OnTotalPlayerChanged);
             // 시작부터 방생성 옵션들을 모두 끈다. 
             TurnCreateBtn(false);
-
+            SelectRooms.SetActive(false);
+            btnBack.transform.gameObject.SetActive(false);
 
         }
         //방생성
@@ -213,6 +218,25 @@ namespace Assets.Scripts
             inputPassword.transform.gameObject.SetActive(B);
             totalNum.transform.gameObject.SetActive(B);
             create.transform.gameObject.SetActive(B);
+            
+        }
+        public void OnClickedSelectSection()
+        {
+            // 섹션 검색하기 버튼을 누르면 게임 생성 버튼을 모두 끄고
+            TurnCreateBtn(false);
+            SelectRooms.SetActive(true);
+            btnJoinRandomly.transform.gameObject.SetActive(false);
+            btnCreate.transform.gameObject.SetActive(false);
+            btnBack.transform.gameObject.SetActive(true);
+            // 스크롤 창과 뒤로가기만 보이도록한다.
+        }
+        public void OnClickedBackBtn()
+        {
+            // 뒤로가기 버튼을 눌렀을 때 원복한다.
+            SelectRooms.SetActive(false);
+            btnJoinRandomly.transform.gameObject.SetActive(true);
+            btnCreate.transform.gameObject.SetActive(true);
+            btnBack.transform.gameObject.SetActive(false);
         }
     }
 }

@@ -61,7 +61,7 @@ public class PlayerMaterial : MonoBehaviourPun
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             AddRail();
         }
