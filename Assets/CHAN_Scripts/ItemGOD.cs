@@ -35,7 +35,7 @@ public class ItemGOD : MonoBehaviour
     void Start()
     {
         rd = GetComponent<Renderer>();
-        defaultColor = Color.green;
+        //defaultColor = Color.green;
     }
 
     
@@ -47,14 +47,14 @@ public class ItemGOD : MonoBehaviour
         {
             isConnected = false;
         }
-        if (isConnected)
-        {
-            rd.material.color = Color.red;
-        }
-        else if(isConnected==false&&items==Items.Idle)
-        {
-            rd.material.color = defaultColor;
-        }
+        //if (isConnected)
+        //{
+        //    rd.material.color = Color.red;
+        //}
+        //else if(isConnected==false&&items==Items.Idle)
+        //{
+        //    rd.material.color = defaultColor;
+        //}
     }
 
     void StateMachine()
@@ -74,10 +74,10 @@ public class ItemGOD : MonoBehaviour
             case Items.StartRail:
                 if (!turn)
                 {
-                    //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/startRail"));
-                    //createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
                     //createItem.transform.rotation = setRot;
-                    rd.material.color = Color.blue;
+                    //rd.material.color = Color.blue;
                     turn = true;
                 }
                 break;
@@ -105,7 +105,9 @@ public class ItemGOD : MonoBehaviour
             case Items.EndRail:
                 if (!turn)
                 {
-                    rd.material.color = Color.black;
+                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                   // rd.material.color = Color.black;
                     turn = true;
                 }
                 break;
