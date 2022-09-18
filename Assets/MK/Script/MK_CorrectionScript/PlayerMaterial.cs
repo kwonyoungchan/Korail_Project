@@ -60,16 +60,16 @@ public class PlayerMaterial : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             AddRail();
-=======
+        }
         // 움직임 연동 : 내것이 아니면 반환
         if (!photonView.IsMine)
         {
             return;
->>>>>>> MK
+
         }
         // RailTrain과의 거리가 가까우면 
         GameObject railtrain = GameObject.Find("train_laugage2");
