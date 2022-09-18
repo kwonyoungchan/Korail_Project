@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // 플레이어 이동
 // 1. 기본적인 이동
 // 2. 플레이어가 바라보는 부분
 // 3. 대쉬
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
     // 필요 속성 : 속도
     public float speed = 3;
@@ -26,6 +27,14 @@ public class PlayerMove : MonoBehaviour
     // 리지드바디
     Rigidbody rigid;
 
+    // 네트워크
+    // 위치
+    Vector3 receivePos;
+    // 회전
+    Quaternion receiveRot;
+    // 보간 속력
+    public float lerpSpeed = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,24 +47,34 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // 1. 사용자 입력값 받기
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-
-        // 방향 전환에 따른 캐릭터 바라보는 부분
-        LookPlayer();
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        // 움직임 연동 : 내것이 아니면 반환
+        if (photonView.IsMine)
         {
-            Dashing();
+            // 1. 사용자 입력값 받기
+            h = Input.GetAxisRaw("Horizontal");
+            v = Input.GetAxisRaw("Vertical");
+
+            // 방향 전환에 따른 캐릭터 바라보는 부분
+            LookPlayer();
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                Dashing();
+            }
+
+            // 2. 방향 설정하기
+            Vector3 dir = h * Vector3.right + v * Vector3.forward;
+            dir.Normalize();
+
+            // 3. 플레이어 움직이기
+            transform.position += dir * finSpeed * Time.deltaTime;
         }
-
-        // 2. 방향 설정하기
-        Vector3 dir = h * Vector3.right + v * Vector3.forward;
-        dir.Normalize();
-
-        // 3. 플레이어 움직이기
-        transform.position += dir * finSpeed * Time.deltaTime;
+        else
+        {
+            // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+        }
     }
 
     // 플레이어의 앞방향 전환하는 함수
@@ -114,4 +133,25 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
         finSpeed = speed;
     }
+
+    #region 네트워크
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 데이터 보내기와 받기는 한가지만 ture가 됨
+        // 데이터 보내기
+        if (stream.IsWriting)
+        {
+            // position, rotation => class 못넘김 value만 가능, value 타입 배열이나 리스트 가능
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+
+        }
+        // 데이터 받기
+        else if (stream.IsReading) // = if (stream.IsReading)
+        {
+            receivePos = (Vector3)stream.ReceiveNext();
+            receiveRot = (Quaternion)stream.ReceiveNext();
+        }
+    }
+    #endregion
 }

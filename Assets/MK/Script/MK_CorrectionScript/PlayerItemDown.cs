@@ -1,7 +1,8 @@
 using UnityEngine;
+using Photon.Pun;
 
 // PutDownItem 역할
-public class PlayerItemDown : MonoBehaviour
+public class PlayerItemDown : MonoBehaviourPun
 {
     // 아이템 정보 확인
     public enum Hold
@@ -45,12 +46,17 @@ public class PlayerItemDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 움직임 연동 : 내것이 아니면 반환
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         PlayerFSM();
         // 레이를 발사하고
         Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
