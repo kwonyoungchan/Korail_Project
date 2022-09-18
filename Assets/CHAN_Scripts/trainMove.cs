@@ -96,7 +96,7 @@ public class trainMove : MonoBehaviour
         {
             for (int i = 0; i < railCount.Length; i++)
             {
-                railCount[i]++;
+                railCount[i] = connectRail.instance.connectedRails.Count - 1;
             }
             depart = true;
         }
