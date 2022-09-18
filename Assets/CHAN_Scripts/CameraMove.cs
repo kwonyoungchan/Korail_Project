@@ -12,19 +12,28 @@ public class CameraMove : MonoBehaviour
     // 기차의 위치 
     public Transform TrainPos;
     [SerializeField] Vector3 setPos;
+    public Transform triggerPos;
+    Vector3 pos;
     void Start()
     {
-        transform.position = TrainPos.position + setPos; 
+        Camera.main.transform.position = TrainPos.position + setPos;
+        pos = Vector3.zero;
     }
 
     void Update()
     {
         //카메라이동은 기차의 x축방향 이동에만 관여한다.
-        Vector3 pos = Vector3.zero;
-        if (!TrainPos.gameObject.activeSelf)
+        // 기차가 스크린 좌표상에서 특정지점 넘어가면 카메라가 따라서 이동한다. 
+        
+        //카메라 이동은 Lerp로 보간하면서 이동한다.
+        if (TrainPos.gameObject.activeSelf)
         {
-            pos.x = TrainPos.position.x;
+            if (TrainPos.position.x > triggerPos.position.x)
+            {
+                pos.x = Mathf.Lerp(pos.x, TrainPos.position.x, 10 * Time.deltaTime);
+            }
         }
-        transform.position = pos + setPos;
+        Camera.main.transform.position = pos + setPos;
+        
     }
 }
