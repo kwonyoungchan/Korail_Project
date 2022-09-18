@@ -24,7 +24,6 @@ public class CameraMove : MonoBehaviour
     {
         //카메라이동은 기차의 x축방향 이동에만 관여한다.
         // 기차가 스크린 좌표상에서 특정지점 넘어가면 카메라가 따라서 이동한다. 
-        
         //카메라 이동은 Lerp로 보간하면서 이동한다.
         if (TrainPos.gameObject.activeSelf)
         {
