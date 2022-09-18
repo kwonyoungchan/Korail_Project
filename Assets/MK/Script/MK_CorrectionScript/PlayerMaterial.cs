@@ -127,21 +127,22 @@ public class PlayerMaterial : MonoBehaviourPun
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
+                            matGod.branchCount = branchArray.Count;
                             if (matGod.steelCount > 0)
                             {
-                                matGod.branchCount = branchArray.Count;
+                                for (int i = 0; i < matGod.mat.Count; i++)
+                                {
+                                    Destroy(matGod.mat[i]);
+                                }
+                                matGod.mat.Clear();
                                 for (int i = 0; i < matGod.steelCount; i++)
                                 {
                                     MakeMat("MK_Prefab/Steel", steelArray);
                                     steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
-                                for (int i = 0; i < matGod.mat.Count; i++)
-                                {
-                                    Destroy(matGod.mat[i]);
-                                }
-                                matGod.mat.Clear();
-                                matGod.steelCount = 0;
+
+                                
                                 matGod.matState = MaterialGOD.Materials.Branch;
                                 DeleteMat(branchArray);
                             }
