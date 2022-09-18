@@ -96,7 +96,7 @@ public class PlayerMaterial : MonoBehaviourPun
                 // 기차와의 거리 판별
                 float dis1 = Vector3.Distance(transform.position, matTrain.position);
                 // 기차와의 거리가 가까우면
-                if (dis1 < 1.5f)
+                if (dis1 < 2)
                 {
                     if (Input.GetButtonDown("Jump"))
                     {
@@ -127,22 +127,22 @@ public class PlayerMaterial : MonoBehaviourPun
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
-                            matGod.branchCount = branchArray.Count;
+                            
                             if (matGod.steelCount > 0)
                             {
-                                for (int i = 0; i < matGod.mat.Count; i++)
-                                {
-                                    Destroy(matGod.mat[i]);
-                                }
-                                matGod.mat.Clear();
+                                
                                 for (int i = 0; i < matGod.steelCount; i++)
                                 {
                                     MakeMat("MK_Prefab/Steel", steelArray);
                                     steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
-
-                                
+                                for (int i = 0; i < matGod.mat.Count; i++)
+                                {
+                                    Destroy(matGod.mat[i]);
+                                }
+                                matGod.mat.Clear();
+                                matGod.branchCount = branchArray.Count;
                                 matGod.matState = MaterialGOD.Materials.Branch;
                                 DeleteMat(branchArray);
                             }
@@ -161,16 +161,21 @@ public class PlayerMaterial : MonoBehaviourPun
                                     railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
-                                
+                                for (int i = 0; i < matGod.mat.Count; i++)
+                                {
+                                    Destroy(matGod.mat[i]);
+                                }
+                                matGod.mat.Clear();
+                                matGod.branchCount = branchArray.Count;
+                                matGod.matState = MaterialGOD.Materials.Branch;
+                                DeleteMat(branchArray);
+
                             }
-                            matGod.branchCount = branchArray.Count;
-                            matGod.matState = MaterialGOD.Materials.Branch;
-                            DeleteMat(branchArray);
                         }
                     }
 
                     // 바닥 상태가 idle이라면
-                    if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                    if (toolGOD.toolsState == ToolGOD.Tools.Idle && matGod.matState == MaterialGOD.Materials.Idle)
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
@@ -217,7 +222,7 @@ public class PlayerMaterial : MonoBehaviourPun
                 // 기차와의 거리 판별
                 float dis1 = Vector3.Distance(transform.position, matTrain.position);
                 // 기차와의 거리가 가까우면
-                if (dis < 1.5f)
+                if (dis < 2)
                 {
                     if (Input.GetButtonDown("Jump"))
                     {
@@ -255,11 +260,16 @@ public class PlayerMaterial : MonoBehaviourPun
                                     branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
-
+                                for (int i = 0; i < matGod.mat.Count; i++)
+                                {
+                                    Destroy(matGod.mat[i]);
+                                }
+                                matGod.mat.Clear();
+                                matGod.steelCount = steelArray.Count;
+                                matGod.matState = MaterialGOD.Materials.Steel;
+                                DeleteMat(steelArray);
                             }
-                            matGod.steelCount = steelArray.Count;
-                            matGod.matState = MaterialGOD.Materials.Steel;
-                            DeleteMat(steelArray);
+                            
                         }
                     }
                     if (matGod.matState == MaterialGOD.Materials.Rail)
@@ -274,15 +284,20 @@ public class PlayerMaterial : MonoBehaviourPun
                                     railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
-
+                                for (int i = 0; i < matGod.mat.Count; i++)
+                                {
+                                    Destroy(matGod.mat[i]);
+                                }
+                                matGod.mat.Clear();
+                                matGod.steelCount = steelArray.Count;
+                                matGod.matState = MaterialGOD.Materials.Steel;
+                                DeleteMat(steelArray);
                             }
-                            matGod.steelCount = steelArray.Count;
-                            matGod.matState = MaterialGOD.Materials.Steel;
-                            DeleteMat(steelArray);
+
                         }
                     }
                     // 점프키를 눌렀을 때,
-                    if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                    if (toolGOD.toolsState == ToolGOD.Tools.Idle && matGod.matState == MaterialGOD.Materials.Idle)
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
@@ -366,7 +381,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             AddRail();
                         }
                     }
-                    if (mainDis < 1.6 && n <= 0)
+                    if (mainDis < 2 && n <= 0)
                     {
                         // 키를 누르면
                         if (Input.GetButtonDown("Jump"))
@@ -393,11 +408,16 @@ public class PlayerMaterial : MonoBehaviourPun
                                         branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                         branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                     }
-
+                                    for (int i = 0; i < matGod.mat.Count; i++)
+                                    {
+                                        Destroy(matGod.mat[i]);
+                                    }
+                                    matGod.mat.Clear();
+                                    matGod.railCount = railArray.Count;
+                                    matGod.matState = MaterialGOD.Materials.Rail;
+                                    DeleteMat(railArray);
                                 }
-                                matGod.railCount = railArray.Count;
-                                matGod.matState = MaterialGOD.Materials.Rail;
-                                DeleteMat(railArray);
+                                
                             }
                         }
                         if (matGod.matState == MaterialGOD.Materials.Steel)
@@ -412,15 +432,20 @@ public class PlayerMaterial : MonoBehaviourPun
                                         steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                         steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                     }
-
+                                    for (int i = 0; i < matGod.mat.Count; i++)
+                                    {
+                                        Destroy(matGod.mat[i]);
+                                    }
+                                    matGod.mat.Clear();
+                                    matGod.railCount = railArray.Count;
+                                    matGod.matState = MaterialGOD.Materials.Rail;
+                                    DeleteMat(railArray);
                                 }
-                                matGod.railCount = railArray.Count;
-                                matGod.matState = MaterialGOD.Materials.Rail;
-                                DeleteMat(railArray);
+
                             }
                         }
                         // 바닥 상태가 idle이라면
-                        if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                        if (toolGOD.toolsState == ToolGOD.Tools.Idle && matGod.matState == MaterialGOD.Materials.Idle)
                         {
                             if (Input.GetButtonDown("Jump"))
                             {

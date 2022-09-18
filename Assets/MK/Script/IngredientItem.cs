@@ -32,7 +32,7 @@ public class IngredientItem : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "ProtoType")
-            player = GameObject.Find("Player").GetComponent<PlayerItemDown>();
+            player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
         //(Clone)
         if (player.holdState == PlayerItemDown.Hold.Ax) 
         { 
@@ -40,7 +40,7 @@ public class IngredientItem : MonoBehaviour
             
             if (gameObject.name.Contains("Tree"))
             {
-                if (axDis < 2f)
+                if (axDis < 1.5f)
                 {
                     currentTime += Time.deltaTime;
 
@@ -57,7 +57,7 @@ public class IngredientItem : MonoBehaviour
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 2f)
+                if (pickDis < 1.5f)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
