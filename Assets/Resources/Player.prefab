@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 211203229181198302}
   - component: {fileID: 1022065495014899646}
   - component: {fileID: 1022065495014899647}
+  - component: {fileID: 8426417404587648907}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -171,6 +172,7 @@ MonoBehaviour:
   a: 2
   finSpeed: 0
   dashTime: 0.3
+  lerpSpeed: 10
 --- !u!114 &1022065495014899617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,8 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdState: 0
   tool:
+  - {fileID: 972937886758427958}
   - {fileID: 8862676340123679111}
-  - {fileID: 0}
   - {fileID: 7595792603955614642}
   mat:
   - {fileID: 0}
@@ -244,6 +246,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8426417404587648907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022065495014899643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1022065495075990568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,5 +1354,10 @@ PrefabInstance:
 --- !u!4 &972937886758427953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9094547737513447158, guid: 6b2133780f758544a93f374aca4415ed, type: 3}
+  m_PrefabInstance: {fileID: 8338066307154121671}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &972937886758427958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9094547737513447153, guid: 6b2133780f758544a93f374aca4415ed, type: 3}
   m_PrefabInstance: {fileID: 8338066307154121671}
   m_PrefabAsset: {fileID: 0}

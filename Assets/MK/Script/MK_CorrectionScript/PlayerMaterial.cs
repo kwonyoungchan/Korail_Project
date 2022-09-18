@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // 플레이어가 material을 판별
 #region material 판별 로직 
@@ -16,7 +17,7 @@ using UnityEngine;
 // + 09.15 문제사항
 // : 플레이어가 손에 나무를 들고 있을 때, 바닥 상태도 Branch라면 바닥 상태의 개수에 따라 손에 들고 있는 개수 변경됨
 #endregion
-public class PlayerMaterial : MonoBehaviour
+public class PlayerMaterial : MonoBehaviourPun
 {
     // 리스트
     // 나뭇가지
@@ -48,12 +49,22 @@ public class PlayerMaterial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 움직임 연동 : 내것이 아니면 반환
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerItem = GetComponent<PlayerItemDown>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 움직임 연동 : 내것이 아니면 반환
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         // RailTrain과의 거리가 가까우면 
         GameObject railtrain = GameObject.Find("train_laugage2");
         float dis = Vector3.Distance(railtrain.transform.position, transform.position);
