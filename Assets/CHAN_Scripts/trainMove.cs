@@ -79,7 +79,7 @@ public class trainMove : MonoBehaviour
                     RailChecker(rayPos[i].position, i);
                     if (connectRail.instance.stageClear)
                     {
-                        trainSpeed = 10;
+                        trainSpeed = 5;
                         if (isEnding)
                         {
                             trainSpeed = 0;
@@ -102,7 +102,7 @@ public class trainMove : MonoBehaviour
         {
             for (int i = 0; i < railCount.Length; i++)
             {
-                railCount[i] = DefineBlocks.instance.StartBlocks.Length - 1;
+                railCount[i] = DefineBlocks.instance.StartBlocks.Length;
             }
             depart = true;
         }
