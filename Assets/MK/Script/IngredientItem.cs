@@ -31,8 +31,9 @@ public class IngredientItem : MonoBehaviour
     void Update()
     {
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "ProtoType")
-            player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
+        
+        player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
+        
         if (player.holdState == PlayerItemDown.Hold.Ax) 
         {
             axDis = Vector3.Distance(player.transform.position, transform.position);
