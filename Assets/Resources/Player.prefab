@@ -1576,10 +1576,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ed80e3a4cd87f49898c0fd249061f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rPos: {fileID: 122694445870208107}
   isBranch: 0
   waterTime: 4
-  water: {fileID: 0}
+  water: {fileID: 5306645351462097965}
   isWater: 0
+  isGathering: 0
 --- !u!1 &5587062031630758818
 GameObject:
   m_ObjectHideFlags: 0
