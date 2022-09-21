@@ -26,6 +26,7 @@ public class ItemGOD : MonoBehaviour
     public Items items;
     public bool turn;
     public bool isConnected;
+    public float railHeight;
     GameObject createItem;
     Quaternion setRot;
     Renderer rd;
@@ -75,7 +76,7 @@ public class ItemGOD : MonoBehaviour
                 if (!turn)
                 {
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
-                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     //createItem.transform.rotation = setRot;
                     //rd.material.color = Color.blue;
                     turn = true;
@@ -87,7 +88,7 @@ public class ItemGOD : MonoBehaviour
                 {
                     Destroy(createItem);
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
-                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     createItem.transform.rotation = setRot;
                     turn = true;
                 }
@@ -97,7 +98,7 @@ public class ItemGOD : MonoBehaviour
                 {
                     Destroy(createItem);
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
-                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     createItem.transform.rotation = setRot;
                     turn = true;
                 }
@@ -106,7 +107,7 @@ public class ItemGOD : MonoBehaviour
                 if (!turn)
                 {
                     createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
-                    createItem.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                    // rd.material.color = Color.black;
                     turn = true;
                 }
@@ -116,11 +117,12 @@ public class ItemGOD : MonoBehaviour
 
 
     }
-    public void ChangeState(Items item,Quaternion Rot= default)
+    public void ChangeState(Items item, Quaternion Rot= default,float Height = 0.5f)
     {
         turn = false;
         setRot = Rot;
         items = item;
+        railHeight = Height;
     }
 
 }

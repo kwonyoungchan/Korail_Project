@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class trainMove : MonoBehaviour
+public class trainMove : MonoBehaviourPun ,IPunObservable
 {
     // 기차를 이동시키는 알고리즘
     // 기차는 선로를 따라 이동함
@@ -30,6 +31,11 @@ public class trainMove : MonoBehaviour
     float time;
     float setTime = 2;
 
+    [SerializeField] float LerpSpeed;
+    Vector3[] recievePos = new Vector3[3];
+    Quaternion[] recieveRot=new Quaternion[3];
+
+
     void Start()
     {
         // 여기서 기차는 시각선로에서 시작되도록 설정 한다.
@@ -49,46 +55,57 @@ public class trainMove : MonoBehaviour
     void Update()
     {
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
-        
-        if (!depart)
+        if (photonView.IsMine)
         {
-            ReadyToDepart();
-        }
-        else
-        {
-            for (int i = 0; i < trains.Length; i++)
+            if (!depart)
             {
-                if (trains[i].activeSelf)
+                ReadyToDepart();
+            }
+            else
+            {
+                for (int i = 0; i < trains.Length; i++)
                 {
-                    
-                    //만약 리스트상에 선로 오브젝트가 없으면 기차는 그냥 직진만 하도록 한다.
-                    if (connectRail.instance.connectedRails.Count > railCount[i])
+                    if (trains[i].activeSelf)
                     {
-                        //기차의 방향은 리스트에서 저장된 선로의 위치를 목표 방향으로 잡는다. 
-                        if (!isDie[i])
-                        { dir[i] = (connectRail.instance.connectedRails[railCount[i]].transform.position - trains[i].transform.position).normalized; }
-                        CheckTrainPos(railCount[i], trains[i].transform.position, i);
-                        //여기서 y좌표는 무시한다.
-                        dir[i].y = trains[i].transform.position.y;
-                        RotateTrain(dir[i], trains[i].transform);
-                    }
-                    else
-                    {
-                        dir[i] = trains[i].transform.forward;
-                    }
-                    RailChecker(rayPos[i].position, i);
-                    if (connectRail.instance.stageClear)
-                    {
-                        trainSpeed = 5;
-                        if (isEnding)
+
+                        //만약 리스트상에 선로 오브젝트가 없으면 기차는 그냥 직진만 하도록 한다.
+                        if (connectRail.instance.connectedRails.Count > railCount[i])
                         {
-                            trainSpeed = 0;
+                            //기차의 방향은 리스트에서 저장된 선로의 위치를 목표 방향으로 잡는다. 
+                            if (!isDie[i])
+                            { dir[i] = (connectRail.instance.connectedRails[railCount[i]].transform.position - trains[i].transform.position).normalized; }
+                            CheckTrainPos(railCount[i], trains[i].transform.position, i);
+                            //여기서 y좌표는 무시한다.
+                            dir[i].y = trains[i].transform.position.y;
+                            RotateTrain(dir[i], trains[i].transform);
                         }
+                        else
+                        {
+                            dir[i] = trains[i].transform.forward;
+                        }
+                        RailChecker(rayPos[i].position, i);
+                        if (connectRail.instance.stageClear)
+                        {
+                            trainSpeed = 5;
+                            if (isEnding)
+                            {
+                                trainSpeed = 0;
+                            }
+                        }
+                        trains[i].transform.position += dir[i] * trainSpeed * Time.deltaTime;
                     }
-                    trains[i].transform.position += dir[i] * trainSpeed * Time.deltaTime;
                 }
             }
         }
+        else
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                trains[i].transform.position = Vector3.Lerp(trains[i].transform.position, recievePos[i], LerpSpeed * Time.deltaTime);
+                trains[i].transform.rotation = Quaternion.Lerp(trains[i].transform.rotation, recieveRot[i], LerpSpeed * Time.deltaTime);
+            }
+        }
+       
         SpeedText.text = trainSpeed.ToString("0.00")+" "+ "m/s";
 
 
@@ -161,6 +178,23 @@ public class trainMove : MonoBehaviour
         }
     }
 
-
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            //데이터 보내기
+            if (stream.IsWriting)//IsMine==true;
+            {
+                stream.SendNext(trains[i].transform.position);
+                stream.SendNext(trains[i].transform.rotation);
+            }
+            //데이터 받기
+            else if (stream.IsReading)//IsMine==false  
+            {
+                recievePos[i] = (Vector3)stream.ReceiveNext();
+                recieveRot[i] = (Quaternion)stream.ReceiveNext();
+            }
+        }
+    }
 
 }
