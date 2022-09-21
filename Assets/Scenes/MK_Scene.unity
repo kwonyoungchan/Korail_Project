@@ -19790,6 +19790,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 890500597914624942, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1567805644720311589, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
       propertyPath: matPos.Array.size
       value: 3
@@ -34485,14 +34489,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 686818933}
     m_Modifications:
-    - target: {fileID: 4083026860266396165, guid: 573d0e287b5eba34da325cdaa727f230, type: 3}
-      propertyPath: m_Size.y
-      value: 1.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083026860266396165, guid: 573d0e287b5eba34da325cdaa727f230, type: 3}
-      propertyPath: m_Center.y
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 4083026860266396166, guid: 573d0e287b5eba34da325cdaa727f230, type: 3}
       propertyPath: m_RootOrder
       value: 580
@@ -34540,10 +34536,6 @@ PrefabInstance:
     - target: {fileID: 4083026860266396171, guid: 573d0e287b5eba34da325cdaa727f230, type: 3}
       propertyPath: m_Name
       value: River
-      objectReference: {fileID: 0}
-    - target: {fileID: 8217118447778979716, guid: 573d0e287b5eba34da325cdaa727f230, type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573d0e287b5eba34da325cdaa727f230, type: 3}

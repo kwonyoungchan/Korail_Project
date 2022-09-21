@@ -117,7 +117,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             if (Input.GetButtonDown("Jump"))
                             {
                                 // 손에서 제거
-                                itemGOD.ChangeState(ItemGOD.Items.Rail, default, 0.7f);
+                                itemGOD.ChangeState(ItemGOD.Items.Rail, default, 0.75f);
                                 RemoveRail();
                             }
 
@@ -128,7 +128,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             if (Input.GetButtonDown("Jump"))
                             {
                                 // 제거
-                                itemGOD.ChangeState(ItemGOD.Items.Idle);
+                                itemGOD.ChangeState(ItemGOD.Items.Idle, default, 0.75f);
                                 connectRail.instance.connectedRails.RemoveAt(connectRail.instance.connectedRails.Count - 1);
                                 AddRail();
                             }
@@ -724,6 +724,10 @@ public class PlayerMaterial : MonoBehaviourPun
             if(railArray.Count > 0)
             {
                 playerItem.holdState = PlayerItemDown.Hold.Mat;
+            }
+            else
+            {
+                playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
             }
         }
         

@@ -42,7 +42,7 @@ public class PlayerForwardRay : MonoBehaviour
         Ray playerRay = new Ray(rPos.transform.position, transform.forward);
         RaycastHit rayInfo;
         // 만약 맞은 물체가 있다면
-        if (Physics.Raycast(playerRay, out rayInfo, 1f))
+        if (Physics.Raycast(playerRay, out rayInfo, 1.5f))
         {
             Debug.DrawRay(rPos.transform.position, transform.forward, Color.blue);
             // 맞은 곳이 강
