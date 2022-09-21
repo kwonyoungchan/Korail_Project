@@ -21,6 +21,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
     [SerializeField] float RotScale;
     [SerializeField] GameObject[] trains;
     [SerializeField] Text SpeedText;
+    GameObject trainBang;
     float trainTimer;
     bool depart;
     bool[] isDie;
@@ -150,18 +151,25 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
     //기차 탈선됐을 때 죽는 처리하는 기능
      void RailChecker(Vector3 rayPosition,int i)
     {
+        photonView.RPC("RpcRailChecker", RpcTarget.All, rayPosition, i);
+    }
+    [PunRPC]
+    void RpcRailChecker(Vector3 rayPosition, int i)
+    {
         Ray ray = new Ray(rayPosition, -transform.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit,~1<<9))
+        int layerMask = 1 << LayerMask.NameToLayer("Bridge");
+        if (Physics.Raycast(ray, out hit, 2, ~layerMask))
         {
             //만약 지금 기차가 선로가 아닌곳에 있다면 
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Idle)
             {
                 //기차가 터진다
                 isDie[i] = true;
+                GameObject explosion = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/train_explosion"));
+                explosion.transform.position = trains[i].transform.position;
+                Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
-
-
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
@@ -173,7 +181,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
                 {
                     SceneManager.LoadScene("ClearScene");
                 }
-                
+
             }
         }
     }

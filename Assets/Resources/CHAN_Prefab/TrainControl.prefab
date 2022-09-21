@@ -52,7 +52,7 @@ MonoBehaviour:
   - {fileID: 6448478617297431777}
   - {fileID: 6448478618219358453}
   - {fileID: 6448478617717880827}
-  gap: 1
+  gap: 2
   RotScale: 2
   trains:
   - {fileID: 6448478618529776305}
@@ -62,8 +62,8 @@ MonoBehaviour:
   railCount: 
   isEnding: 0
   trainSpeed: 0.5
-  departTime: 80
-  LerpSpeed: 0
+  departTime: 20
+  LerpSpeed: 5
 --- !u!114 &890500597914624942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +99,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 4446306246945821641, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
+      propertyPath: m_TagString
+      value: RPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 5529417373789184645, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
       propertyPath: m_TagString
       value: RPos
       objectReference: {fileID: 0}
@@ -182,6 +186,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1567805645146434428}
     m_Modifications:
+    - target: {fileID: 5529417373789184645, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5529417374954917072, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
       propertyPath: m_RootOrder
       value: 0

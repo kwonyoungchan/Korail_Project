@@ -31,6 +31,7 @@ public class Radar : MonoBehaviour
         }
         detectBlocks.Clear();
         // blocks 배열에 주변 콜라이더 정보가 들어온다.
+       
         blocks = Physics.OverlapSphere(transform.position, 2, 1 << 7);
 
         //검출한 콜라이더의 정보를 리스트에 저장한다.
