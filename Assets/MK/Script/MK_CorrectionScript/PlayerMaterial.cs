@@ -117,7 +117,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             if (Input.GetButtonDown("Jump"))
                             {
                                 // 손에서 제거
-                                itemGOD.ChangeState(ItemGOD.Items.Rail);
+                                itemGOD.ChangeState(ItemGOD.Items.Rail, default, 0.7f);
                                 RemoveRail();
                             }
 
