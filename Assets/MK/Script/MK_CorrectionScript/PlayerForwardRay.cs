@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 플레이어가 보는 방향으로 레이쏘기 => 레이로 재료와 강 collider판 
+// 플레이어가 보는 방향에 나무나 철이 있다면 캐기
 public class PlayerForwardRay : MonoBehaviour
 {
+    // 레이 위치
+    public GameObject rPos;
     public bool isBranch;
     // 플레이어 재료
     PlayerMaterial player;
@@ -19,6 +22,12 @@ public class PlayerForwardRay : MonoBehaviour
 
     public bool isWater = false;
 
+    // 채집을 위한 변수들
+    // ingredientItem
+    IngredientItem item;
+
+    public bool isGathering = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,37 +39,54 @@ public class PlayerForwardRay : MonoBehaviour
     void Update()
     {
         // 플레이어가 앞으로 레이를 쏜다
-        Ray playerRay = new Ray(transform.position, transform.forward);
+        Ray playerRay = new Ray(rPos.transform.position, transform.forward);
         RaycastHit rayInfo;
         // 만약 맞은 물체가 있다면
         if (Physics.Raycast(playerRay, out rayInfo, 1f))
         {
+            Debug.DrawRay(rPos.transform.position, transform.forward, Color.blue);
+            // 맞은 곳이 강
             riverGOD = rayInfo.transform.GetComponentInParent<RiverGOD>();
-            // 플레이어의 손에 나무가 있을때
-            if (player.branchArray.Count > 0)
+            // 맞은 곳이 재료 수집하는 곳
+            item = rayInfo.transform.GetComponentInParent<IngredientItem>();
+            if (riverGOD)
             {
-                // 점프키를 누른다면
-                if (Input.GetButtonDown("Jump"))
+                // 플레이어의 손에 나무가 있을때
+                if (player.branchArray.Count > 0)
                 {
-                    if (rayInfo.transform.gameObject.layer == 8)
+                    // 점프키를 누른다면
+                    if (Input.GetButtonDown("Jump"))
                     {
-                        isBranch = false;
-                        player.RemoveBranch();
-                        // bridge로 바뀜
-                        riverGOD.riverState = RiverGOD.River.Bridge;
+                        if (rayInfo.transform.gameObject.layer == 8)
+                        {
+                            isBranch = false;
+                            player.RemoveBranch();
+                            // bridge로 바뀜
+                            riverGOD.riverState = RiverGOD.River.Bridge;
+                        }
+                    }
+                }
+                // 물가 근처에 있을때
+                // 양동이를 들고 있다면
+                if (playerHand.holdState == PlayerItemDown.Hold.Pail)
+                {
+                    currentTime += Time.deltaTime;
+                    // 일정 시간 후 양동이에 물이 채워진다
+                    if (currentTime > waterTime)
+                    {
+                        water.SetActive(true);
+                        isWater = true;
                     }
                 }
             }
-            // 물가 근처에 있을때
-            // 양동이를 들고 있다면
-            if (playerHand.holdState == PlayerItemDown.Hold.Pail)
+            // 맞은 곳이 나무나 철이라면
+            if (item)
             {
                 currentTime += Time.deltaTime;
-                // 일정 시간 후 양동이에 물이 채워진다
-                if(currentTime > waterTime)
+                if (currentTime > 1)
                 {
-                    water.SetActive(true);
-                    isWater = true;
+                    isGathering = true;
+                    currentTime = 0;
                 }
             }
         }
