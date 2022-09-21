@@ -87,7 +87,7 @@ public class ItemGOD : MonoBehaviourPun
             case Items.Rail:
                 if (!turn)
                 {
-                    Destroy(createItem);
+                    PhotonNetwork.Destroy(createItem);
                     createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, railHeight, 0), setRot);
                     //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
@@ -98,7 +98,8 @@ public class ItemGOD : MonoBehaviourPun
             case Items.CornerRail:
                 if (!turn)
                 {
-                    Destroy(createItem);
+
+                    PhotonNetwork.Destroy(createItem);
                     createItem = PhotonNetwork.Instantiate("CHAN_Prefab/cornerRail", transform.position + new Vector3(0, railHeight, 0), setRot);
                     //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
                     //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
