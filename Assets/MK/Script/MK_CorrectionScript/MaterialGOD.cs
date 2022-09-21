@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // 플레이어의 명령에 따라 cube(맵)의 상태를 전환함
-public class MaterialGOD : MonoBehaviour
+public class MaterialGOD : MonoBehaviourPun
 {
     // Material에 따른 상태 변화
     public enum Materials

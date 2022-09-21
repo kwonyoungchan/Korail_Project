@@ -152,7 +152,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
     {
         Ray ray = new Ray(rayPosition, -transform.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit,~1<<9))
         {
             //만약 지금 기차가 선로가 아닌곳에 있다면 
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Idle)
