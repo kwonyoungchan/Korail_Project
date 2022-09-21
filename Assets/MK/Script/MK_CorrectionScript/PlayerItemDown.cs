@@ -70,7 +70,10 @@ public class PlayerItemDown : MonoBehaviourPun
                 toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
                 matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
                 itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
-                if (matGOD.matState != MaterialGOD.Materials.Idle) return;
+                RiverGOD riverGod = cubeInfo.transform.gameObject.GetComponent<RiverGOD>();
+                //if (matGOD == null) return;
+                if (matGOD == null || matGOD.matState != MaterialGOD.Materials.Idle) return;
+
                 // 바닥 상태 : 아무것도 없음
                 if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                 {

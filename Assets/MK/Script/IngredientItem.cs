@@ -20,6 +20,8 @@ public class IngredientItem : MonoBehaviour
 
     PlayerItemDown player;
 
+    bool isGathering;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,15 +33,17 @@ public class IngredientItem : MonoBehaviour
     void Update()
     {
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "ProtoType")
-            player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
+        
+        player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
+        isGathering = GameObject.Find("Player(Clone)").GetComponent<PlayerForwardRay>().isGathering;
+        
         if (player.holdState == PlayerItemDown.Hold.Ax) 
         {
             axDis = Vector3.Distance(player.transform.position, transform.position);
 
             if (gameObject.name.Contains("Tree"))
             {
-                if (axDis < 1.5f)
+                if (axDis < 1f && isGathering)
                 {
                     currentTime += Time.deltaTime;
 
@@ -50,13 +54,13 @@ public class IngredientItem : MonoBehaviour
                 }
             }
         }
-        if (player.holdState == PlayerItemDown.Hold.Pick)
+        if (player.holdState == PlayerItemDown.Hold.Pick && isGathering)
         {
             pickDis = Vector3.Distance(player.transform.position, transform.position);
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 1.5f)
+                if (pickDis < 1.2f)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
@@ -75,9 +79,11 @@ public class IngredientItem : MonoBehaviour
     {
         currentTime = 0;
         hp--;
-        if(hp <= 0)
+        isGathering = false;
+        if (hp <= 0)
         {
             Destroy(gameObject);
+            isGathering = false;
             // GOD�� �ִ� State ����
             if (n == 0)
                 GetComponentInParent<MaterialGOD>().matState = MaterialGOD.Materials.Branch;
