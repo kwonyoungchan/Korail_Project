@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
-        PhotonNetwork.Instantiate("Player", spawnPos[idx], Quaternion.identity);
+        PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
     }
 
     // Update is called once per frame

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 
 // 블럭 주변의 rail 정보 클래스
 public class RailInfo
@@ -11,7 +11,7 @@ public class RailInfo
 }
 
 
-public class ItemGOD : MonoBehaviour
+public class ItemGOD : MonoBehaviourPun
 {
     
     public enum Items
@@ -75,8 +75,9 @@ public class ItemGOD : MonoBehaviour
             case Items.StartRail:
                 if (!turn)
                 {
-                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
-                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
+                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, 0.5f, 0), setRot);
+                    //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     //createItem.transform.rotation = setRot;
                     //rd.material.color = Color.blue;
                     turn = true;
@@ -87,8 +88,9 @@ public class ItemGOD : MonoBehaviour
                 if (!turn)
                 {
                     Destroy(createItem);
-                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
-                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
+                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, railHeight, 0), setRot);
+                    //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     createItem.transform.rotation = setRot;
                     turn = true;
                 }
@@ -97,8 +99,9 @@ public class ItemGOD : MonoBehaviour
                 if (!turn)
                 {
                     Destroy(createItem);
-                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
-                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
+                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/cornerRail", transform.position + new Vector3(0, railHeight, 0), setRot);
+                    //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/cornerRail"));
+                    //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     createItem.transform.rotation = setRot;
                     turn = true;
                 }
@@ -106,8 +109,9 @@ public class ItemGOD : MonoBehaviour
             case Items.EndRail:
                 if (!turn)
                 {
-                    createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
-                    createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
+                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, 0.5f, 0),setRot);
+                    //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                    // rd.material.color = Color.black;
                     turn = true;
                 }
@@ -117,11 +121,23 @@ public class ItemGOD : MonoBehaviour
 
 
     }
-    public void ChangeState(Items item, Quaternion Rot= default,float Height = 0.5f)
+
+
+
+    public void ChangeState(Items item, Quaternion Rot = default, float Height = 0.5f, bool Turn = false)
     {
         turn = false;
-        setRot = Rot;
         items = item;
+        setRot = Rot;
+        railHeight = Height;
+        photonView.RPC("RPCChangeState", RpcTarget.All,items, setRot, railHeight, turn);
+    }
+    [PunRPC]
+    void RPCChangeState(Items item, Quaternion Rot = default, float Height = 0.5f, bool Turn = false)
+    {
+        turn = false;
+        items = item;
+        setRot = Rot;       
         railHeight = Height;
     }
 
