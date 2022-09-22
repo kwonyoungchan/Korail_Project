@@ -23,7 +23,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
     [SerializeField] Text SpeedText;
     GameObject trainBang;
     float trainTimer;
-    bool depart;
+    public bool depart;
     bool[] isDie;
     [SerializeField] int[] railCount;
     public bool isEnding;

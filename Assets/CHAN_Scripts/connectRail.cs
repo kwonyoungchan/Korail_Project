@@ -50,25 +50,27 @@ public class connectRail : MonoBehaviour
                 Ray ray = new Ray(connectedRails[connectedRails.Count-1].transform.position, dir[i]);
                 RaycastHit hit;
                 Physics.Raycast(ray, out hit);
-                if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Rail && !hit.transform.GetComponent<ItemGOD>().isConnected)
+                ItemGOD itemInfo = hit.transform.GetComponent<ItemGOD>();
+                if (itemInfo)
                 {
-                    hit.transform.GetComponent<ItemGOD>().isConnected = true;
-                    if (!connectedRails.Contains(hit.transform.gameObject))
+                    if (itemInfo.items == ItemGOD.Items.Rail && !itemInfo.isConnected)
                     {
-                        connectedRails.Add(hit.transform.gameObject);
+                        itemInfo.isConnected = true;
+                        if (!connectedRails.Contains(hit.transform.gameObject))
+                        {
+                            connectedRails.Add(hit.transform.gameObject);
+                        }
+                        break;
                     }
-                    break;
-                }
-                else if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
-                {
-                    print("Clear!!");
-                    if (!stageClear)
-                    { 
-                        connectedRails.Add(hit.transform.gameObject);
+                    else if (itemInfo.items == ItemGOD.Items.EndRail)
+                    {
+                        print("Clear!!");
+                        if (!stageClear)
+                        {
+                            connectedRails.Add(hit.transform.gameObject);
+                        }
+                        stageClear = true;
                     }
-                    stageClear = true; 
-
-
                 }
             }
         }
