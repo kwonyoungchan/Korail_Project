@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5662804375531942600}
   - component: {fileID: 2643301451550268546}
   - component: {fileID: 1394344932678914527}
+  - component: {fileID: -430256963106084352}
   m_Layer: 0
   m_Name: Forest 1
   m_TagString: Untagged
@@ -114,9 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 0
-  steelCount: 0
-  railCount: 0
+  branchCount: 1
+  steelCount: 1
+  railCount: 1
   mat: []
 --- !u!114 &2643301451550268546
 MonoBehaviour:
@@ -146,6 +147,29 @@ MonoBehaviour:
   items: 0
   turn: 0
   isConnected: 0
+  railHeight: 0
+--- !u!114 &-430256963106084352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211484740561144326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &7570101651193816162
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,19 +8,24 @@ public class PlayerForwardRay : MonoBehaviour
 {
     // 레이 위치
     public GameObject rPos;
+    public GameObject iPos;
     public bool isBranch;
     // 플레이어 재료
     PlayerMaterial player;
     // 플레이어 아이템 상태
     PlayerItemDown playerHand;
-    RiverGOD riverGOD;
+    RiverGOD riverGOD; 
     // 시간
     float currentTime;
     public float waterTime = 4;
     // 물채우기
     public GameObject water;
+    Animal animal;
 
     public bool isWater = false;
+    public bool isItemDown = false;
+
+    bool isAnimal = false;
 
     // 채집을 위한 변수들
     // ingredientItem
@@ -38,6 +43,17 @@ public class PlayerForwardRay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerHand.holdState == PlayerItemDown.Hold.Animal)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                isItemDown = false;
+                iPos.transform.GetChild(1).GetComponent<Animal>().animalState = Animal.Animals.Idle;
+                playerHand.holdState = PlayerItemDown.Hold.ChangeIdle;
+                iPos.transform.GetChild(1).gameObject.transform.position = iPos.transform.position + new Vector3(0, 0.5f, 0.8f);
+                iPos.transform.GetChild(1).gameObject.transform.parent = null;
+            }
+        }
         // 플레이어가 앞으로 레이를 쏜다
         Ray playerRay = new Ray(rPos.transform.position, transform.forward);
         RaycastHit rayInfo;
@@ -49,6 +65,7 @@ public class PlayerForwardRay : MonoBehaviour
             riverGOD = rayInfo.transform.GetComponentInParent<RiverGOD>();
             // 맞은 곳이 재료 수집하는 곳
             item = rayInfo.transform.GetComponentInParent<IngredientItem>();
+            animal = rayInfo.transform.GetComponent<Animal>();
             if (riverGOD)
             {
                 // 플레이어의 손에 나무가 있을때
@@ -82,13 +99,34 @@ public class PlayerForwardRay : MonoBehaviour
             // 맞은 곳이 나무나 철이라면
             if (item)
             {
-                currentTime += Time.deltaTime;
-                if (currentTime > 1)
+                isGathering = true;
+            }
+
+            if (animal)
+            {
+
+                if (Input.GetButtonDown("Jump"))
                 {
-                    isGathering = true;
-                    currentTime = 0;
+                    isAnimal = true;
+                    if (playerHand.holdState == PlayerItemDown.Hold.Idle)
+                    {
+                        isItemDown = true;
+                        animal.animalState = Animal.Animals.Stop;
+                        playerHand.holdState = PlayerItemDown.Hold.Animal;
+                        animal.gameObject.transform.parent = iPos.transform;
+                        animal.gameObject.transform.localPosition = new Vector3(0, 0.5f, 0.6f);
+                    }
+
+                }
+                if (playerHand.holdState == PlayerItemDown.Hold.Ax || playerHand.holdState == PlayerItemDown.Hold.Pick)
+                {
+                    animal.Damage();
                 }
             }
         }
+
+
     }
+
+    
 }

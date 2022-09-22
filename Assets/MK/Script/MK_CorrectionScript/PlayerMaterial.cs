@@ -49,6 +49,8 @@ public class PlayerMaterial : MonoBehaviourPun
     Transform matTrain;
     MixedItem rail;
 
+    GameObject railtrain;
+
     bool isBranch = true;
 
     int n;
@@ -69,18 +71,24 @@ public class PlayerMaterial : MonoBehaviourPun
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AddRail();
-        }
         // 움직임 연동 : 내것이 아니면 반환
         if (!photonView.IsMine)
         {
             return;
 
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            AddRail();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            AddBranch();
+        }
         // RailTrain과의 거리가 가까우면 
-        GameObject railtrain = GameObject.Find("train_laugage2");
+        railtrain = GameObject.Find("train_laugage2");
         float dis = Vector3.Distance(railtrain.transform.position, transform.position);
 
         // 기차 위치
@@ -224,7 +232,7 @@ public class PlayerMaterial : MonoBehaviourPun
                         }
 
                         // 바닥 상태가 idle이라면
-                        if (toolGOD.toolsState == ToolGOD.Tools.Idle && matGod.matState == MaterialGOD.Materials.Idle && isBranch)
+                        if (toolGOD.toolsState == ToolGOD.Tools.Idle && matGod.matState == MaterialGOD.Materials.Idle)
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
@@ -239,7 +247,11 @@ public class PlayerMaterial : MonoBehaviourPun
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, matGod.branchCount);
+                                playerItem.holdState = PlayerItemDown.Hold.Ax;
+                                toolGOD.toolsState = ToolGOD.Tools.Idle;
+                                matGod.branchCount = branchArray.Count;
+                                matGod.matState = MaterialGOD.Materials.Branch;
+                                // ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, matGod.branchCount);
                                 DeleteMat(branchArray);
                             }
                         }
@@ -547,7 +559,6 @@ public class PlayerMaterial : MonoBehaviourPun
                 // 손에 없고
                 else
                 {
-
                     if (dis < 1.5f && rail.railCount > 0)
                     {
                         if (Input.GetButtonDown("Jump"))
@@ -568,6 +579,7 @@ public class PlayerMaterial : MonoBehaviourPun
                     // 점프키를 눌렀을 때,
                     if (Input.GetButtonDown("Jump"))
                     {
+
                         #region Branch 
                         // 바닥 상태가 Branch라면
                         if (matGod.matState == MaterialGOD.Materials.Branch)
@@ -691,7 +703,7 @@ public class PlayerMaterial : MonoBehaviourPun
         {
             Destroy(matArray[i].gameObject);
         }
-        playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+        // playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
         matArray.Clear();
     }
     // 상태 변화
@@ -702,7 +714,17 @@ public class PlayerMaterial : MonoBehaviourPun
         count = mat.Count;
         matGod.matState = mats;
     }
-
+    public void AddBranch()
+    {
+        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+        branch.gameObject.transform.parent = itemPos;
+        branchArray.Add(branch);
+        for (int i = 0; i < branchArray.Count; i++)
+        {
+            branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+        }
+        playerItem.holdState = PlayerItemDown.Hold.Mat;
+    }
     public void AddRail()
     {
         GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));

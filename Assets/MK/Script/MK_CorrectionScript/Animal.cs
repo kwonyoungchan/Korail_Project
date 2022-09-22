@@ -2,41 +2,105 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ÆÐÆ®·ÑÇÏ°Ô ¸¸µé±â =
-// Ã¼·Â ¸¸µé±â
 public class Animal : MonoBehaviour
 {
     public enum Animals
     {
         Idle,
         Move,
-        Rot
+        Rot,
+        Stop
     }
     public Animals animalState = Animals.Idle;
-    // µ¿¹° hp
+    // ë™ë¬¼ hp
     public int animalHP = 5;
-    // µ¿¹° ÀÌµ¿ ¼Óµµ
+    // ì†ë„
     public float speed = 1;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    // ëžœë¤ ìœ„ì¹˜
+    Vector3 rndPos;
+    bool res;
+    // ëžœë¤ ìœ„ì¹˜ ë²”ìœ„
+    public float range = 3;
 
-    }
+    float currentTime = 0;
+    float currentTime1 = 0;
+    public float changeTime = 3;
 
     // Update is called once per frame
     void Update()
     {
+        AnimalFSM();
+        if (animalState != Animals.Stop)
+        {
+            currentTime += Time.deltaTime;
+        }
+
+        if (currentTime > changeTime)
+        {
+            currentTime = 0;
+            int rnd = Random.Range(0, 2);
+            print(rnd);
+            switch (rnd)
+            {
+                case 0:
+                    animalState = Animals.Idle;
+                    break;
+                case 1:
+                    animalState = Animals.Rot;
+                    break;
+            }
+        }
+        
 
     }
 
-    // µ¥¹ÌÁö
-    void Damage()
+    void AnimalFSM()
     {
-        animalHP--;
-        if(animalHP <= 0)
+        switch (animalState)
         {
-            Destroy(gameObject);
+            case Animals.Idle:
+                break;
+            case Animals.Move:
+                Move();
+                break;
+            case Animals.Rot:
+                Rot();
+                break;
+            case Animals.Stop:
+                currentTime = 0;
+                break;
+        }
+    }
+    
+    // ì›€ì§ì´ê¸°
+    void Move()
+    {
+        Vector3 dir = rndPos - transform.position;
+        transform.position += dir * speed * Time.deltaTime;
+    }
+
+    void Rot()
+    {
+        // ëžœë¤ ìœ„ì¹˜ ì •í•˜ê¸°
+        rndPos = UnityEngine.Random.insideUnitSphere * range;
+        rndPos.y = 1.5f;
+        transform.LookAt(rndPos);
+        animalState = Animals.Move;
+    }
+
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public void Damage()
+    {
+        currentTime1 += Time.deltaTime;
+        if (currentTime1 > 1)
+        {
+            animalHP--;
+            if (animalHP <= 0)
+            {
+                Destroy(gameObject);
+            }
+            currentTime1 = 0;
         }
     }
 }

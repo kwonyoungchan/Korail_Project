@@ -114,9 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 0
-  steelCount: 0
-  railCount: 0
+  branchCount: 1
+  steelCount: 1
+  railCount: 1
   mat: []
 --- !u!114 &8470321773874906803
 MonoBehaviour:

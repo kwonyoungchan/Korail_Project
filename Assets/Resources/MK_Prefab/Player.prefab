@@ -513,7 +513,6 @@ GameObject:
   - component: {fileID: 771538227883799619}
   - component: {fileID: 9004529808299624028}
   - component: {fileID: 3703405768045682223}
-  - component: {fileID: 3303682647015000537}
   m_Layer: 0
   m_Name: ArmAx
   m_TagString: Tool
@@ -601,28 +600,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3303682647015000537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637004026864238890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1863922144975108570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,7 +1032,6 @@ GameObject:
   - component: {fileID: 2682638419265692950}
   - component: {fileID: 6349104232716605473}
   - component: {fileID: 5864039252825232014}
-  - component: {fileID: 7034774095759022093}
   m_Layer: 0
   m_Name: ArmPail
   m_TagString: Tool
@@ -1147,28 +1123,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7034774095759022093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515616995476909995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &5210833608676381148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,7 +1175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6045564612975815712
 Transform:
   m_ObjectHideFlags: 0
@@ -1424,7 +1378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5545212992765044964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.059, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1544,6 +1498,9 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4416746454337753914}
+  - {fileID: 297246485837511287}
+  - {fileID: 0}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1577,10 +1534,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rPos: {fileID: 122694445870208107}
+  iPos: {fileID: 44306439055955659}
   isBranch: 0
   waterTime: 4
   water: {fileID: 5306645351462097965}
   isWater: 0
+  isItemDown: 0
   isGathering: 0
 --- !u!1 &5587062031630758818
 GameObject:
@@ -2261,7 +2220,6 @@ GameObject:
   - component: {fileID: 3797177703774007439}
   - component: {fileID: 5055029923866408195}
   - component: {fileID: 8924548875221366230}
-  - component: {fileID: 3510774906492361678}
   m_Layer: 0
   m_Name: ArmPick
   m_TagString: Tool
@@ -2351,28 +2309,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3510774906492361678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8367362038833982557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &8601532608409813215
 GameObject:
   m_ObjectHideFlags: 0

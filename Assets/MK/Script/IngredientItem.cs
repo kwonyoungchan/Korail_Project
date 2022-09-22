@@ -54,13 +54,13 @@ public class IngredientItem : MonoBehaviour
                 }
             }
         }
-        if (player.holdState == PlayerItemDown.Hold.Pick && isGathering)
+        if (player.holdState == PlayerItemDown.Hold.Pick)
         {
             pickDis = Vector3.Distance(player.transform.position, transform.position);
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 1.2f)
+                if (pickDis < 1.2f && isGathering)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
