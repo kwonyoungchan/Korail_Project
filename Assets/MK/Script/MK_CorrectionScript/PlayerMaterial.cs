@@ -176,7 +176,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                 branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                             }
-                            matGod.matState = MaterialGOD.Materials.None;
+                            matGod.MaterialFSM(MaterialGOD.Materials.None);
 
                         }
                         // 바닥 상태가 Steel일때
@@ -200,7 +200,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                     }
                                     matGod.mat.Clear();
                                     matGod.branchCount = branchArray.Count;
-                                    matGod.matState = MaterialGOD.Materials.Branch;
+                                    matGod.MaterialFSM(MaterialGOD.Materials.Branch);
                                     DeleteMat(branchArray);
                                 }
                             }
@@ -224,7 +224,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                     }
                                     matGod.mat.Clear();
                                     matGod.branchCount = branchArray.Count;
-                                    matGod.matState = MaterialGOD.Materials.Branch;
+                                    matGod.MaterialFSM(MaterialGOD.Materials.Branch);
                                     DeleteMat(branchArray);
 
                                 }
@@ -237,7 +237,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             if (Input.GetButtonDown("Jump"))
                             {
                                 matGod.branchCount = branchArray.Count;
-                                matGod.matState = MaterialGOD.Materials.Branch;
+                                matGod.MaterialFSM(MaterialGOD.Materials.Branch);
                                 DeleteMat(branchArray);
                             }
                         }
@@ -250,7 +250,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 playerItem.holdState = PlayerItemDown.Hold.Ax;
                                 toolGOD.toolsState = ToolGOD.Tools.Idle;
                                 matGod.branchCount = branchArray.Count;
-                                matGod.matState = MaterialGOD.Materials.Branch;
+                                matGod.MaterialFSM(MaterialGOD.Materials.Branch);
                                 // ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, matGod.branchCount);
                                 DeleteMat(branchArray);
                             }
@@ -310,7 +310,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                 steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                             }
-                            matGod.matState = MaterialGOD.Materials.None;
+                            matGod.MaterialFSM(MaterialGOD.Materials.None);
 
                         }
                         // 바닥 상태가 branch
@@ -332,7 +332,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                     }
                                     matGod.mat.Clear();
                                     matGod.steelCount = steelArray.Count;
-                                    matGod.matState = MaterialGOD.Materials.Steel;
+                                    matGod.MaterialFSM(MaterialGOD.Materials.Steel);
                                     DeleteMat(steelArray);
                                 }
 
@@ -356,7 +356,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                     }
                                     matGod.mat.Clear();
                                     matGod.steelCount = steelArray.Count;
-                                    matGod.matState = MaterialGOD.Materials.Steel;
+                                    matGod.MaterialFSM(MaterialGOD.Materials.Steel);
                                     DeleteMat(steelArray);
                                 }
 
@@ -368,7 +368,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             if (Input.GetButtonDown("Jump"))
                             {
                                 matGod.steelCount = steelArray.Count;
-                                matGod.matState = MaterialGOD.Materials.Steel;
+                                matGod.MaterialFSM(MaterialGOD.Materials.Steel);
                                 DeleteMat(steelArray);
                             }
                         }
@@ -479,7 +479,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                         }
                                         matGod.mat.Clear();
                                         matGod.railCount = railArray.Count;
-                                        matGod.matState = MaterialGOD.Materials.Rail;
+                                        matGod.MaterialFSM(MaterialGOD.Materials.Rail);
                                         DeleteMat(railArray);
                                     }
 
@@ -503,7 +503,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                         }
                                         matGod.mat.Clear();
                                         matGod.railCount = railArray.Count;
-                                        matGod.matState = MaterialGOD.Materials.Rail;
+                                        matGod.MaterialFSM(MaterialGOD.Materials.Rail);
                                         DeleteMat(railArray);
                                     }
 
@@ -515,7 +515,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 if (Input.GetButtonDown("Jump"))
                                 {
                                     matGod.railCount = railArray.Count;
-                                    matGod.matState = MaterialGOD.Materials.Rail;
+                                    matGod.MaterialFSM(MaterialGOD.Materials.Rail);
                                     DeleteMat(railArray);
                                 }
 
@@ -600,7 +600,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Mat;
                             // 바닥상태 변환
-                            matGod.matState = MaterialGOD.Materials.None;
+                            matGod.MaterialFSM(MaterialGOD.Materials.None);
                         }
                         #endregion
                         #region Steel
@@ -623,7 +623,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Mat;
                             // 바닥상태 변환
-                            matGod.matState = MaterialGOD.Materials.None;
+                            matGod.MaterialFSM(MaterialGOD.Materials.None);
 
                         }
                         #endregion
@@ -647,7 +647,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             // 플레이어 손상태 변환
                             playerItem.holdState = PlayerItemDown.Hold.Mat;
                             // 바닥상태 변환
-                            matGod.matState = MaterialGOD.Materials.None;
+                            matGod.MaterialFSM(MaterialGOD.Materials.None);
                         }
                         if (itemGOD.items == ItemGOD.Items.Rail || itemGOD.items == ItemGOD.Items.CornerRail)
                         {
@@ -712,7 +712,7 @@ public class PlayerMaterial : MonoBehaviourPun
         playerItem.holdState = player;
         toolGOD.toolsState = tool;
         count = mat.Count;
-        matGod.matState = mats;
+        matGod.MaterialFSM(mats);
     }
     public void AddBranch()
     {

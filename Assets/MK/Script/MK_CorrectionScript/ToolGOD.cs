@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 // 플레이어의 명령에 따라 cube(맵)의 상태를 전환함
-public class ToolGOD : MonoBehaviour
+public class ToolGOD : MonoBehaviourPun
 {
     // 도구 상태 enum
     public enum Tools
@@ -92,4 +92,15 @@ public class ToolGOD : MonoBehaviour
         }
     }
 
+
+    public void ChangeState(Tools s)
+    {
+        photonView.RPC("RpcChangeState", RpcTarget.All, s);
+    }
+
+    [PunRPC]
+    void RpcChangeState(Tools s)
+    {
+        toolsState = s;
+    }
 }

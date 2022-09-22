@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5662804375531942600}
   - component: {fileID: 2643301451550268546}
   - component: {fileID: 1394344932678914527}
-  - component: {fileID: -430256963106084352}
+  - component: {fileID: 6214843184780359572}
   m_Layer: 0
   m_Name: Forest 1
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
   turn: 0
   isConnected: 0
   railHeight: 0
---- !u!114 &-430256963106084352
+--- !u!114 &6214843184780359572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,45 +177,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2051009745310149537}
     m_Modifications:
-    - target: {fileID: 66870935901008597, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 66870935901008597, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.146
-      objectReference: {fileID: 0}
-    - target: {fileID: 6527394270619768851, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6527394270619768851, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6527394270619768851, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6527394270619768851, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.129
-      objectReference: {fileID: 0}
     - target: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
       propertyPath: m_LocalPosition.x
@@ -261,29 +225,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3545212490828388887, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
---- !u!1 &412502972629898202 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7833983047612807096, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
-  m_PrefabInstance: {fileID: 7570101651193816162}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1217769466052089254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412502972629898202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56dc0873cb592754f980e2ee6d54f2c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemFact:
-  - {fileID: 220032747963324046, guid: 0da75dfc077d2bd4cbfb0280b175c575, type: 3}
-  - {fileID: 8311551919865575204, guid: 2bfb0be2357996949a6cca404819b9c6, type: 3}
-  y: 0.3
 --- !u!4 &686577457909493931 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}

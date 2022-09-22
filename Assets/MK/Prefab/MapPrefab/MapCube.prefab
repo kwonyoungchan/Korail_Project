@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3971322621493523818}
   - component: {fileID: 8470321773874906803}
   - component: {fileID: 2201691128530709105}
-  - component: {fileID: 7302155828780000467}
+  - component: {fileID: -7819074640255125047}
   m_Layer: 0
   m_Name: MapCube
   m_TagString: Untagged
@@ -147,7 +147,7 @@ MonoBehaviour:
   turn: 0
   isConnected: 0
   railHeight: 0
---- !u!114 &7302155828780000467
+--- !u!114 &-7819074640255125047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4083026860266396165}
   - component: {fileID: 4083026860266396170}
   - component: {fileID: 6722434002324572100}
-  - component: {fileID: 280483942273390589}
+  - component: {fileID: -3788982149532966845}
   m_Layer: 0
   m_Name: River
   m_TagString: Untagged
@@ -130,7 +130,7 @@ MonoBehaviour:
   turn: 0
   isConnected: 0
   railHeight: 0
---- !u!114 &280483942273390589
+--- !u!114 &-3788982149532966845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

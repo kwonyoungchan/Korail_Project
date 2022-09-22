@@ -26,25 +26,21 @@ public class MaterialGOD : MonoBehaviourPun
 
     // 생성된 게임오브젝트
     public List<GameObject> mat = new List<GameObject>();
-
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        branchCount = 1;
-        steelCount = 1;
-        railCount = 1; 
+        MaterialFSM(Materials.Idle);
+    }
+    public void MaterialFSM(Materials s)
+    {
+        //photonView.RPC("PunMaterialFSM", RpcTarget.All, s);
+        PunMaterialFSM(s);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        MaterialFSM();
-    }
-
+    [PunRPC]
     // Material의 따른 FSM
-    void MaterialFSM()
+    void PunMaterialFSM(Materials s)
     {
-        switch (matState)
+        switch (s)
         {
             // 아무것도 안함(위에 재료가 아닌 다른 것이 있는 경우)
             case Materials.Idle:
@@ -52,22 +48,23 @@ public class MaterialGOD : MonoBehaviourPun
             // 나무가지라면
             case Materials.Branch:
                 // 게임오브젝트가 있으면 return
-                if (branchCount == mat.Count) return;
+                //if (branchCount == mat.Count) return;
                 // Resources파일에 있는 나뭇가지 생성
                 if (branchCount > 1)
                 {
 
                     for (int i = 0; i < branchCount; i++)
                     {
-                        CreateMat("MK_Prefab/Branch", i);
+                        GameObject ingredient = PhotonNetwork.Instantiate("MK_Prefab/Branch", transform.position + new Vector3(0, y + i * 0.2f, 0), default);
+                        mat.Insert(i, ingredient);
                     }
                 }
                 else
                 {
                     branchCount = 1;
-                    GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                    GameObject branch = PhotonNetwork.Instantiate("MK_Prefab/Branch", transform.position + new Vector3(0, y, 0), default);
                     mat.Add(branch);
-                    branch.transform.position = transform.position + new Vector3(0, y, 0);
+                    // branch.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.Steel:
@@ -84,9 +81,9 @@ public class MaterialGOD : MonoBehaviourPun
                 else
                 {
                     steelCount = 1;
-                    GameObject steel = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"));
+                    GameObject steel = PhotonNetwork.Instantiate("MK_Prefab/Steel", transform.position + new Vector3(0, y, 0), default);
                     mat.Add(steel);
-                    steel.transform.position = transform.position + new Vector3(0, y, 0);
+                    // steel.transform.position = transform.position + new Vector3(0, y, 0);
                 }
                 break;
             case Materials.Rail:
@@ -103,9 +100,9 @@ public class MaterialGOD : MonoBehaviourPun
                 else
                 {
                     railCount = 1;
-                    GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
+                    GameObject rail = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, y, 0), default);
                     mat.Add(rail);
-                    rail.transform.position = transform.position + new Vector3(0, y, 0);
+                    
                 }
                 break;
             case Materials.None:
@@ -113,7 +110,7 @@ public class MaterialGOD : MonoBehaviourPun
                 {
                     for (int i = 0; i < mat.Count; i++) 
                     { 
-                        Destroy(mat[i]);
+                        PhotonNetwork.Destroy(mat[i]);
                     }
                     mat.Clear();
                 }
@@ -126,8 +123,8 @@ public class MaterialGOD : MonoBehaviourPun
     }
     void CreateMat(string s, int i)
     {
-        GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
+        GameObject ingredient = PhotonNetwork.Instantiate(s, transform.position + new Vector3(0, y + i * 0.2f, 0), default);
         mat.Insert(i, ingredient);
-        mat[i].transform.position = transform.position + new Vector3(0, y + i * 0.2f, 0);
+        // mat[i].transform.position = transform.position + new Vector3(0, y + i * 0.2f, 0);
     }
 }

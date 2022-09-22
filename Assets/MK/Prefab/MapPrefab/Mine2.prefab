@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1725454013166412177}
   - component: {fileID: 1725454013166412178}
   - component: {fileID: 1725454013166412179}
+  - component: {fileID: 672302941764074485}
   m_Layer: 0
   m_Name: Iron
   m_TagString: Untagged
@@ -114,6 +115,28 @@ MonoBehaviour:
   - {fileID: 220032747963324046, guid: 0da75dfc077d2bd4cbfb0280b175c575, type: 3}
   - {fileID: 8311551919865575204, guid: 2bfb0be2357996949a6cca404819b9c6, type: 3}
   y: 0.3
+--- !u!114 &672302941764074485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725454013166412180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5576150445262535444
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +152,7 @@ GameObject:
   - component: {fileID: -7565249698695968917}
   - component: {fileID: 4529298355607568949}
   - component: {fileID: -6920881640158656656}
-  - component: {fileID: -800178095025231362}
+  - component: {fileID: 2988171069696197720}
   m_Layer: 0
   m_Name: Mine2
   m_TagString: Untagged
@@ -262,7 +285,7 @@ MonoBehaviour:
   turn: 0
   isConnected: 0
   railHeight: 0
---- !u!114 &-800178095025231362
+--- !u!114 &2988171069696197720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

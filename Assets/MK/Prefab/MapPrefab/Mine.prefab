@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: -7565249698695968917}
   - component: {fileID: 4529298355607568949}
   - component: {fileID: -6920881640158656656}
-  - component: {fileID: 1152768352514596085}
+  - component: {fileID: 8133493218391774868}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -262,7 +262,7 @@ MonoBehaviour:
   turn: 0
   isConnected: 0
   railHeight: 0
---- !u!114 &1152768352514596085
+--- !u!114 &8133493218391774868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

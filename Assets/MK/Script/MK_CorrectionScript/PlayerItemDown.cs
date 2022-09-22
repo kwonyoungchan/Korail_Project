@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 
 // PutDownItem 역할
-public class PlayerItemDown : MonoBehaviourPun
+public class PlayerItemDown : MonoBehaviourPun, IPunObservable
 {
     // 아이템 정보 확인
     public enum Hold
@@ -58,7 +58,7 @@ public class PlayerItemDown : MonoBehaviourPun
         if (photonView.IsMine)
         {
 
-            PlayerFSM();
+            PlayerFSM(holdState);
             // 레이를 발사하고
             Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
             RaycastHit cubeInfo;
@@ -84,27 +84,28 @@ public class PlayerItemDown : MonoBehaviourPun
                             // 도끼
                             if (tool[0].activeSelf)
                             {
-                                holdState = Hold.ChangeIdle;
-                                toolGOD.toolsState = ToolGOD.Tools.Ax;
+                                PlayerFSM(Hold.ChangeIdle);
+                               // toolGOD.toolsState = ToolGOD.Tools.Ax;
+                                toolGOD.ChangeState(ToolGOD.Tools.Ax);
                                 return;
                             }
                             // 곡갱이
                             else if (tool[1].activeSelf)
                             {
-                                holdState = Hold.ChangeIdle;
+                                PlayerFSM(Hold.ChangeIdle);
                                 toolGOD.toolsState = ToolGOD.Tools.Pick;
                                 return;
                             }
                             // 양동이
                             else if (tool[2].activeSelf)
                             {
-                                holdState = Hold.ChangeIdle;
+                                PlayerFSM(Hold.ChangeIdle);
                                 toolGOD.toolsState = ToolGOD.Tools.Pail;
                                 return;
                             }
                             else
                             {
-                                holdState = Hold.ChangeIdle;
+                                PlayerFSM(Hold.ChangeIdle);
                             }
 
                         }
@@ -117,20 +118,21 @@ public class PlayerItemDown : MonoBehaviourPun
                             if (hand == 1)
                             {
                                 toolGOD.toolsState = ToolGOD.Tools.Pick;
-                                holdState = Hold.Ax;
+                                PlayerFSM(Hold.Ax);
                             }
                             // 양동이를 들고 있다면
                             else if (hand == 2)
                             {
                                 toolGOD.toolsState = ToolGOD.Tools.Pail;
-                                holdState = Hold.Ax;
+                                PlayerFSM(Hold.Ax);
                             }
                             else
                             {
                                 // 플레이어 상태를 변환한다
-                                holdState = Hold.Ax;
-                                // 레이의 상태도 변화
-                                toolGOD.toolsState = ToolGOD.Tools.Idle;
+                                PlayerFSM(Hold.Ax);
+                            // 레이의 상태도 변화
+                            //toolGOD.toolsState = ToolGOD.Tools.Idle;
+                                toolGOD.ChangeState(ToolGOD.Tools.Idle);
                             }
 
                         }
@@ -143,18 +145,18 @@ public class PlayerItemDown : MonoBehaviourPun
                             if (hand == 0)
                             {
                                 toolGOD.toolsState = ToolGOD.Tools.Ax;
-                                holdState = Hold.Pick;
+                                PlayerFSM(Hold.Pick);
                             }
                             // 양동이를 들고 있다면
                             else if (hand == 2)
                             {
                                 toolGOD.toolsState = ToolGOD.Tools.Pail;
-                                holdState = Hold.Pick;
+                                PlayerFSM(Hold.Pick);
                             }
                             else
                             {
                                 // 플레이어 상태를 변환한다
-                                holdState = Hold.Pick;
+                                PlayerFSM(Hold.Pick);
                                 // 레이의 상태도 변화
                                 toolGOD.toolsState = ToolGOD.Tools.Idle;
                             }
@@ -170,18 +172,18 @@ public class PlayerItemDown : MonoBehaviourPun
                             if (hand == 0)
                             {
                                 toolGOD.toolsState = ToolGOD.Tools.Ax;
-                                holdState = Hold.Pail;
+                                PlayerFSM(Hold.Pail);
                             }
                             // 곡갱이를 들고 있다면
                             else if (hand == 1)
                             {
                                 toolGOD.toolsState = ToolGOD.Tools.Pick;
-                                holdState = Hold.Pail;
+                                PlayerFSM(Hold.Pail);
                             }
                             else
                             {
                                 // 플레이어 상태를 변환한다
-                                holdState = Hold.Pail;
+                                PlayerFSM(Hold.Pail);
                                 // 레이의 상태도 변화
                                 toolGOD.toolsState = ToolGOD.Tools.Idle;
                             }
@@ -192,12 +194,22 @@ public class PlayerItemDown : MonoBehaviourPun
             }
 
         }
+        else
+        {
+            PlayerFSM(holdState);
+        }
     }
-
-    // 플레이어 상태
-    void PlayerFSM()
+    public void PlayerFSM(Hold s)
     {
-        switch (holdState)
+        //photonView.RPC("PUNPlayerFSM", RpcTarget.All, s);
+        PUNPlayerFSM(s);
+    }
+    // 플레이어 상태
+    [PunRPC]
+    void PUNPlayerFSM(Hold s)
+    {
+        holdState = s;
+        switch (s)
         {
             // 아무것도 들고 있지 않을 때,
             case Hold.Idle:
@@ -288,4 +300,15 @@ public class PlayerItemDown : MonoBehaviourPun
         return -1;
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(holdState);
+        }
+        else
+        {
+            holdState = (Hold)stream.ReceiveNext();
+        }
+    }
 }

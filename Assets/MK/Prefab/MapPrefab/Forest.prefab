@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5662804375531942600}
   - component: {fileID: 2643301451550268546}
   - component: {fileID: 1394344932678914527}
-  - component: {fileID: 3351538110353309569}
+  - component: {fileID: 5590239732091427479}
   m_Layer: 0
   m_Name: Forest
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
   turn: 0
   isConnected: 0
   railHeight: 0
---- !u!114 &3351538110353309569
+--- !u!114 &5590239732091427479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,21 +177,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2051009745310149537}
     m_Modifications:
-    - target: {fileID: 1882203161997955714, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2764824039683115842, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2764824039683115842, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2764824039683115842, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2764824039683115842, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -236,22 +224,6 @@ PrefabInstance:
     - target: {fileID: 3053465953948690483, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
       propertyPath: m_Name
       value: Tree
-      objectReference: {fileID: 0}
-    - target: {fileID: 3504723385006206373, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5319232985282334373, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6420494772614944728, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9066563167487999168, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
