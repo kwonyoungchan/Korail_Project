@@ -204,19 +204,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845e9402425f6f94a939c8294443f567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayPos: []
-  gap: 0
-  RotScale: 0
-  trains: []
-  SpeedText: {fileID: 0}
-  depart: 0
-  railCount: 
-  isEnding: 0
-  trainSpeed: 0
-  departTime: 0
-  LerpSpeed: 0
-  maxVolume: 0
+  firePos: []
+  fireObj: {fileID: 4363528374927502100, guid: 8c9c3cfd3f3be0d47a4759718b9aec5b, type: 3}
+  Fires:
+  - {fileID: 6808481893268935902}
+  maxVolume: 100
   curVolume: 0
+  tMove: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
 --- !u!1 &6024839842427022435
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6808481893268935902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.888, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

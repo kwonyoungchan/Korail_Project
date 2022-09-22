@@ -47,7 +47,7 @@ public class PlayerMaterial : MonoBehaviourPun
     PlayerItemDown playerItem;
     // 기차 위치
     Transform matTrain;
-    MixedItem rail;
+    Maker rail;
 
     bool isBranch = true;
 
@@ -85,7 +85,7 @@ public class PlayerMaterial : MonoBehaviourPun
 
         // 기차 위치
         matTrain = GameObject.Find("train_laugage1").transform;
-        rail = matTrain.GetComponent<MixedItem>();
+        rail = matTrain.GetComponent<Maker>();
 
         // 플레이어가 레이를 발사한다
         Ray pRay = new Ray(rayPos.position + new Vector3(0.2f, 0, 0), -transform.up);
@@ -148,7 +148,7 @@ public class PlayerMaterial : MonoBehaviourPun
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
-                            matTrain.GetComponent<MixedItem>().branchCount = branchArray.Count;
+                            matTrain.GetComponent<Maker>().branchCount = branchArray.Count;
                             // 기차 위에 branch 쌓기
                             DeleteMat(branchArray);
                             playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
@@ -276,7 +276,7 @@ public class PlayerMaterial : MonoBehaviourPun
                     {
                         if (Input.GetButtonDown("Jump"))
                         {
-                            matTrain.GetComponent<MixedItem>().steelCount = steelArray.Count;
+                            matTrain.GetComponent<Maker>().steelCount = steelArray.Count;
                             // 기차 위에 branch 쌓기
                             DeleteMat(steelArray);
                         }
