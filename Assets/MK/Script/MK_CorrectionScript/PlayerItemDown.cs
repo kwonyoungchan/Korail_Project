@@ -62,133 +62,143 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
             // 레이를 발사하고
             Ray pRay = new Ray(rayPos.position + new Vector3(-0.2f, 0, 0), -transform.up);
             RaycastHit cubeInfo;
-                // 스페이스 바를 누르면
-                if (Input.GetButtonDown("Jump"))
+            // 스페이스 바를 누르면
+            if (Input.GetButtonDown("Jump"))
+            {
+
+                if (Physics.Raycast(pRay, out cubeInfo))
                 {
+                    toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
+                    matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
+                    itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
+                    RiverGOD riverGod = cubeInfo.transform.gameObject.GetComponent<RiverGOD>();
+                    //if (matGOD == null) return;
+                    if (matGOD == null || matGOD.matState != MaterialGOD.Materials.Idle || player.isItemDown) return;
 
-                    if (Physics.Raycast(pRay, out cubeInfo))
+                    // 바닥 상태 : 아무것도 없음
+                    if (toolGOD.toolsState == ToolGOD.Tools.Idle)
                     {
-                        toolGOD = cubeInfo.transform.gameObject.GetComponent<ToolGOD>();
-                        matGOD = cubeInfo.transform.gameObject.GetComponent<MaterialGOD>();
-                        itemGOD = cubeInfo.transform.gameObject.GetComponent<ItemGOD>();
-                        RiverGOD riverGod = cubeInfo.transform.gameObject.GetComponent<RiverGOD>();
-                        //if (matGOD == null) return;
-                        if (matGOD == null || matGOD.matState != MaterialGOD.Materials.Idle || player.isItemDown) return;
-
-                        // 바닥 상태 : 아무것도 없음
-                        if (toolGOD.toolsState == ToolGOD.Tools.Idle)
+                        // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
+                        // 손에 무언갈 들고 있을 때,
+                        // 손에 있는 것에 따른 바닥의 변화
+                        // 도끼
+                        if (tool[0].activeSelf)
                         {
-                            // 오류 사항 : 손에 재료를 들고 있을 경우, 발생
-                            // 손에 무언갈 들고 있을 때,
-                            // 손에 있는 것에 따른 바닥의 변화
-                            // 도끼
-                            if (tool[0].activeSelf)
-                            {
-                                PlayerFSM(Hold.ChangeIdle);
-                               // toolGOD.toolsState = ToolGOD.Tools.Ax;
-                                toolGOD.ChangeState(ToolGOD.Tools.Ax);
-                                return;
-                            }
-                            // 곡갱이
-                            else if (tool[1].activeSelf)
-                            {
-                                PlayerFSM(Hold.ChangeIdle);
-                                toolGOD.toolsState = ToolGOD.Tools.Pick;
-                                return;
-                            }
-                            // 양동이
-                            else if (tool[2].activeSelf)
-                            {
-                                PlayerFSM(Hold.ChangeIdle);
-                                toolGOD.toolsState = ToolGOD.Tools.Pail;
-                                return;
-                            }
-                            else
-                            {
-                                PlayerFSM(Hold.ChangeIdle);
-                            }
-
+                            PlayerFSM(Hold.ChangeIdle);
+                            // toolGOD.toolsState = ToolGOD.Tools.Ax;
+                            toolGOD.ChangeState(ToolGOD.Tools.Ax);
+                            return;
                         }
-                        // 바닥 상태 : 도끼
-                        else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
+                        // 곡갱이
+                        else if (tool[1].activeSelf)
                         {
-                            // 손에 무언갈 들고 있을 때
-                            hand = CheckHand();
-                            // 곡갱이를 들고 있다면
-                            if (hand == 1)
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Pick;
-                                PlayerFSM(Hold.Ax);
-                            }
-                            // 양동이를 들고 있다면
-                            else if (hand == 2)
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Pail;
-                                PlayerFSM(Hold.Ax);
-                            }
-                            else
-                            {
-                                // 플레이어 상태를 변환한다
-                                PlayerFSM(Hold.Ax);
+                            PlayerFSM(Hold.ChangeIdle);
+                            // toolGOD.toolsState = ToolGOD.Tools.Pick;
+                            toolGOD.ChangeState(ToolGOD.Tools.Pick);
+                            return;
+                        }
+                        // 양동이
+                        else if (tool[2].activeSelf)
+                        {
+                            PlayerFSM(Hold.ChangeIdle);
+                            // toolGOD.toolsState = ToolGOD.Tools.Pail;
+                            toolGOD.ChangeState(ToolGOD.Tools.Pail);
+                            return;
+                        }
+                        else
+                        {
+                            PlayerFSM(Hold.ChangeIdle);
+                        }
+
+                    }
+                    // 바닥 상태 : 도끼
+                    else if (toolGOD.toolsState == ToolGOD.Tools.Ax)
+                    {
+                        // 손에 무언갈 들고 있을 때
+                        hand = CheckHand();
+                        // 곡갱이를 들고 있다면
+                        if (hand == 1)
+                        {
+                            // toolGOD.toolsState = ToolGOD.Tools.Pick;
+                            toolGOD.ChangeState(ToolGOD.Tools.Pick);
+                            PlayerFSM(Hold.Ax);
+                        }
+                        // 양동이를 들고 있다면
+                        else if (hand == 2)
+                        {
+                            //toolGOD.toolsState = ToolGOD.Tools.Pail;
+                            toolGOD.ChangeState(ToolGOD.Tools.Pail);
+                            PlayerFSM(Hold.Ax);
+                        }
+                        else
+                        {
+                            // 플레이어 상태를 변환한다
+                            PlayerFSM(Hold.Ax);
                             // 레이의 상태도 변화
                             //toolGOD.toolsState = ToolGOD.Tools.Idle;
-                                toolGOD.ChangeState(ToolGOD.Tools.Idle);
-                            }
-
+                            toolGOD.ChangeState(ToolGOD.Tools.Idle);
                         }
-                        // 바닥 상태 : 곡갱이
-                        else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
+
+                    }
+                    // 바닥 상태 : 곡갱이
+                    else if (toolGOD.toolsState == ToolGOD.Tools.Pick)
+                    {
+
+                        hand = CheckHand();
+                        // 도끼를 들고 있다면
+                        if (hand == 0)
                         {
-
-                            hand = CheckHand();
-                            // 도끼를 들고 있다면
-                            if (hand == 0)
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Ax;
-                                PlayerFSM(Hold.Pick);
-                            }
-                            // 양동이를 들고 있다면
-                            else if (hand == 2)
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Pail;
-                                PlayerFSM(Hold.Pick);
-                            }
-                            else
-                            {
-                                // 플레이어 상태를 변환한다
-                                PlayerFSM(Hold.Pick);
-                                // 레이의 상태도 변화
-                                toolGOD.toolsState = ToolGOD.Tools.Idle;
-                            }
-
+                            // toolGOD.toolsState = ToolGOD.Tools.Ax;
+                            toolGOD.ChangeState(ToolGOD.Tools.Ax);
+                            PlayerFSM(Hold.Pick);
                         }
-                        // 바닥 상태 : 양동이
-                        else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
+                        // 양동이를 들고 있다면
+                        else if (hand == 2)
                         {
-                            // 손에 무언가 있을 때
-
-                            hand = CheckHand();
-                            // 도끼를 들고 있다면
-                            if (hand == 0)
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Ax;
-                                PlayerFSM(Hold.Pail);
-                            }
-                            // 곡갱이를 들고 있다면
-                            else if (hand == 1)
-                            {
-                                toolGOD.toolsState = ToolGOD.Tools.Pick;
-                                PlayerFSM(Hold.Pail);
-                            }
-                            else
-                            {
-                                // 플레이어 상태를 변환한다
-                                PlayerFSM(Hold.Pail);
-                                // 레이의 상태도 변화
-                                toolGOD.toolsState = ToolGOD.Tools.Idle;
-                            }
-
+                            //toolGOD.toolsState = ToolGOD.Tools.Pail;
+                            toolGOD.ChangeState(ToolGOD.Tools.Pail);
+                            PlayerFSM(Hold.Pick);
                         }
+                        else
+                        {
+                            // 플레이어 상태를 변환한다
+                            PlayerFSM(Hold.Pick);
+                            // 레이의 상태도 변화
+                            //toolGOD.toolsState = ToolGOD.Tools.Idle;
+                            toolGOD.ChangeState(ToolGOD.Tools.Idle);
+                        }
+
+                    }
+                    // 바닥 상태 : 양동이
+                    else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
+                    {
+                        // 손에 무언가 있을 때
+
+                        hand = CheckHand();
+                        // 도끼를 들고 있다면
+                        if (hand == 0)
+                        {
+                            // toolGOD.toolsState = ToolGOD.Tools.Ax;
+                            toolGOD.ChangeState(ToolGOD.Tools.Ax);
+                            PlayerFSM(Hold.Pail);
+                        }
+                        // 곡갱이를 들고 있다면
+                        else if (hand == 1)
+                        {
+                            //toolGOD.toolsState = ToolGOD.Tools.Pick;
+                            toolGOD.ChangeState(ToolGOD.Tools.Pick);
+                            PlayerFSM(Hold.Pail);
+                        }
+                        else
+                        {
+                            // 플레이어 상태를 변환한다
+                            PlayerFSM(Hold.Pail);
+                            // 레이의 상태도 변화
+                            //toolGOD.toolsState = ToolGOD.Tools.Idle;
+                            toolGOD.ChangeState(ToolGOD.Tools.Idle);
+                        }
+
+                    }
 
                 }
             }
