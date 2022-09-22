@@ -59,6 +59,7 @@ public class waterTank : trainController
             if (curTime > explosionTime)
             {
                 // 이때 기차는 폭발한다.
+               CameraShaking(amplitude,1);
                 isBoom = true;
                 turn = false;
             }
@@ -76,6 +77,10 @@ public class waterTank : trainController
     public override void Boom()
     {
         base.Boom();
+    }
+    public override void CameraShaking(float amplitude, float setTime)
+    {
+        base.CameraShaking(amplitude, setTime);
     }
 
 }

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class trainController : MonoBehaviour
 {
     // 기차 화재 관리해주는 스크립트
@@ -14,9 +17,25 @@ public class trainController : MonoBehaviour
     public static bool isBoom;
     public static bool turn;
     public static Action DoActive;
+
+    //진폭
+    public static float amplitude;
+    //진동수
+    public static float frequency;
+
+    public static float setTime;
+    [SerializeField] float ampli;
+    [SerializeField] float freq;
+    [SerializeField] float sTime;
+
+    float curtime;
+
+
     void Start()
     {
-        
+        amplitude = ampli;
+        frequency = freq;
+        setTime = sTime;
     }
 
     // Update is called once per frame
@@ -57,4 +76,19 @@ public class trainController : MonoBehaviour
         Destroy(explosion, 1);
         gameObject.SetActive(false);
     }
+
+    public virtual void CameraShaking(float amplitude, float setTime)
+    {
+        //기차가 터질 때, 카메라가 흔들리는 함수
+        
+        while (curtime < setTime)
+        { 
+            transform.position = Camera.main.transform.position + UnityEngine.Random.insideUnitSphere * amplitude * Time.deltaTime;
+            curtime += Time.deltaTime;
+        }
+        curtime = 0;
+        return;
+
+    }
+    
 }
