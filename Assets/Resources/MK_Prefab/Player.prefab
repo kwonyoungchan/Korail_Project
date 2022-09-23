@@ -1580,12 +1580,7 @@ MonoBehaviour:
   isBranch: 0
   waterTime: 4
   water: {fileID: 5306645351462097965}
-<<<<<<< Updated upstream
   isWater: 0
-=======
-  isWater: 1
-  isItemDown: 0
->>>>>>> Stashed changes
   isGathering: 0
 --- !u!1 &5587062031630758818
 GameObject:
