@@ -291,7 +291,7 @@ public class PlayerMaterial : MonoBehaviourPun
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                matTrain.GetComponent<MixedItem>().steelCount = steelArray.Count;
+                                //matTrain.GetComponent<MixedItem>().steelCount = steelArray.Count;
                                 // 기차 위에 branch 쌓기
                                 DeleteMat(steelArray);
                             }
