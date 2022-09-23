@@ -73,8 +73,6 @@ public class IngredientItem : MonoBehaviourPun
 
     }
 
-    // ���ӿ�����Ʈ�� Ÿ���� ������
-    // 0 ���϶��� ������ ����
     void DamagedObject(int n)
     {
         currentTime = 0;
@@ -82,13 +80,13 @@ public class IngredientItem : MonoBehaviourPun
         isGathering = false;
         if (hp <= 0)
         {
-            Destroy(gameObject);
+
             isGathering = false;
             // GOD�� �ִ� State ����
             if (n == 0)
-                GetComponentInParent<MaterialGOD>().MaterialFSM(MaterialGOD.Materials.Branch);
+                GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Branch, 1);
             if(n == 1)
-                GetComponentInParent<MaterialGOD>().MaterialFSM(MaterialGOD.Materials.Steel);
+                GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Steel, 1);
         }
 
     }

@@ -25,7 +25,6 @@ public class PlayerForwardRay : MonoBehaviour
     public bool isWater = false;
     public bool isItemDown = false;
 
-    bool isAnimal = false;
 
     // 채집을 위한 변수들
     // ingredientItem
@@ -107,7 +106,6 @@ public class PlayerForwardRay : MonoBehaviour
 
                 if (Input.GetButtonDown("Jump"))
                 {
-                    isAnimal = true;
                     if (playerHand.holdState == PlayerItemDown.Hold.Idle)
                     {
                         isItemDown = true;
