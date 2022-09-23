@@ -99,5 +99,9 @@ public class Maker : trainController
     {
         base.Boom();
     }
+    public override void TurnOffFire()
+    {
+        base.TurnOffFire();
+    }
 
 }

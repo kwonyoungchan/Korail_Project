@@ -69,4 +69,8 @@ public class Loader : trainController
     {
         base.Boom();
     }
+    public override void TurnOffFire()
+    {
+        base.TurnOffFire();
+    }
 }

@@ -59,16 +59,20 @@ public class waterTank : trainController
             if (curTime > explosionTime)
             {
                 // 이때 기차는 폭발한다.
-               CameraShaking(amplitude,1);
                 isBoom = true;
-                turn = false;
+                StartCoroutine(CameraShaking(amplitude, SetTime));
+                
+
             }
         }
     }
     public override void DoFire()
     {
         base.DoFire();
-        print("물탱크 화재");
+    }
+    public override void TurnOffFire()
+    {
+        base.TurnOffFire();
     }
     public override void MakeFire()
     {
@@ -78,9 +82,9 @@ public class waterTank : trainController
     {
         base.Boom();
     }
-    public override void CameraShaking(float amplitude, float setTime)
+    public override IEnumerator CameraShaking(float amplitude, float setTime)
     {
-        base.CameraShaking(amplitude, setTime);
+        return base.CameraShaking(amplitude, setTime);
     }
 
 }

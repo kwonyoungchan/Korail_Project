@@ -35,4 +35,8 @@ public class mainTrain : trainController
     {
         base.Boom();
     }
+    public override void TurnOffFire()
+    {
+        base.TurnOffFire();
+    }
 }

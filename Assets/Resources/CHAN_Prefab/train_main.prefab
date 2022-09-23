@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5529417373789184642}
   m_Layer: 0
-  m_Name: rayPos
+  m_Name: rayPos_main
   m_TagString: RPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,6 +170,9 @@ MonoBehaviour:
   - {fileID: 1561153461917212731}
   fireObj: {fileID: 4363528374927502100, guid: 8c9c3cfd3f3be0d47a4759718b9aec5b, type: 3}
   Fires: []
+  ampli: 0
+  freq: 0
+  sTime: 0
 --- !u!1 &6548042211878081717
 GameObject:
   m_ObjectHideFlags: 0

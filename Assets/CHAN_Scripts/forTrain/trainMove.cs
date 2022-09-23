@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class trainMove : MonoBehaviourPun ,IPunObservable
+public class trainMove :trainController,IPunObservable
 {
     // 기차를 이동시키는 알고리즘
     // 기차는 선로를 따라 이동함
@@ -16,12 +16,12 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
     // 기차의 속도, 방향, 기차 오브젝트, 기차 생성 위치, 기차 출발 타이머
     // 게임이 시작될 대, 메인 기차는 start 블럭에, 나머지 짐칸일 경우, 메인기차의 왼쪽으로 위치시킨다. 
      Vector3[] dir;
+    
     [SerializeField] Transform[] rayPos;
     [SerializeField] int gap;
     [SerializeField] float RotScale;
     [SerializeField] GameObject[] trains;
     [SerializeField] Text SpeedText;
-    GameObject trainBang;
     float trainTimer;
     public bool depart;
     bool[] isDie;
@@ -33,12 +33,14 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
     float setTime = 2;
 
     [SerializeField] float LerpSpeed;
-    Vector3[] recievePos = new Vector3[3];
-    Quaternion[] recieveRot=new Quaternion[3];
+    Vector3[] recievePos;
+    Quaternion[] recieveRot;
 
 
     void Start()
     {
+        recievePos=new Vector3[trains.Length];
+        recieveRot= new Quaternion[trains.Length];
         // 여기서 기차는 시각선로에서 시작되도록 설정 한다.
         transform.position = DefineBlocks.instance.StartBlocks[1].transform.position;
         for (int i = 0; i < trains.Length; i++)
@@ -100,7 +102,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
         }
         else
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < trains.Length; i++)
             {
                 trains[i].transform.position = Vector3.Lerp(trains[i].transform.position, recievePos[i], LerpSpeed * Time.deltaTime);
                 trains[i].transform.rotation = Quaternion.Lerp(trains[i].transform.rotation, recieveRot[i], LerpSpeed * Time.deltaTime);
@@ -159,7 +161,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
         Ray ray = new Ray(rayPosition, -transform.up);
         RaycastHit hit;
         int layerMask = 1 << LayerMask.NameToLayer("Bridge");
-        if (Physics.Raycast(ray, out hit, 2, ~layerMask))
+        if (Physics.Raycast(ray, out hit, 3, ~layerMask))
         {
             //만약 지금 기차가 선로가 아닌곳에 있다면 
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Idle)
@@ -168,6 +170,7 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
                 isDie[i] = true;
                 GameObject explosion = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/train_explosion"));
                 explosion.transform.position = trains[i].transform.position;
+                StartCoroutine(CameraShaking(amplitude,SetTime));
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
             }
@@ -185,10 +188,13 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
             }
         }
     }
-
+    public override IEnumerator CameraShaking(float amplitude, float setTime)
+    {
+        return base.CameraShaking(amplitude, setTime);
+    }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < trains.Length; i++)
         {
             //데이터 보내기
             if (stream.IsWriting)//IsMine==true;
@@ -203,6 +209,10 @@ public class trainMove : MonoBehaviourPun ,IPunObservable
                 recieveRot[i] = (Quaternion)stream.ReceiveNext();
             }
         }
+    }
+    public override void TurnOffFire()
+    {
+        base.TurnOffFire();
     }
 
 }

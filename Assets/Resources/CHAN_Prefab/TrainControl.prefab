@@ -50,14 +50,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a7be5859c95064c99d0a4dca67db73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firePos: []
+  fireObj: {fileID: 0}
+  Fires: []
+  ampli: 0
+  freq: 0
+  sTime: 0
   rayPos:
   - {fileID: 6448478617297431777}
+  - {fileID: 5916407850057948071}
   - {fileID: 6448478618219358453}
   - {fileID: 6448478617717880827}
   gap: 2
   RotScale: 2
   trains:
   - {fileID: 6448478618529776305}
+  - {fileID: 5916407848624272887}
   - {fileID: 6448478617574229669}
   - {fileID: 6448478619153652139}
   SpeedText: {fileID: 0}
@@ -105,6 +113,9 @@ MonoBehaviour:
   firePos: []
   fireObj: {fileID: 0}
   Fires: []
+  ampli: 5
+  freq: 0
+  sTime: 1
 --- !u!1001 &1567805643293021561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 4446306246945821641, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
       propertyPath: m_TagString
-      value: RPos
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5529417373789184645, guid: 1c34443b1a1dc3a46be499670a215728, type: 3}
       propertyPath: m_TagString
@@ -385,6 +396,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1567805645146434428}
     m_Modifications:
+    - target: {fileID: 3308829470485848633, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
+      propertyPath: tMove
+      value: 
+      objectReference: {fileID: 1567805645146434429}
     - target: {fileID: 5529417374954917072, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -438,5 +453,15 @@ PrefabInstance:
 --- !u!4 &5916407848624272885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5529417374954917072, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
+  m_PrefabInstance: {fileID: 2208771911966177573}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5916407848624272887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5529417374954917074, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
+  m_PrefabInstance: {fileID: 2208771911966177573}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5916407850057948071 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5529417373789184642, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
   m_PrefabInstance: {fileID: 2208771911966177573}
   m_PrefabAsset: {fileID: 0}

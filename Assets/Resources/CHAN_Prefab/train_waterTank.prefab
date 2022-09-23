@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5529417373789184642}
   m_Layer: 0
-  m_Name: rayPos
+  m_Name: rayPos_water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,8 +176,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5529417374954917074}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -11.5, y: 0, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -208,8 +208,12 @@ MonoBehaviour:
   fireObj: {fileID: 4363528374927502100, guid: 8c9c3cfd3f3be0d47a4759718b9aec5b, type: 3}
   Fires:
   - {fileID: 6808481893268935902}
+  ampli: 0
+  freq: 0
+  sTime: 0
   maxVolume: 100
   curVolume: 0
+  explosionTime: 0
   tMove: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
 --- !u!1 &6024839842427022435
 GameObject:

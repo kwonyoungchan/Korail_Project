@@ -17,7 +17,7 @@ public class IngredientItem : MonoBehaviour
     int hp;
     float axDis;
     float pickDis;
-
+    
     PlayerItemDown player;
 
     bool isGathering;
