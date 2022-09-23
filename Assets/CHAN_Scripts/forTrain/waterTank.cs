@@ -10,7 +10,9 @@ public class waterTank : trainController
     [SerializeField]float maxVolume;
     [SerializeField]float curVolume;
     [SerializeField] float explosionTime;
+    [SerializeField]float detectRange;
     float curTime;
+    [SerializeField] Collider[] detect;
 
     // 기차가 이동하기 시작하는 순간에 물의 양은 줄어들기 시작한다.
     [SerializeField] trainMove tMove;
@@ -39,7 +41,27 @@ public class waterTank : trainController
         {
             DoActive += Boom;
         }
-            
+        if (TurnedOffFire&& !turn)
+        {
+            DoActive += TurnOffFire;
+        }
+        // 여기서부터 플레이어 탐지를 시작한다.
+        // waterTank가 플레이어를 감지하면 플레이어의 컴포넌트에 접근한다.
+        detect=Physics.OverlapSphere(transform.position, detectRange, 1<<6);
+        // 스크립트 PlayerForwardRay 내부의 is water 여부를 검사한다.
+        if (detect.Length !=0)
+        {
+            if (detect[0].GetComponent<PlayerForwardRay>().isWater)
+            {
+                curVolume = maxVolume;
+                TurnedOffFire = true;
+                turn = false;
+            }
+        }
+        // 만약 true 이면 isFire를 false 시킨다.
+        // 물을 다시 채운다.
+        // 만약 false 면 그냥 넘긴다. 
+
     }
     void drainWater()
     {
@@ -61,8 +83,6 @@ public class waterTank : trainController
                 // 이때 기차는 폭발한다.
                 isBoom = true;
                 StartCoroutine(CameraShaking(amplitude, SetTime));
-                
-
             }
         }
     }

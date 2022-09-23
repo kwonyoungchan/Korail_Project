@@ -48,6 +48,10 @@ public class Maker : trainController
         {
             DoActive += Boom;
         }
+        if (TurnedOffFire && !turn)
+        {
+            DoActive += TurnOffFire;
+        }
         if (railCount != railArray.Count)
         {
             for (int i = 0; i < railArray.Count; i++)

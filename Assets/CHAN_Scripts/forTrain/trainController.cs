@@ -15,6 +15,7 @@ public class trainController : MonoBehaviourPun
     public List<GameObject> Fires = new List<GameObject>();
     public static bool isFire;
     public static bool isBoom;
+    public static bool TurnedOffFire;
     public static bool turn;
     public static Action DoActive;
     //ÁøÆø
@@ -51,7 +52,6 @@ public class trainController : MonoBehaviourPun
         for (int i = 0; i < firePos.Length; i++)
         {
             Fires[i].SetActive(true);
-
         }
     }
     public virtual void MakeFire()

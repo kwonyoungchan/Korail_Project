@@ -1409,7 +1409,7 @@ GameObject:
   - component: {fileID: 8836915508344469019}
   - component: {fileID: -4360814510425656172}
   - component: {fileID: 4839149134815222586}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1580,7 +1580,12 @@ MonoBehaviour:
   isBranch: 0
   waterTime: 4
   water: {fileID: 5306645351462097965}
+<<<<<<< Updated upstream
   isWater: 0
+=======
+  isWater: 1
+  isItemDown: 0
+>>>>>>> Stashed changes
   isGathering: 0
 --- !u!1 &5587062031630758818
 GameObject:

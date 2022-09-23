@@ -26,6 +26,10 @@ public class Loader : trainController
         {
             DoActive += Boom;
         }
+        if (TurnedOffFire && !turn)
+        {
+            DoActive += TurnOffFire;
+        }
 
         if (maker.branchArray.Count > 0 && maker.steelArray.Count > 0)
         {
