@@ -81,7 +81,7 @@ public class waterTank : trainController
             if (curTime > explosionTime)
             {
                 // 이때 기차는 폭발한다.
-                isBoom = true;
+                
                 StartCoroutine(CameraShaking(amplitude, SetTime));
             }
         }

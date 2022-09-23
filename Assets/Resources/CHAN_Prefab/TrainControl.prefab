@@ -54,7 +54,6 @@ MonoBehaviour:
   fireObj: {fileID: 0}
   Fires: []
   ampli: 0
-  freq: 0
   sTime: 0
   rayPos:
   - {fileID: 6448478617297431777}
@@ -73,7 +72,7 @@ MonoBehaviour:
   railCount: 
   isEnding: 0
   trainSpeed: 0.5
-  departTime: 20
+  departTime: 10
   LerpSpeed: 5
 --- !u!114 &890500597914624942
 MonoBehaviour:
@@ -114,8 +113,7 @@ MonoBehaviour:
   fireObj: {fileID: 0}
   Fires: []
   ampli: 5
-  freq: 0
-  sTime: 1
+  sTime: 0.25
 --- !u!1001 &1567805643293021561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,6 +398,18 @@ PrefabInstance:
       propertyPath: tMove
       value: 
       objectReference: {fileID: 1567805645146434429}
+    - target: {fileID: 3308829470485848633, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
+      propertyPath: detectRange
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308829470485848633, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
+      propertyPath: explosionTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308829470485848633, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
+      propertyPath: detect.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5529417374954917072, guid: 833ca616f69ef114fa6549aba10980b1, type: 3}
       propertyPath: m_RootOrder
       value: 3
