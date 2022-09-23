@@ -43,7 +43,6 @@ public class MaterialGOD : MonoBehaviourPun
             case Materials.Branch:
                 // 게임오브젝트가 있으면 return
                 if (mat.Count == branchCount) return;
-                print(mat.Count + "/" + branchCount);
                 // Resources파일에 있는 나뭇가지 생성
                 if (branchCount >= 1)
                 {

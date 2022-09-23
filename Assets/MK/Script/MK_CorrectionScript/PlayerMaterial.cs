@@ -16,11 +16,15 @@ using UnityEngine;
 // + 09.15 문제사항
 // : 플레이어가 손에 나무를 들고 있을 때, 바닥 상태도 Branch라면 바닥 상태의 개수에 따라 손에 들고 있는 개수 변경됨
 #endregion
-public class PlayerMaterial : MonoBehaviourPun
+public class PlayerMaterial : MonoBehaviourPun, IPunObservable
 {
     // 리스트
     // 나뭇가지
-    public List<GameObject> branchArray = new List<GameObject>();
+    public List<GameObject> branchArray;
+    private void Awake()
+    {
+        branchArray = new List<GameObject>();
+    }
     // 철
     public List<GameObject> steelArray = new List<GameObject>();
     // 래일
@@ -50,7 +54,9 @@ public class PlayerMaterial : MonoBehaviourPun
 
     GameObject railtrain;
 
-    bool isBranch = true;
+    GameObject branch;
+
+    // bool isBranch = true;
 
     int n;
 
@@ -58,6 +64,7 @@ public class PlayerMaterial : MonoBehaviourPun
 
     int layer;
 
+    int r;
 
     // Start is called before the first frame update
     void Start()
@@ -74,12 +81,9 @@ public class PlayerMaterial : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-
-        // 움직임 연동 : 내것이 아니면 반환
         if (photonView.IsMine)
         {
-
-
+            r = branchArray.Count;
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 AddRail();
@@ -105,7 +109,7 @@ public class PlayerMaterial : MonoBehaviourPun
 
                 float railDis = Vector3.Distance(connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1].transform.position, transform.position);
 
-                isBranch = playerRay.isBranch;
+                // isBranch = playerRay.isBranch;
                 // 손에 무언갈 들고 있다면
                 // 강일 때
                 if (riverGOD)
@@ -208,7 +212,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                     }
                                 }
                             }
-                            // 바닥 상태가 Steel일때
+                            // 바닥 상태가 Rail 일때
                             if (matGod.matState == MaterialGOD.Materials.Rail)
                             {
                                 if (Input.GetButtonDown("Jump"))
@@ -597,12 +601,11 @@ public class PlayerMaterial : MonoBehaviourPun
                                     for (int i = 0; i < matGod.branchCount; i++)
                                     {
                                         // Array에 추가하기
-                                        GameObject branch = PhotonNetwork.Instantiate("MK_Prefab/Branch", itemPos.position + new Vector3(0, i * 0.2f, 0), default);
-                                        branch.transform.parent = itemPos;
-                                        branchArray.Add(branch);
-
-                                        // branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-                                        // branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                                        // branch = PhotonNetwork.Instantiate("MK_Prefab/Branch", itemPos.position + new Vector3(0, i * 0.2f, 0), default);
+                                        MakeMat("MK_Prefab/Branch", branchArray);
+                                        print(branchArray.Count);
+                                        branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                        branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                     }
 
                                 }
@@ -675,7 +678,21 @@ public class PlayerMaterial : MonoBehaviourPun
                 }
             }
         }
-        
+        else
+        {
+
+            if (brn > 0)
+            {
+                for (int i = 0; i < brn; i++)
+                {
+                    branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                    branchArray.Add(branch);
+                }
+            }
+        }
+
+
+
     }
 
     void ChangeToolGod()
@@ -711,13 +728,14 @@ public class PlayerMaterial : MonoBehaviourPun
         // 손에 있는 모든 것들이 제거
         for (int i = 0; i < matArray.Count; i++)
         {
-            Destroy(matArray[i].gameObject);
+            PhotonNetwork.Destroy(matArray[i].gameObject);
         }
-        matArray.Clear();
+
         if(matArray.Count <= 0)
         {
             playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
         }
+        matArray.Clear();
     }
     // 상태 변화
     void ChangeState(PlayerItemDown.Hold player, ToolGOD.Tools tool, List<GameObject> mat, MaterialGOD.Materials mats, int count)
@@ -767,8 +785,20 @@ public class PlayerMaterial : MonoBehaviourPun
             {
                 playerItem.holdState = PlayerItemDown.Hold.Mat;
             }
-            isBranch = true;
+            // isBranch = true;
         }
 
+    }
+    int brn;
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(r);
+        }
+        else
+        {
+            brn = (int)stream.ReceiveNext();
+        }
     }
 }
