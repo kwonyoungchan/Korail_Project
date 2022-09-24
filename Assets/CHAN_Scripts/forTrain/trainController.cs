@@ -6,7 +6,7 @@ using Photon.Pun;
 
 
 
-public class trainController : MonoBehaviourPun, IPunObservable
+public class trainController : MonoBehaviourPun
 {
     // 기차 화재 관리해주는 스크립트
     // 물탱크에서 고갈 플래그를 주면  모든 객실에 화재가 발생하도록 한다. 
@@ -16,6 +16,7 @@ public class trainController : MonoBehaviourPun, IPunObservable
     public static bool isFire;
     public static bool isBoom;
     public static bool TurnedOffFire;
+    public static bool boomTurn;
     public static bool turn;
     public static Action DoActive;
     //진폭
@@ -24,12 +25,6 @@ public class trainController : MonoBehaviourPun, IPunObservable
     public static float SetTime;
     [SerializeField] float ampli;
     [SerializeField] float sTime;
-    [Header ("포톤 UDP 정보 모음")]
-    [SerializeField] public static GameObject[] trains;
-    public static Vector3[] recievePos;
-    public static Quaternion[] recieveRot;
-    public static Vector3 CamRecievePos;
-
 
 
 
@@ -37,9 +32,6 @@ public class trainController : MonoBehaviourPun, IPunObservable
     {
         amplitude = ampli;
         SetTime = sTime;
-        recievePos = new Vector3[trains.Length];
-        
-        recieveRot = new Quaternion[trains.Length];
     }
 
     // Update is called once per frame
@@ -50,7 +42,12 @@ public class trainController : MonoBehaviourPun, IPunObservable
             DoActive();
             DoActive = null;
             turn = true;
+            if (isBoom)
+            {
+                boomTurn = true;
+            }
             
+
         }
         
     }
@@ -124,10 +121,21 @@ public class trainController : MonoBehaviourPun, IPunObservable
     }
     #endregion
     #region 카메라 흔드는 기능
-    public virtual IEnumerator CameraShaking(float amplitude, float setTime)
+    public virtual void DoCamShake()
+    {
+        StopAllCoroutines();
+        photonView.RPC("RpcDoCamShake", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public virtual void RpcDoCamShake()
+    {
+        StartCoroutine(CameraShaking(amplitude, SetTime));
+    }
+
+    public  IEnumerator CameraShaking(float amplitude, float setTime)
     {
         float curtime = 0;
-        isBoom = true;
         while (curtime < setTime)
         {
             Camera.main.transform.position += UnityEngine.Random.insideUnitSphere * amplitude * Time.deltaTime;
@@ -135,29 +143,7 @@ public class trainController : MonoBehaviourPun, IPunObservable
             yield return null;
         }
         turn = false;
-        
     }
-
-
     #endregion
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        for (int i = 0; i < trains.Length; i++)
-        {
-            //데이터 보내기
-            if (stream.IsWriting)//IsMine==true;
-            {
-                stream.SendNext(trains[i].transform.position);
-                stream.SendNext(trains[i].transform.rotation);
-            }
-            //데이터 받기
-            else if (stream.IsReading)//IsMine==false  
-            {
-                recievePos[i] = (Vector3)stream.ReceiveNext();
-                recieveRot[i] = (Quaternion)stream.ReceiveNext();
-            }
-        }
-
-    }
 
 }

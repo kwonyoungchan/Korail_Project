@@ -69,6 +69,8 @@ public class PlayerMaterial : MonoBehaviourPun
         }
         playerItem = GetComponent<PlayerItemDown>();
         playerRay = GetComponent<PlayerForwardRay>();
+        matTrain = GameObject.Find("train_laugage1").transform;
+        railtrain = GameObject.Find("train_laugage2");
     }
 
     // Update is called once per frame
@@ -78,8 +80,8 @@ public class PlayerMaterial : MonoBehaviourPun
         // 움직임 연동 : 내것이 아니면 반환
         if (photonView.IsMine)
         {
-
-
+            if (!matTrain ||! railtrain)
+                return;
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 AddRail();
@@ -87,16 +89,9 @@ public class PlayerMaterial : MonoBehaviourPun
 
             // RailTrain과의 거리가 가까우면 
 
-            railtrain = GameObject.Find("train_laugage2");
-            if (!railtrain)
-                return;
             float dis = Vector3.Distance(railtrain.transform.position, transform.position);
 
             // 기차 위치
-
-            matTrain = GameObject.Find("train_laugage1").transform;
-            if (!matTrain)
-                return;
             //rail = matTrain.GetComponent<MixedItem>();
             layer = 1 << 10;
             // 플레이어가 레이를 발사한다

@@ -23,7 +23,7 @@ public class Loader : trainController
             DoActive += DoFire;
 
         }
-        if (isBoom)
+        if (isBoom && !boomTurn)
         {
             DoActive += Boom;
         }

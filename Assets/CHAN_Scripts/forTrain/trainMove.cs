@@ -31,6 +31,12 @@ public class trainMove :trainController,IPunObservable
     public float departTime;
     float time;
     float setTime = 2;
+    bool[] isturn;
+    [Header("포톤 UDP 정보 모음")]
+    [SerializeField] GameObject[] trains;
+    Vector3[] recievePos;
+    Quaternion[] recieveRot;
+
 
     [SerializeField] float LerpSpeed;
 
@@ -48,13 +54,19 @@ public class trainMove :trainController,IPunObservable
         }
         railCount = new int[trains.Length];
         isDie = new bool[trains.Length];
+        isturn = new bool[trains.Length];
         dir = new Vector3[trains.Length];
-        
+
+        recievePos = new Vector3[trains.Length];
+        recieveRot = new Quaternion[trains.Length];
+
+
     }
 
     
     void Update()
     {
+
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
         if (photonView.IsMine)
         {
@@ -66,6 +78,12 @@ public class trainMove :trainController,IPunObservable
             {
                 for (int i = 0; i < trains.Length; i++)
                 {
+                    if (isDie[i] && !isturn[i])
+                    {
+                        DoCamShake();
+                        isturn[i] = true;
+                    }
+
                     if (trains[i].activeSelf)
                     {
 
@@ -170,6 +188,7 @@ public class trainMove :trainController,IPunObservable
                 explosion.transform.position = trains[i].transform.position;
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
+                
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
@@ -186,13 +205,29 @@ public class trainMove :trainController,IPunObservable
         }
     }
 
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-
-    //}
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        for (int i = 0; i < trains.Length; i++)
+        {
+            //데이터 보내기
+            if (stream.IsWriting)//IsMine==true;
+            {
+                stream.SendNext(trains[i].transform.position);
+                stream.SendNext(trains[i].transform.rotation);
+            }
+            //데이터 받기
+            else if (stream.IsReading)//IsMine==false  
+            {
+                recievePos[i] = (Vector3)stream.ReceiveNext();
+                recieveRot[i] = (Quaternion)stream.ReceiveNext();
+            }
+        }
+    }
     public override void TurnOffFire()
     {
         base.TurnOffFire();
     }
+
+
 
 }

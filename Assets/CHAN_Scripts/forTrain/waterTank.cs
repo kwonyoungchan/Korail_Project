@@ -9,7 +9,7 @@ public class waterTank : trainController
 
     [SerializeField]float maxVolume;
     [SerializeField]float curVolume;
-    [SerializeField] float explosionTime;
+    [SerializeField]float explosionTime;
     [SerializeField]float detectRange;
     float curTime;
     [SerializeField] Collider[] detect;
@@ -37,9 +37,10 @@ public class waterTank : trainController
         {
             DoActive += DoFire;
         }
-        if (isBoom&&!turn)
+        if (isBoom&&!boomTurn)
         {
             DoActive += Boom;
+            
         }
         if (TurnedOffFire&& !turn)
         {
@@ -81,6 +82,16 @@ public class waterTank : trainController
             if (curTime > explosionTime)
             {
                 // 이때 기차는 폭발한다.
+                
+                if (photonView.IsMine)
+                {
+                    if (!isBoom)
+                    {
+                        isBoom = true;
+                        DoCamShake();
+                    }
+                    
+                }
             }
         }
     }
@@ -100,6 +111,10 @@ public class waterTank : trainController
     {
         base.Boom();
     }
+    public override void DoCamShake()
+    {
+        base.DoCamShake();
+    }
 
     [PunRPC]
     public override void RpcDofire()
@@ -116,7 +131,9 @@ public class waterTank : trainController
     {
         base.RpcBoom();
     }
-
-
-
+    [PunRPC]
+    public override void RpcDoCamShake()
+    {
+        base.RpcDoCamShake();
+    }
 }
