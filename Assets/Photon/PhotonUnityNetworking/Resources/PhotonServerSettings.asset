@@ -40,6 +40,17 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - RPCChangeState
+  - RPCCheckHand
+  - RPCRotArm
+  - PunPlayerFSM
+  - PUNRiverSwitch
+  - PunMaterialFSM
+  - ToolFSM
+  - PUNPlayerFSM
+  - RpcChangeState
+  - PUNChangeMaterial
+  - PunBranchMake
+  - PunChangeParent
   - RpcRailChecker
   DisableAutoOpenWizard: 1
   ShowSettings: 1

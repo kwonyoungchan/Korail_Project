@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 // �÷��̾ ������ ��̸� ���� ������ HP�� 1�� ���δ�
-public class IngredientItem : MonoBehaviour
+public class IngredientItem : MonoBehaviourPun
 {
     public GameObject[] itemFact = new GameObject[2];
 
@@ -32,7 +33,6 @@ public class IngredientItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Scene scene = SceneManager.GetActiveScene();
         
         player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
         isGathering = GameObject.Find("Player(Clone)").GetComponent<PlayerForwardRay>().isGathering;
@@ -54,13 +54,13 @@ public class IngredientItem : MonoBehaviour
                 }
             }
         }
-        if (player.holdState == PlayerItemDown.Hold.Pick && isGathering)
+        if (player.holdState == PlayerItemDown.Hold.Pick)
         {
             pickDis = Vector3.Distance(player.transform.position, transform.position);
 
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 1.2f)
+                if (pickDis < 1.2f && isGathering)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
@@ -73,8 +73,6 @@ public class IngredientItem : MonoBehaviour
 
     }
 
-    // ���ӿ�����Ʈ�� Ÿ���� ������
-    // 0 ���϶��� ������ ����
     void DamagedObject(int n)
     {
         currentTime = 0;
@@ -82,13 +80,13 @@ public class IngredientItem : MonoBehaviour
         isGathering = false;
         if (hp <= 0)
         {
-            Destroy(gameObject);
+
             isGathering = false;
             // GOD�� �ִ� State ����
             if (n == 0)
-                GetComponentInParent<MaterialGOD>().matState = MaterialGOD.Materials.Branch;
+                GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Branch, 1);
             if(n == 1)
-                GetComponentInParent<MaterialGOD>().matState = MaterialGOD.Materials.Steel;
+                GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Steel, 1);
         }
 
     }

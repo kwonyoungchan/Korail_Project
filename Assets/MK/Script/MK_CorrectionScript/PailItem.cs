@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // 플레이어 손에 있는 양동이와 연동 시키기
-public class PailItem : MonoBehaviour
+public class PailItem : MonoBehaviourPun
 {
     // 물 오브젝트
     public GameObject water;

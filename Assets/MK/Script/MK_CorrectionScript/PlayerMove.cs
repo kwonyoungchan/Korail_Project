@@ -45,7 +45,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         // 움직임 연동 : 내것이 아니면 반환
         if (photonView.IsMine)
