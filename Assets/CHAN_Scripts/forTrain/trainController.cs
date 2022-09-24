@@ -15,6 +15,7 @@ public class trainController : MonoBehaviourPun
     public List<GameObject> Fires = new List<GameObject>();
     public static bool isFire;
     public static bool isBoom;
+    public static bool TurnedOffFire;
     public static bool turn;
     public static Action DoActive;
     //진폭
@@ -51,7 +52,6 @@ public class trainController : MonoBehaviourPun
         for (int i = 0; i < firePos.Length; i++)
         {
             Fires[i].SetActive(true);
-
         }
     }
     public virtual void MakeFire()
@@ -84,6 +84,7 @@ public class trainController : MonoBehaviourPun
     {
         //기차가 터질 때, 카메라가 흔들리는 함수
         float curtime = 0;
+        isBoom = true;
         while (curtime < setTime)
         {
             Camera.main.transform.position += UnityEngine.Random.insideUnitSphere * amplitude * Time.deltaTime;
@@ -91,6 +92,7 @@ public class trainController : MonoBehaviourPun
             yield return null;
 
         }
+        
         turn = false;
     }
 

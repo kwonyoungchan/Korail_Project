@@ -22,6 +22,10 @@ public class mainTrain : trainController
         {
             DoActive += Boom;
         }
+        if (TurnedOffFire && !turn)
+        {
+            DoActive += TurnOffFire;
+        }
     }
     public override void DoFire()
     {
