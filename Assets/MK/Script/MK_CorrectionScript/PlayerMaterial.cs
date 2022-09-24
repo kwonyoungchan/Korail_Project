@@ -86,11 +86,17 @@ public class PlayerMaterial : MonoBehaviourPun
             }
 
             // RailTrain과의 거리가 가까우면 
+
             railtrain = GameObject.Find("train_laugage2");
+            if (!railtrain)
+                return;
             float dis = Vector3.Distance(railtrain.transform.position, transform.position);
 
             // 기차 위치
+
             matTrain = GameObject.Find("train_laugage1").transform;
+            if (!matTrain)
+                return;
             //rail = matTrain.GetComponent<MixedItem>();
             layer = 1 << 10;
             // 플레이어가 레이를 발사한다

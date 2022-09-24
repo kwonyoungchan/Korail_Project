@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class waterTank : trainController
 {
     // 본 스크립트는 물탱크 스크립트
@@ -81,8 +81,6 @@ public class waterTank : trainController
             if (curTime > explosionTime)
             {
                 // 이때 기차는 폭발한다.
-                
-                StartCoroutine(CameraShaking(amplitude, SetTime));
             }
         }
     }
@@ -102,9 +100,23 @@ public class waterTank : trainController
     {
         base.Boom();
     }
-    public override IEnumerator CameraShaking(float amplitude, float setTime)
+
+    [PunRPC]
+    public override void RpcDofire()
     {
-        return base.CameraShaking(amplitude, setTime);
+        base.RpcDofire();
     }
+    [PunRPC]
+    public override void RpcTurnOffFire()
+    {
+        base.RpcTurnOffFire();
+    }
+    [PunRPC]
+    public override void RpcBoom()
+    {
+        base.RpcBoom();
+    }
+
+
 
 }
