@@ -28,6 +28,8 @@ public class trainMove :trainController,IPunObservable
     [SerializeField] int[] railCount;
     public bool isEnding;
     public float trainSpeed;
+    float delay;
+    [SerializeField] float delayTime;
     public float departTime;
     float time;
     float setTime = 2;
@@ -66,10 +68,16 @@ public class trainMove :trainController,IPunObservable
     
     void Update()
     {
-
+        
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
         if (photonView.IsMine)
         {
+            delay += Time.deltaTime;
+            if (delay > delayTime)
+            {
+                trainSpeed += 0.01f;
+                delay = 0;
+            }
             if (!depart)
             {
                 ReadyToDepart();
@@ -115,7 +123,10 @@ public class trainMove :trainController,IPunObservable
                     }
                 }
             }
-
+            if (!trains[0].activeSelf && !trains[1].activeSelf && !trains[2].activeSelf && !trains[3].activeSelf)
+            {
+                Invoke("BackToRoom", 2);
+            }
         }
         else
         {
@@ -189,10 +200,7 @@ public class trainMove :trainController,IPunObservable
                 explosion.transform.position = trains[i].transform.position;
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
-                if (isDie[0] && isDie[1] && isDie[2] && isDie[3])
-                {
-                    Invoke("BackToRoom", 2);
-                }
+
 
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)

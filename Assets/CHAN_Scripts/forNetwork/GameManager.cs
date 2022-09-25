@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         instance = this;
+
     }
     // spawnPos 둘 변수
     public Vector3[] spawnPos;
     void Start()
     {
+
         //OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         PhotonNetwork.SendRate = 60;
@@ -22,14 +24,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 2. 한 횟수당 회전 각도를 계산
         for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers; i++)
         {
-            spawnPos[i] = transform.position + transform.forward * 5;
+            spawnPos[i] = transform.position + transform.forward * 1;
             transform.Rotate(0, angle, 0);
         }
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
-        PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
+       //PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
         //players.Add(obj.GetPhotonView());
+        
     }
 
     // Update is called once per frame
@@ -52,9 +55,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("WaitingRoom");
+            photonView.RPC("RpcLoadWaitingRoom", RpcTarget.All);
         }
-       
+        
+    }
+
+    [PunRPC]
+    void RpcLoadWaitingRoom()
+    {
+        PhotonNetwork.LoadLevel("WaitingRoom");
     }
 
 
