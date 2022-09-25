@@ -127,7 +127,7 @@ Transform:
   m_Children:
   - {fileID: 7290345457412661857}
   m_Father: {fileID: 6210587206830641699}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122694445870208107
 GameObject:
@@ -154,13 +154,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122694445870208107}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 3.3573142e-13, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6210587206830641699}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1364414358595920667
 MeshFilter:
@@ -1382,8 +1382,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3206281260203616171}
   - {fileID: 301071571733175752}
+  - {fileID: 3206281260203616171}
   - {fileID: 36561063747992047}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1499,6 +1499,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4416746454337753914}
   - {fileID: 297246485837511287}
+  - {fileID: 8774505750135136060}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

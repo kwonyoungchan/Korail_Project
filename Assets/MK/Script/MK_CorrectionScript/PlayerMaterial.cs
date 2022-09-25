@@ -16,11 +16,15 @@ using UnityEngine;
 // + 09.15 문제사항
 // : 플레이어가 손에 나무를 들고 있을 때, 바닥 상태도 Branch라면 바닥 상태의 개수에 따라 손에 들고 있는 개수 변경됨
 #endregion
-public class PlayerMaterial : MonoBehaviourPun
+public class PlayerMaterial : MonoBehaviourPun, IPunObservable
 {
     // 리스트
     // 나뭇가지
-    public List<GameObject> branchArray = new List<GameObject>();
+    public List<GameObject> branchArray;
+    private void Awake()
+    {
+        branchArray = new List<GameObject>();
+    }
     // 철
     public List<GameObject> steelArray = new List<GameObject>();
     // 래일
@@ -50,23 +54,18 @@ public class PlayerMaterial : MonoBehaviourPun
 
     GameObject railtrain;
 
-    bool isBranch = true;
+    GameObject branch;
+
+    // bool isBranch = true;
 
     int n;
 
-    int matCount = 0;
-
     int layer;
-
 
     // Start is called before the first frame update
     void Start()
     {
         // 움직임 연동 : 내것이 아니면 반환
-        if (!photonView.IsMine)
-        {
-            return;
-        }
         playerItem = GetComponent<PlayerItemDown>();
         playerRay = GetComponent<PlayerForwardRay>();
     }
@@ -74,12 +73,9 @@ public class PlayerMaterial : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-
-        // 움직임 연동 : 내것이 아니면 반환
         if (photonView.IsMine)
         {
-
-
+            
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 AddRail();
@@ -105,7 +101,7 @@ public class PlayerMaterial : MonoBehaviourPun
 
                 float railDis = Vector3.Distance(connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1].transform.position, transform.position);
 
-                isBranch = playerRay.isBranch;
+                // isBranch = playerRay.isBranch;
                 // 손에 무언갈 들고 있다면
                 // 강일 때
                 if (riverGOD)
@@ -168,7 +164,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             if (matGod.matState == MaterialGOD.Materials.Branch)
                             {
                                 // Array에 추가하기
-                                GameObject mat = PhotonNetwork.Instantiate("MK_Prefab/Branch", itemPos.position, default);
+                                GameObject mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
                                 mat.transform.parent = itemPos;
                                 branchArray.Add(mat);
                                 // 손 위치 위로 아이템 쌓게 만들기
@@ -188,12 +184,12 @@ public class PlayerMaterial : MonoBehaviourPun
                                 if (Input.GetButtonDown("Jump"))
                                 {
 
-                                    if (matGod.steelCount > 0)
+                                    if (matGod.matCount > 0)
                                     {
 
-                                        for (int i = 0; i < matGod.steelCount; i++)
+                                        MakeMat("MK_Prefab/Steel", steelArray);
+                                        for (int i = 0; i < matGod.matCount; i++)
                                         {
-                                            MakeMat("MK_Prefab/Steel", steelArray);
                                             steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                             steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                         }
@@ -202,20 +198,20 @@ public class PlayerMaterial : MonoBehaviourPun
                                             Destroy(matGod.mat[i]);
                                         }
                                         matGod.mat.Clear();
-                                        matGod.branchCount = branchArray.Count;
+                                        matGod.matCount = branchArray.Count;
                                         matGod.ChangeMaterial(MaterialGOD.Materials.Branch, branchArray.Count);
                                         DeleteMat(branchArray);
                                     }
                                 }
                             }
-                            // 바닥 상태가 Steel일때
+                            // 바닥 상태가 Rail 일때
                             if (matGod.matState == MaterialGOD.Materials.Rail)
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    if (matGod.railCount > 0)
+                                    if (matGod.matCount > 0)
                                     {
-                                        for (int i = 0; i < matGod.railCount; i++)
+                                        for (int i = 0; i < matGod.matCount; i++)
                                         {
                                             MakeMat("CHAN_Prefab/Rail", railArray);
                                             railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -226,7 +222,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                             Destroy(matGod.mat[i]);
                                         }
                                         matGod.mat.Clear();
-                                        matGod.branchCount = branchArray.Count;
+                                        matGod.matCount = branchArray.Count;
                                         matGod.ChangeMaterial(MaterialGOD.Materials.Branch, branchArray.Count);
                                         DeleteMat(branchArray);
 
@@ -251,8 +247,8 @@ public class PlayerMaterial : MonoBehaviourPun
                                 if (Input.GetButtonDown("Jump"))
                                 {
                                     playerItem.holdState = PlayerItemDown.Hold.Ax;
-                                    toolGOD.toolsState = ToolGOD.Tools.Idle;
-                                    matGod.branchCount = branchArray.Count;
+                                    toolGOD.ChangeState(ToolGOD.Tools.Idle);
+                                    // matGod.matCount = branchArray.Count;
                                     matGod.ChangeMaterial(MaterialGOD.Materials.Branch, branchArray.Count);
                                     // ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, matGod.branchCount);
                                     DeleteMat(branchArray);
@@ -263,7 +259,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, matGod.branchCount);
+                                    ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, branchArray.Count);
                                     DeleteMat(branchArray);
                                 }
                             }
@@ -272,7 +268,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    ChangeState(PlayerItemDown.Hold.Pail, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, matGod.branchCount);
+                                    ChangeState(PlayerItemDown.Hold.Pail, ToolGOD.Tools.Idle, branchArray, MaterialGOD.Materials.Branch, branchArray.Count);
                                     DeleteMat(branchArray);
                                 }
                             }
@@ -313,7 +309,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                     steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                 }
-                                matGod.ChangeMaterial(MaterialGOD.Materials.None, 0);
+                                matGod.ChangeMaterial(MaterialGOD.Materials.None, steelArray.Count);
 
                             }
                             // 바닥 상태가 branch
@@ -321,9 +317,9 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    if (matGod.branchCount > 0)
+                                    if (matGod.matCount > 0)
                                     {
-                                        for (int i = 0; i < matGod.branchCount; i++)
+                                        for (int i = 0; i < matGod.matCount; i++)
                                         {
                                             MakeMat("MK_Prefab/Branch", branchArray);
                                             branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -334,7 +330,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                             Destroy(matGod.mat[i]);
                                         }
                                         matGod.mat.Clear();
-                                        matGod.steelCount = steelArray.Count;
+                                        matGod.matCount = steelArray.Count;
                                         matGod.ChangeMaterial(MaterialGOD.Materials.Steel, steelArray.Count);
                                         DeleteMat(steelArray);
                                     }
@@ -345,9 +341,9 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    if (matGod.railCount > 0)
+                                    if (matGod.matCount > 0)
                                     {
-                                        for (int i = 0; i < matGod.railCount; i++)
+                                        for (int i = 0; i < matGod.matCount; i++)
                                         {
                                             MakeMat("CHAN_Prefab/Rail", railArray);
                                             railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -358,7 +354,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                             Destroy(matGod.mat[i]);
                                         }
                                         matGod.mat.Clear();
-                                        matGod.steelCount = steelArray.Count;
+                                        matGod.matCount = steelArray.Count;
                                         matGod.ChangeMaterial(MaterialGOD.Materials.Steel, steelArray.Count);
                                         DeleteMat(steelArray);
                                     }
@@ -370,7 +366,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    matGod.steelCount = steelArray.Count;
+                                    //matGod.steelCount = steelArray.Count;
                                     matGod.ChangeMaterial(MaterialGOD.Materials.Steel, steelArray.Count);
                                     DeleteMat(steelArray);
                                 }
@@ -380,7 +376,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, steelArray, MaterialGOD.Materials.Steel, matGod.steelCount);
+                                    ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, steelArray, MaterialGOD.Materials.Steel, steelArray.Count);
                                     DeleteMat(steelArray);
                                 }
                             }
@@ -388,7 +384,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, steelArray, MaterialGOD.Materials.Steel, matGod.steelCount);
+                                    ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, steelArray, MaterialGOD.Materials.Steel, steelArray.Count);
                                     DeleteMat(steelArray);
                                 }
                             }
@@ -397,7 +393,7 @@ public class PlayerMaterial : MonoBehaviourPun
                             {
                                 if (Input.GetButtonDown("Jump"))
                                 {
-                                    ChangeState(PlayerItemDown.Hold.Pail, ToolGOD.Tools.Idle, steelArray, MaterialGOD.Materials.Steel, matGod.steelCount);
+                                    ChangeState(PlayerItemDown.Hold.Pail, ToolGOD.Tools.Idle, steelArray, MaterialGOD.Materials.Steel, steelArray.Count);
                                     DeleteMat(steelArray);
                                 }
                             }
@@ -468,9 +464,9 @@ public class PlayerMaterial : MonoBehaviourPun
                                 {
                                     if (Input.GetButtonDown("Jump"))
                                     {
-                                        if (matGod.branchCount > 0)
+                                        if (matGod.matCount > 0)
                                         {
-                                            for (int i = 0; i < matGod.branchCount; i++)
+                                            for (int i = 0; i < matGod.matCount; i++)
                                             {
                                                 MakeMat("MK_Prefab/Branch", branchArray);
                                                 branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -481,7 +477,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                                 Destroy(matGod.mat[i]);
                                             }
                                             matGod.mat.Clear();
-                                            matGod.railCount = railArray.Count;
+                                            matGod.matCount = railArray.Count;
                                             matGod.ChangeMaterial(MaterialGOD.Materials.Rail, railArray.Count);
                                             DeleteMat(railArray);
                                         }
@@ -492,9 +488,9 @@ public class PlayerMaterial : MonoBehaviourPun
                                 {
                                     if (Input.GetButtonDown("Jump"))
                                     {
-                                        if (matGod.steelCount > 0)
+                                        if (matGod.matCount > 0)
                                         {
-                                            for (int i = 0; i < matGod.steelCount; i++)
+                                            for (int i = 0; i < matGod.matCount; i++)
                                             {
                                                 MakeMat("MK_Prefab/Branch", steelArray);
                                                 steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -505,7 +501,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                                 Destroy(matGod.mat[i]);
                                             }
                                             matGod.mat.Clear();
-                                            matGod.railCount = railArray.Count;
+                                            matGod.matCount = railArray.Count;
                                             matGod.ChangeMaterial(MaterialGOD.Materials.Rail, railArray.Count);
                                             DeleteMat(railArray);
                                         }
@@ -517,7 +513,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 {
                                     if (Input.GetButtonDown("Jump"))
                                     {
-                                        matGod.railCount = railArray.Count;
+                                        matGod.matCount = railArray.Count;
                                         matGod.ChangeMaterial(MaterialGOD.Materials.Rail, railArray.Count);
                                         DeleteMat(railArray);
                                     }
@@ -528,7 +524,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 {
                                     if (Input.GetButtonDown("Jump"))
                                     {
-                                        ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
+                                        ChangeState(PlayerItemDown.Hold.Ax, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, railArray.Count);
                                         DeleteMat(railArray);
                                     }
                                 }
@@ -537,7 +533,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 {
                                     if (Input.GetButtonDown("Jump"))
                                     {
-                                        ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
+                                        ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, railArray.Count);
                                         DeleteMat(railArray);
                                     }
                                 }
@@ -546,7 +542,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 {
                                     if (Input.GetButtonDown("Jump"))
                                     {
-                                        ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, matGod.railCount);
+                                        ChangeState(PlayerItemDown.Hold.Pick, ToolGOD.Tools.Idle, railArray, MaterialGOD.Materials.Rail, railArray.Count);
                                         DeleteMat(railArray);
                                     }
                                 }
@@ -589,28 +585,50 @@ public class PlayerMaterial : MonoBehaviourPun
                             // 바닥 상태가 Branch라면
                             if (matGod.matState == MaterialGOD.Materials.Branch)
                             {
+                                // 바닥 상태 변화
                                 ChangeToolGod();
                                 // 바닥에 branch가 여러개인 경우,
                                 // 만약 바닥에 branch가 3개 이하인 경우
-                                if (matGod.branchCount > 0)
+                                if (matGod.matCount > 0)
                                 {
-                                    for (int i = 0; i < matGod.branchCount; i++)
+                                    for (int i = 0; i < matGod.matCount; i++)
                                     {
                                         // Array에 추가하기
-                                        GameObject branch = PhotonNetwork.Instantiate("MK_Prefab/Branch", itemPos.position + new Vector3(0, i * 0.2f, 0), default);
-                                        branch.transform.parent = itemPos;
-                                        branchArray.Add(branch);
-
-                                        // branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-                                        // branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                                        // branch = PhotonNetwork.Instantiate("MK_Prefab/Branch", itemPos.position + new Vector3(0, i * 0.2f, 0), default);
+                                        // Array에 추가하기
+                                        // 통신
+                                        GameObject mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"), itemPos);
+                                        branchArray.Add(mat);
+                                        branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                        branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                                     }
 
                                 }
                                 // 플레이어 손상태 변환
                                 playerItem.holdState = PlayerItemDown.Hold.Mat;
+
+                                #region 기존에 썼던 코드
+                                /*                                if (matGod.branchCount > 0)
+                                                                {
+                                                                    for (int i = 0; i < matGod.branchCount; i++)
+                                                                    {
+                                                                        // Array에 추가하기
+                                                                        // branch = PhotonNetwork.Instantiate("MK_Prefab/Branch", itemPos.position + new Vector3(0, i * 0.2f, 0), default);
+                                                                        // Array에 추가하기
+                                                                        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
+                                                                        branch.transform.parent = itemPos;
+                                                                        branchArray.Add(branch);
+                                                                        branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                                                                        branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                                                                    }
+
+                                                                }
+                                                                // 플레이어 손상태 변환
+                                                                playerItem.holdState = PlayerItemDown.Hold.Mat;*/
                                 // 바닥상태 변환
                                 matGod.ChangeMaterial(MaterialGOD.Materials.None, 1);
                             }
+                            #endregion
                             #endregion
                             #region Steel
                             // 점프키를 눌렀을 때,
@@ -619,9 +637,9 @@ public class PlayerMaterial : MonoBehaviourPun
                                 ChangeToolGod();
                                 // Steel이라면
                                 // 바닥에 steel이 여러개인 경우
-                                if (matGod.steelCount > 0)
+                                if (matGod.matCount > 0)
                                 {
-                                    for (int i = 0; i < matGod.steelCount; i++)
+                                    for (int i = 0; i < matGod.matCount; i++)
                                     {
                                         MakeMat("MK_Prefab/Steel", steelArray);
                                         steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -632,7 +650,7 @@ public class PlayerMaterial : MonoBehaviourPun
                                 // 플레이어 손상태 변환
                                 playerItem.holdState = PlayerItemDown.Hold.Mat;
                                 // 바닥상태 변환
-                                matGod.ChangeMaterial(MaterialGOD.Materials.None, 0);
+                                matGod.ChangeMaterial(MaterialGOD.Materials.None, steelArray.Count);
 
                             }
                             #endregion
@@ -640,12 +658,12 @@ public class PlayerMaterial : MonoBehaviourPun
                             // 점프키를 눌렀을 때,
                             else if (matGod.matState == MaterialGOD.Materials.Rail)
                             {
-                                //ChangeToolGod();
+                                ChangeToolGod();
                                 // rail
                                 // 바닥에 rail이 여러개인 경우
-                                if (matGod.railCount > 0)
+                                if (matGod.matCount > 0)
                                 {
-                                    for (int i = 0; i < matGod.railCount; i++)
+                                    for (int i = 0; i < matGod.matCount; i++)
                                     {
                                         MakeMat("CHAN_Prefab/Rail", railArray);
                                         railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -675,9 +693,88 @@ public class PlayerMaterial : MonoBehaviourPun
                 }
             }
         }
-        
+        // 동기화
+        else
+        {
+            // 손 위에 올릴 아이템 위치
+            itemPos.transform.position = Vector3.Lerp(itemPos.transform.position, iPos, 5 * Time.deltaTime);
+            itemPos.transform.rotation = Quaternion.Lerp(itemPos.transform.rotation, iPosRot, 5 * Time.deltaTime);
+            // 손에 무언가가 있을때
+            if (playerItem.holdState == PlayerItemDown.Hold.Mat)
+            {
+                // 나무가 있다면
+                if (brnCount > 0)
+                {
+                    if (brnCount == branchArray.Count) return;
+                    GameObject mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"), itemPos);
+                    // mat.transform.localPosition = new Vector3(0, 0, 0);
+                    branchArray.Add(mat);
+                    for (int i = 0; i < branchArray.Count; i++)
+                    {
+                        branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                        branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                }
+
+                if (steelCount > 0)
+                {
+                    if (steelCount == steelArray.Count) return;
+                    GameObject mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"), itemPos);
+                    // mat.transform.localPosition = new Vector3(0, 0, 0);
+                    steelArray.Add(mat);
+                    for (int i = 0; i < steelArray.Count; i++)
+                    {
+                        steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                        steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                }
+
+                if (railCount > 0)
+                {
+                    if (railCount == railArray.Count) return;
+                    GameObject mat = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"), itemPos);
+                    // mat.transform.localPosition = new Vector3(0, 0, 0);
+                    railArray.Add(mat);
+                    for (int i = 0; i < railArray.Count; i++)
+                    {
+                        railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+                        railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                }
+
+            }
+            if (brnCount <= 0)
+            {
+                for (int i = 0; i < branchArray.Count; i++)
+                {
+                    Destroy(branchArray[i].gameObject);
+                }
+                branchArray.Clear();
+                playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+            }
+            if (steelCount <= 0)
+            {
+                for (int i = 0; i < steelArray.Count; i++)
+                {
+                    Destroy(steelArray[i].gameObject);
+                }
+                steelArray.Clear();
+                playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+            }
+            if (railCount <= 0)
+            {
+                for (int i = 0; i < railArray.Count; i++)
+                {
+                    Destroy(railArray[i].gameObject);
+                }
+                railArray.Clear();
+                playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+            }
+        }
+
     }
 
+    // 손에 무언가 들고 있을 때, 부르는 함수
     void ChangeToolGod()
     {
         if (playerItem.holdState != PlayerItemDown.Hold.Idle)
@@ -713,18 +810,19 @@ public class PlayerMaterial : MonoBehaviourPun
         {
             Destroy(matArray[i].gameObject);
         }
-        matArray.Clear();
+
         if(matArray.Count <= 0)
         {
             playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
         }
+        matArray.Clear();
     }
     // 상태 변화
     void ChangeState(PlayerItemDown.Hold player, ToolGOD.Tools tool, List<GameObject> mat, MaterialGOD.Materials mats, int count)
     {
         playerItem.holdState = player;
         toolGOD.ChangeState(tool);
-        count = mat.Count;
+        // count = mat.Count;
         matGod.ChangeMaterial(mats, count);
     }
     public void AddRail()
@@ -767,8 +865,35 @@ public class PlayerMaterial : MonoBehaviourPun
             {
                 playerItem.holdState = PlayerItemDown.Hold.Mat;
             }
-            isBranch = true;
+            // isBranch = true;
         }
 
+    }
+
+
+    Vector3 iPos;
+    Quaternion iPosRot;
+    int brnCount;
+    int steelCount;
+    int railCount;
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(itemPos.transform.position);
+            stream.SendNext(itemPos.transform.rotation);
+            stream.SendNext(branchArray.Count);
+            stream.SendNext(steelArray.Count);
+            stream.SendNext(railArray.Count);
+        }
+        else
+        {
+            iPos = (Vector3)stream.ReceiveNext();
+            iPosRot = (Quaternion)stream.ReceiveNext();
+            brnCount = (int)stream.ReceiveNext();
+            steelCount = (int)stream.ReceiveNext();
+            railCount = (int)stream.ReceiveNext();
+
+        }
     }
 }

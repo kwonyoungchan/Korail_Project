@@ -18,9 +18,7 @@ public class MaterialGOD : MonoBehaviourPun
     public Materials matState = Materials.Idle;
 
     // 생성된 오브젝트 만들 개수
-    public int branchCount = 0;
-    public int steelCount = 0;
-    public int railCount = 0;
+    public int matCount = 1;
 
     float y = 0.55f;
 
@@ -42,10 +40,9 @@ public class MaterialGOD : MonoBehaviourPun
             // 나무가지라면
             case Materials.Branch:
                 // 게임오브젝트가 있으면 return
-                if (mat.Count == branchCount) return;
-                print(mat.Count + "/" + branchCount);
+                if (mat.Count == matCount) return;
                 // Resources파일에 있는 나뭇가지 생성
-                if (branchCount >= 1)
+                if (matCount >= 1)
                 {
                     if (transform.childCount > 0)
                     {
@@ -53,7 +50,7 @@ public class MaterialGOD : MonoBehaviourPun
                     }
                     else
                     {
-                        for (int i = 0; i < branchCount; i++)
+                        for (int i = 0; i < matCount; i++)
                         {
                             //  GameObject ingredient = PhotonNetwork.Instantiate("MK_Prefab/Branch", transform.position + new Vector3(0, y + i * 0.2f, 0), default);
                             CreateMat("MK_Prefab/Branch", i);
@@ -63,9 +60,9 @@ public class MaterialGOD : MonoBehaviourPun
                 break;
             case Materials.Steel:
                 // 게임오브젝트가 있으면 return
-                if (mat.Count == steelCount) return;
+                if (mat.Count == matCount) return;
                 // Resources파일에 있는 나뭇가지 생성
-                if (steelCount > 1)
+                if (matCount >= 1)
                 {
                     if (transform.childCount > 0)
                     {
@@ -73,7 +70,7 @@ public class MaterialGOD : MonoBehaviourPun
                     }
                     else
                     {
-                        for (int i = 0; i < steelCount; i++)
+                        for (int i = 0; i < matCount; i++)
                         {
                             CreateMat("MK_Prefab/Steel", i);
                         }
@@ -83,9 +80,9 @@ public class MaterialGOD : MonoBehaviourPun
                 break;
             case Materials.Rail:
                 // 게임오브젝트가 있으면 return
-                if (mat.Count == railCount) return;
+                if (mat.Count == matCount) return;
                 // Resources파일에 있는 나뭇가지 생성
-                if (railCount > 1)
+                if (matCount >= 1)
                 {
                     if (transform.childCount > 0)
                     {
@@ -93,7 +90,7 @@ public class MaterialGOD : MonoBehaviourPun
                     }
                     else
                     {
-                        for (int i = 0; i < railCount; i++)
+                        for (int i = 0; i < matCount; i++)
                         {
                             CreateMat("CHAN_Prefab/Rail", i);
                         }
@@ -119,7 +116,7 @@ public class MaterialGOD : MonoBehaviourPun
     void DestroyChild()
     {
         Destroy(gameObject.transform.GetChild(0).gameObject);
-        branchCount = 1;
+        matCount = 1;
         GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
         mat.Add(branch);
         branch.transform.position = transform.position + new Vector3(0, y, 0);
@@ -140,6 +137,6 @@ public class MaterialGOD : MonoBehaviourPun
     void PUNChangeMaterial(Materials s, int count)
     {
         matState = s;
-        branchCount = count;
+        matCount = count;
     }
 }

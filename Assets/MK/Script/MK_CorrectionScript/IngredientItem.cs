@@ -80,7 +80,6 @@ public class IngredientItem : MonoBehaviourPun
         isGathering = false;
         if (hp <= 0)
         {
-
             isGathering = false;
             // GOD�� �ִ� State ����
             if (n == 0)
