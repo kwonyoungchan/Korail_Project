@@ -38,6 +38,7 @@ public class trainMove :trainController,IPunObservable
     [SerializeField] GameObject[] trains;
     Vector3[] recievePos;
     Quaternion[] recieveRot;
+    float recieveSpeed;
 
 
     [SerializeField] float LerpSpeed;
@@ -135,6 +136,7 @@ public class trainMove :trainController,IPunObservable
                 trains[i].transform.position = Vector3.Lerp(trains[i].transform.position, recievePos[i], LerpSpeed * Time.deltaTime);
                 trains[i].transform.rotation = Quaternion.Lerp(trains[i].transform.rotation, recieveRot[i], LerpSpeed * Time.deltaTime);
             }
+            trainSpeed = recieveSpeed;
         }
        
         SpeedText.text = trainSpeed.ToString("0.00")+" "+ "m/s";
@@ -234,6 +236,14 @@ public class trainMove :trainController,IPunObservable
                 recievePos[i] = (Vector3)stream.ReceiveNext();
                 recieveRot[i] = (Quaternion)stream.ReceiveNext();
             }
+        }
+        if (stream.IsWriting)
+        {
+            stream.SendNext(trainSpeed);
+        }
+        else
+        {
+            recieveSpeed = (float)stream.ReceiveNext();
         }
     }
     public override void TurnOffFire()
