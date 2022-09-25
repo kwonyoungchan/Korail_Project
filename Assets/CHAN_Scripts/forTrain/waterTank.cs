@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class waterTank : trainController
 {
     // 본 스크립트는 물탱크 스크립트
@@ -9,14 +9,13 @@ public class waterTank : trainController
 
     [SerializeField]float maxVolume;
     [SerializeField]float curVolume;
-    [SerializeField] float explosionTime;
+    [SerializeField]float explosionTime;
     [SerializeField]float detectRange;
     float curTime;
     [SerializeField] Collider[] detect;
 
     // 기차가 이동하기 시작하는 순간에 물의 양은 줄어들기 시작한다.
     [SerializeField] trainMove tMove;
-
     // 물이 고갈되면 모든 기차에서 불이나기 시작한다.
     // 불이 나는 것은 train control에서 제어 할 것이라 train control 에게 flag만 주게 하자
     // 물이 채워지면 물은 다시 충전되고, 기차의 상태를 원상태로 유지시킨다. 
@@ -37,9 +36,10 @@ public class waterTank : trainController
         {
             DoActive += DoFire;
         }
-        if (isBoom&&!turn)
+        if (isBoom&&!boomTurn)
         {
             DoActive += Boom;
+            
         }
         if (TurnedOffFire&& !turn)
         {
@@ -82,7 +82,15 @@ public class waterTank : trainController
             {
                 // 이때 기차는 폭발한다.
                 
-                StartCoroutine(CameraShaking(amplitude, SetTime));
+                if (photonView.IsMine)
+                {
+                    if (!isBoom)
+                    {
+                        isBoom = true;
+                        DoCamShake();
+                    }
+                    
+                }
             }
         }
     }
@@ -102,9 +110,29 @@ public class waterTank : trainController
     {
         base.Boom();
     }
-    public override IEnumerator CameraShaking(float amplitude, float setTime)
+    public override void DoCamShake()
     {
-        return base.CameraShaking(amplitude, setTime);
+        base.DoCamShake();
     }
 
+    [PunRPC]
+    public override void RpcDofire()
+    {
+        base.RpcDofire();
+    }
+    [PunRPC]
+    public override void RpcTurnOffFire()
+    {
+        base.RpcTurnOffFire();
+    }
+    [PunRPC]
+    public override void RpcBoom()
+    {
+        base.RpcBoom();
+    }
+    [PunRPC]
+    public override void RpcDoCamShake()
+    {
+        base.RpcDoCamShake();
+    }
 }

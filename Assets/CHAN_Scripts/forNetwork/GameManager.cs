@@ -29,12 +29,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
         PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
+        //players.Add(obj.GetPhotonView());
     }
 
     // Update is called once per frame
     void Update()
     {
-
+ 
     }
 
     //방에 플레이어가 참여 했을 때 호출해주는 함수
@@ -44,9 +45,17 @@ public class GameManager : MonoBehaviourPunCallbacks
         print(newPlayer.NickName + " 님이 이 방에 들어왔습니다.");
     }
     //현재 방에 있는 Player를 담아놓자.
-    public List<PhotonView> players = new List<PhotonView>();
- 
+    //public List<PhotonView> players = new List<PhotonView>();
 
+
+    public void LoadWaitingRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("WaitingRoom");
+        }
+       
+    }
 
 
 }

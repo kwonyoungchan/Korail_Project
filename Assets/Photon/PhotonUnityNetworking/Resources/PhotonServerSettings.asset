@@ -52,8 +52,11 @@ MonoBehaviour:
   - PunBranchMake
   - PunChangeParent
   - RpcRailChecker
-  - PUNFirstMaterial
-  - PUNChangeRiver
+  - RpcDofire
+  - RpcBoom
+  - RpcCameraShaking
+  - RpcTurnOffFire
+  - RpcDoCamShake
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

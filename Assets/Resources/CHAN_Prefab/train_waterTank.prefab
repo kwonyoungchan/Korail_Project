@@ -162,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5529417374954917072}
   - component: {fileID: 3308829470485848633}
+  - component: {fileID: -4138372394959008352}
   m_Layer: 0
   m_Name: train_waterTank
   m_TagString: Untagged
@@ -209,12 +210,35 @@ MonoBehaviour:
   Fires:
   - {fileID: 6808481893268935902}
   ampli: 0
-  freq: 0
   sTime: 0
   maxVolume: 100
   curVolume: 0
   explosionTime: 0
+  detectRange: 0
+  detect: []
   tMove: {fileID: 1567805645146434429, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+--- !u!114 &-4138372394959008352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5529417374954917074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6024839842427022435
 GameObject:
   m_ObjectHideFlags: 0

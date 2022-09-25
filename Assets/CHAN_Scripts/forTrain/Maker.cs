@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,7 @@ public class Maker : trainController
             DoActive += DoFire;
             
         }
-        if (isBoom)
+        if (isBoom && !boomTurn)
         {
             DoActive += Boom;
         }
@@ -107,5 +108,22 @@ public class Maker : trainController
     {
         base.TurnOffFire();
     }
+    [PunRPC]
+    public override void RpcDofire()
+    {
+        base.RpcDofire();
+    }
+    [PunRPC]
+    public override void RpcTurnOffFire()
+    {
+        base.RpcTurnOffFire();
+    }
+    [PunRPC]
+    public override void RpcBoom()
+    {
+        base.RpcBoom();
+    }
+
+
 
 }

@@ -13,6 +13,14 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     public InputField inputNickName;
     //접속 Button
     public Button btnConnect;
+
+    GameObject player_Lobby;
+    private void Awake()
+    {
+        player_Lobby = (GameObject)Instantiate(Resources.Load("CHAN_Prefab/Player4Lobby"));
+        player_Lobby.transform.position = Vector3.zero;
+        DontDestroyOnLoad(player_Lobby);
+    }
     void Start()
     {
         //닉네임이 변경될 때, 호출되는 함수 등록

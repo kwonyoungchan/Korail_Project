@@ -20,7 +20,7 @@ public class trainMove :trainController,IPunObservable
     [SerializeField] Transform[] rayPos;
     [SerializeField] int gap;
     [SerializeField] float RotScale;
-    [SerializeField] GameObject[] trains;
+
     [SerializeField] Text SpeedText;
     float trainTimer;
     public bool depart;
@@ -31,16 +31,20 @@ public class trainMove :trainController,IPunObservable
     public float departTime;
     float time;
     float setTime = 2;
-
-    [SerializeField] float LerpSpeed;
+    bool[] isturn;
+    [Header("포톤 UDP 정보 모음")]
+    [SerializeField] GameObject[] trains;
     Vector3[] recievePos;
     Quaternion[] recieveRot;
 
 
+    [SerializeField] float LerpSpeed;
+
+
+
     void Start()
     {
-        recievePos=new Vector3[trains.Length];
-        recieveRot= new Quaternion[trains.Length];
+
         // 여기서 기차는 시각선로에서 시작되도록 설정 한다.
         transform.position = DefineBlocks.instance.StartBlocks[1].transform.position;
         for (int i = 0; i < trains.Length; i++)
@@ -50,13 +54,19 @@ public class trainMove :trainController,IPunObservable
         }
         railCount = new int[trains.Length];
         isDie = new bool[trains.Length];
+        isturn = new bool[trains.Length];
         dir = new Vector3[trains.Length];
-        
+
+        recievePos = new Vector3[trains.Length];
+        recieveRot = new Quaternion[trains.Length];
+
+
     }
 
     
     void Update()
     {
+
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
         if (photonView.IsMine)
         {
@@ -68,6 +78,12 @@ public class trainMove :trainController,IPunObservable
             {
                 for (int i = 0; i < trains.Length; i++)
                 {
+                    if (isDie[i] && !isturn[i])
+                    {
+                        //DoCamShake();
+                        isturn[i] = true;
+                    }
+
                     if (trains[i].activeSelf)
                     {
 
@@ -99,6 +115,7 @@ public class trainMove :trainController,IPunObservable
                     }
                 }
             }
+
         }
         else
         {
@@ -170,9 +187,13 @@ public class trainMove :trainController,IPunObservable
                 isDie[i] = true;
                 GameObject explosion = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/train_explosion"));
                 explosion.transform.position = trains[i].transform.position;
-                StartCoroutine(CameraShaking(amplitude,SetTime));
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
+                if (isDie[0] && isDie[1] && isDie[2] && isDie[3])
+                {
+                    Invoke("BackToRoom", 2);
+                }
+
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
@@ -188,10 +209,7 @@ public class trainMove :trainController,IPunObservable
             }
         }
     }
-    public override IEnumerator CameraShaking(float amplitude, float setTime)
-    {
-        return base.CameraShaking(amplitude, setTime);
-    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         for (int i = 0; i < trains.Length; i++)
@@ -214,5 +232,10 @@ public class trainMove :trainController,IPunObservable
     {
         base.TurnOffFire();
     }
+    void BackToRoom()
+    {
+        GameManager.instance.LoadWaitingRoom();
+    }
+
 
 }

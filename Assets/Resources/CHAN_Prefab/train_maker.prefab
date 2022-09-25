@@ -286,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5529417374954917072}
   - component: {fileID: 2143841566244431434}
+  - component: {fileID: 4056086970256569864}
   m_Layer: 0
   m_Name: train_maker
   m_TagString: Untagged
@@ -340,7 +341,6 @@ MonoBehaviour:
   fireObj: {fileID: 4363528374927502100, guid: 8c9c3cfd3f3be0d47a4759718b9aec5b, type: 3}
   Fires: []
   ampli: 0
-  freq: 0
   sTime: 0
   branchCount: 0
   steelCount: 0
@@ -354,6 +354,28 @@ MonoBehaviour:
   railArray: []
   bCount: 0
   sCount: 0
+--- !u!114 &4056086970256569864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5529417374954917074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6180727870842699381
 GameObject:
   m_ObjectHideFlags: 0
