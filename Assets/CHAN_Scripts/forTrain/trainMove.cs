@@ -28,6 +28,8 @@ public class trainMove :trainController,IPunObservable
     [SerializeField] int[] railCount;
     public bool isEnding;
     public float trainSpeed;
+    float delay;
+    [SerializeField] float delayTime;
     public float departTime;
     float time;
     float setTime = 2;
@@ -66,10 +68,16 @@ public class trainMove :trainController,IPunObservable
     
     void Update()
     {
-
+        
         //처음에 기차는 바로 출발하지 않고 일정 시간이 지난 후 출발한다.
         if (photonView.IsMine)
         {
+            delay += Time.deltaTime;
+            if (delay > delayTime)
+            {
+                trainSpeed += 0.01f;
+                delay = 0;
+            }
             if (!depart)
             {
                 ReadyToDepart();
