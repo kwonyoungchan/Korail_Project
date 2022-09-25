@@ -846,12 +846,18 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     }
     public void RemoveRail()
     {
+        photonView.RPC("PunRemoveRail", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void PunRemoveRail()
+    {
         if (railArray.Count > 0)
         {
             GameObject rail = railArray[railArray.Count - 1];
             railArray.RemoveAt(railArray.Count - 1);
             Destroy(rail);
-            if(railArray.Count > 0)
+            if (railArray.Count > 0)
             {
                 playerItem.holdState = PlayerItemDown.Hold.Mat;
             }
@@ -860,7 +866,6 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
             }
         }
-        
     }
     public void RemoveBranch()
     {
