@@ -24,14 +24,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SendRate = 60;
         // 1. spawnPos의 갯수를 할당
         spawnPos = new Vector3[PhotonNetwork.CurrentRoom.MaxPlayers];
+        RandomSpawn();
 
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
-        {
-            float x = Random.Range(-Range, Range);
-            float z = Random.Range(-Range, Range);
-            ClientManager.instance.players[i].gameObject.transform.position = new Vector3(x, 0.5f, z);
-        }
-        
+
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
@@ -92,6 +87,22 @@ public class GameManager : MonoBehaviourPunCallbacks
         
     }
     #endregion
+ 
+    public void RandomSpawn()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        photonView.RPC("RpcRandomSpawn", RpcTarget.All);
+    }
+    [PunRPC]
+    void RpcRandomSpawn()
+    {
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            float x = Random.Range(-Range, Range);
+            float z = Random.Range(-Range, Range);
+            ClientManager.instance.players[i].gameObject.transform.position = new Vector3(x, 0.5f, z);
+        }
+    }
 
 
 
