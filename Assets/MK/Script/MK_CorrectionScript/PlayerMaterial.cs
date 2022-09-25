@@ -53,13 +53,13 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     // MixedItem rail;
 
     GameObject railtrain;
-
+    GameObject train_main; 
     GameObject branch;
 
     // bool isBranch = true;
 
     int n;
-
+    float mainDis;
     int layer;
 
     // Start is called before the first frame update
@@ -68,6 +68,9 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
         // 움직임 연동 : 내것이 아니면 반환
         playerItem = GetComponent<PlayerItemDown>();
         playerRay = GetComponent<PlayerForwardRay>();
+        matTrain = GameObject.Find("train_laugage1").transform;
+        railtrain = GameObject.Find("train_laugage2");
+        train_main = GameObject.Find("train_main");
     }
 
     // Update is called once per frame
@@ -80,13 +83,14 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
             {
                 AddRail();
             }
-
+            if (!matTrain || !railtrain)
+            {
+                return;
+            }
             // RailTrain과의 거리가 가까우면 
-            railtrain = GameObject.Find("train_laugage2");
             float dis = Vector3.Distance(railtrain.transform.position, transform.position);
 
             // 기차 위치
-            matTrain = GameObject.Find("train_laugage1").transform;
             //rail = matTrain.GetComponent<MixedItem>();
             layer = 1 << 10;
             // 플레이어가 레이를 발사한다
@@ -404,8 +408,11 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                     else if (railArray.Count > 0)
                     {
                         if (rayInfo.transform.name == "Bridge") return;
-                        GameObject train_main = GameObject.Find("train_main");
-                        float mainDis = Vector3.Distance(train_main.transform.position, transform.position);
+
+                        if (train_main)
+                        { 
+                            mainDis = Vector3.Distance(train_main.transform.position, transform.position);
+                        }
 
                         // 레일이 마지막이 아닌 경우
                         if (itemGOD.items == ItemGOD.Items.Rail || itemGOD.items == ItemGOD.Items.CornerRail)
