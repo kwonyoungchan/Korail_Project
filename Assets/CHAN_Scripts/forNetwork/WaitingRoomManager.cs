@@ -1,4 +1,4 @@
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,10 +59,20 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
             if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-
-                PhotonNetwork.LoadLevel("GameScene");
+                if(photonView.IsMine)
+                LoadGameScene();
             }
         }
+    }
+    void LoadGameScene()
+    {
+        photonView.RPC("RpcLoadGameScene", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RpcLoadGameScene()
+    {
+        PhotonNetwork.LoadLevel("GameScene");
     }
 
 
