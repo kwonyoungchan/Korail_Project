@@ -68,7 +68,8 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
         // 움직임 연동 : 내것이 아니면 반환
         playerItem = GetComponent<PlayerItemDown>();
         playerRay = GetComponent<PlayerForwardRay>();
-        matTrain = GameObject.Find("train_laugage1").transform;        railtrain = GameObject.Find("train_laugage2");
+        matTrain = GameObject.Find("train_laugage1").transform;        
+        railtrain = GameObject.Find("train_laugage2");
         train_main = GameObject.Find("train_main");
     }
 
@@ -154,7 +155,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                // matTrain.GetComponent<MixedItem>().branchCount = branchArray.Count;
+                                matTrain.GetComponent<Maker>().branchCount = branchArray.Count;
                                 // 기차 위에 branch 쌓기
                                 DeleteMat(branchArray);
                                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
@@ -285,12 +286,13 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         if (rayInfo.transform.name == "Bridge") return;
                         // 기차와의 거리 판별
                         float dis1 = Vector3.Distance(transform.position, matTrain.position);
+                        print(dis1);
                         // 기차와의 거리가 가까우면
                         if (dis < 2)
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                //matTrain.GetComponent<MixedItem>().steelCount = steelArray.Count;
+                                matTrain.GetComponent<Maker>().steelCount = steelArray.Count;
                                 // 기차 위에 branch 쌓기
                                 DeleteMat(steelArray);
                             }

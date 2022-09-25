@@ -8,8 +8,6 @@ public class Maker : trainController
 
 
     // Update is called once per frame
-
-
     [HideInInspector]
     public int branchCount;
     [HideInInspector]
