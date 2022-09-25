@@ -15,8 +15,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // spawnPos 둘 변수
     public Vector3[] spawnPos;
     public Button GoBtn;
-    //현재 방에 있는 Player를 담아놓자.
-    public List<PhotonView> players = new List<PhotonView>();
+   
     void Start()
     {
         //OnPhotonSerializeView 호출 빈도
@@ -34,7 +33,15 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
-        PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
+       // if(ClientManager.instance.IsExit() == false)
+        {
+            PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
+        }
+       
+        
+       
+        
+
         //players.Add(obj.GetPhotonView());
         
     }

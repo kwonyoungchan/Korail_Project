@@ -63,7 +63,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcLoadWaitingRoom()
     {
+        ClientManager.instance.DestroyPlayer();
+       // StartCoroutine(d());
         PhotonNetwork.LoadLevel("WaitingRoom");
+
+    }
+
+    IEnumerator d()
+    {
+        yield return new WaitForSeconds(2);
+       
+
     }
 
 

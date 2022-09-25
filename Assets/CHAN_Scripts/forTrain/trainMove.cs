@@ -250,8 +250,11 @@ public class trainMove :trainController,IPunObservable
     {
         base.TurnOffFire();
     }
+    bool b;
     void BackToRoom()
     {
+        if (b) return;
+        b = true;
         GameManager.instance.LoadWaitingRoom();
     }
 

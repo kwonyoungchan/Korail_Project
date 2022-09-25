@@ -15,15 +15,16 @@ public class CHAN_PlayerManager : MonoBehaviourPun
             CHAN_PlayerManager.LocalPlayerInstance = this.gameObject;
         }
         DontDestroyOnLoad(this.gameObject);
-        var obj = FindObjectsOfType<CHAN_PlayerManager>();
-        if (obj.Length == 2)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-        else if(obj.Length > 2)
-        {
-            Destroy(gameObject);
-        }
+        ClientManager.instance.AddPlayer(photonView);
+        //var obj = FindObjectsOfType<CHAN_PlayerManager>();
+        //if (obj.Length == 2)
+        //{
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else if(obj.Length > 2)
+        //{
+        //    Destroy(gameObject);
+        //}
 
     }
     private void Update()
