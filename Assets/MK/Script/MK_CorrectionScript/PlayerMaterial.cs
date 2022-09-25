@@ -288,7 +288,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         float dis1 = Vector3.Distance(transform.position, matTrain.position);
                         print(dis1);
                         // 기차와의 거리가 가까우면
-                        if (dis < 2)
+                        if (dis1 < 2)
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
