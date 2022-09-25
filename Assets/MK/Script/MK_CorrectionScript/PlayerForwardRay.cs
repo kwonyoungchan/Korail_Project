@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 // 플레이어가 보는 방향으로 레이쏘기 => 레이로 재료와 강 collider판 
 // 플레이어가 보는 방향에 나무나 철이 있다면 캐기
-public class PlayerForwardRay : MonoBehaviour
+public class PlayerForwardRay : MonoBehaviourPun, IPunObservable
 {
     // 레이 위치
     public GameObject rPos;
@@ -78,7 +79,7 @@ public class PlayerForwardRay : MonoBehaviour
                             isBranch = false;
                             player.RemoveBranch();
                             // bridge로 바뀜
-                            riverGOD.riverState = RiverGOD.River.Bridge;
+                            riverGOD.ChangeRiver(RiverGOD.River.Bridge);
                         }
                     }
                 }
@@ -91,7 +92,7 @@ public class PlayerForwardRay : MonoBehaviour
                     if (currentTime > waterTime)
                     {
                         water.SetActive(true);
-                        isWater = true;
+                        Water(true);
                     }
                 }
             }
@@ -122,9 +123,23 @@ public class PlayerForwardRay : MonoBehaviour
                 }
             }
         }
-
+        
 
     }
 
-    
+    public void Water(bool s)
+    {
+        photonView.RPC("RPCWater", RpcTarget.All, s);
+    }
+
+    [PunRPC]
+    void RPCWater(bool s)
+    {
+        isWater = s;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }

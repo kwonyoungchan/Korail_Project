@@ -33,7 +33,6 @@ public class IngredientItem : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        
         player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
         isGathering = GameObject.Find("Player(Clone)").GetComponent<PlayerForwardRay>().isGathering;
         
