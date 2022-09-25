@@ -80,7 +80,7 @@ public class trainMove :trainController,IPunObservable
                 {
                     if (isDie[i] && !isturn[i])
                     {
-                        DoCamShake();
+                        //DoCamShake();
                         isturn[i] = true;
                     }
 
@@ -115,6 +115,7 @@ public class trainMove :trainController,IPunObservable
                     }
                 }
             }
+
         }
         else
         {
@@ -188,7 +189,11 @@ public class trainMove :trainController,IPunObservable
                 explosion.transform.position = trains[i].transform.position;
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
-                
+                if (isDie[0] && isDie[1] && isDie[2] && isDie[3])
+                {
+                    Invoke("BackToRoom", 2);
+                }
+
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
@@ -227,7 +232,10 @@ public class trainMove :trainController,IPunObservable
     {
         base.TurnOffFire();
     }
-
+    void BackToRoom()
+    {
+        GameManager.instance.LoadWaitingRoom();
+    }
 
 
 }

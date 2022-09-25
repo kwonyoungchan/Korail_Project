@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
+ 
     }
 
     //방에 플레이어가 참여 했을 때 호출해주는 함수
@@ -48,6 +48,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     //public List<PhotonView> players = new List<PhotonView>();
 
 
+    public void LoadWaitingRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("WaitingRoom");
+        }
+       
+    }
 
 
 }

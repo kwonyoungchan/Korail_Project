@@ -61,7 +61,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
 
-            PhotonNetwork.LoadLevel("ProtoType");
+            PhotonNetwork.LoadLevel("GameScene");
         }
     }
 
