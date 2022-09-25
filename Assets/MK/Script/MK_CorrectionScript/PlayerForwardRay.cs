@@ -5,7 +5,7 @@ using Photon.Pun;
 
 // 플레이어가 보는 방향으로 레이쏘기 => 레이로 재료와 강 collider판 
 // 플레이어가 보는 방향에 나무나 철이 있다면 캐기
-public class PlayerForwardRay : MonoBehaviourPun, IPunObservable
+public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
 {
     // 레이 위치
     public GameObject rPos;
@@ -138,8 +138,8 @@ public class PlayerForwardRay : MonoBehaviourPun, IPunObservable
         isWater = s;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new System.NotImplementedException();
-    }
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    throw new System.NotImplementedException();
+    //}
 }
