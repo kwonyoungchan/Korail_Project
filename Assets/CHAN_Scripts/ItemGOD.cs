@@ -65,7 +65,7 @@ public class ItemGOD : MonoBehaviourPun
             case Items.Idle:
                 if (createItem != null)
                 {
-                    Destroy(createItem);
+                    PhotonNetwork.Destroy(createItem);
                     break;
                 }
                 else
