@@ -59,6 +59,8 @@ MonoBehaviour:
   - RpcDoCamShake
   - PUNChangeRiver
   - RpcLoadGameScene
+  - PUNWater
+  - RPCWater
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

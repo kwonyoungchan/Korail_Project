@@ -1032,6 +1032,7 @@ GameObject:
   - component: {fileID: 2682638419265692950}
   - component: {fileID: 6349104232716605473}
   - component: {fileID: 5864039252825232014}
+  - component: {fileID: 1785786589365218673}
   m_Layer: 0
   m_Name: ArmPail
   m_TagString: Tool
@@ -1123,6 +1124,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1785786589365218673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4515616995476909995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552578091fcfba64d8f41660848de333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: []
+  water: {fileID: 5306645351462097965}
 --- !u!1 &5210833608676381148
 GameObject:
   m_ObjectHideFlags: 0

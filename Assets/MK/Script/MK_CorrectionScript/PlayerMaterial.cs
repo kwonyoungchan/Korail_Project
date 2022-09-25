@@ -68,8 +68,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
         // 움직임 연동 : 내것이 아니면 반환
         playerItem = GetComponent<PlayerItemDown>();
         playerRay = GetComponent<PlayerForwardRay>();
-        matTrain = GameObject.Find("train_laugage1").transform;
-        railtrain = GameObject.Find("train_laugage2");
+        matTrain = GameObject.Find("train_laugage1").transform;        railtrain = GameObject.Find("train_laugage2");
         train_main = GameObject.Find("train_main");
     }
 
@@ -723,7 +722,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                     }
                 }
 
-                if (steelCount > 0)
+                else if (steelCount > 0)
                 {
                     if (steelCount == steelArray.Count) return;
                     GameObject mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"), itemPos);
@@ -736,7 +735,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                     }
                 }
 
-                if (railCount > 0)
+                else if (railCount > 0)
                 {
                     if (railCount == railArray.Count) return;
                     GameObject mat = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"), itemPos);
@@ -759,7 +758,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 branchArray.Clear();
                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
             }
-            if (steelCount <= 0)
+            else if (steelCount <= 0)
             {
                 for (int i = 0; i < steelArray.Count; i++)
                 {
@@ -768,7 +767,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 steelArray.Clear();
                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
             }
-            if (railCount <= 0)
+            else if (railCount <= 0)
             {
                 for (int i = 0; i < railArray.Count; i++)
                 {
@@ -871,6 +870,10 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
             if (branchArray.Count > 0)
             {
                 playerItem.holdState = PlayerItemDown.Hold.Mat;
+            }
+            else
+            {
+                playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
             }
             // isBranch = true;
         }
