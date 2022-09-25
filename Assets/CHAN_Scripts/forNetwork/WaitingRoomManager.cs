@@ -36,6 +36,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         //플레이어를 생성한다.
         PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
         //players.Add(obj.GetPhotonView());
+        
     }
 
     // Update is called once per frame
