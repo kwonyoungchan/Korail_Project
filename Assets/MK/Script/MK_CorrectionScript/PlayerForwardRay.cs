@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-// ÇÃ·¹ÀÌ¾î°¡ º¸´Â ¹æÇâÀ¸·Î ·¹ÀÌ½î±â => ·¹ÀÌ·Î Àç·á¿Í °­ colliderÆÇ 
-// ÇÃ·¹ÀÌ¾î°¡ º¸´Â ¹æÇâ¿¡ ³ª¹«³ª Ã¶ÀÌ ÀÖ´Ù¸é Ä³±â
-public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
+// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ colliderï¿½ï¿½
+// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¶ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ Ä³ï¿½ï¿½
+public class PlayerForwardRay : MonoBehaviourPun
 {
-    // ·¹ÀÌ À§Ä¡
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     public GameObject rPos;
     public GameObject iPos;
     public bool isBranch;
-    // ÇÃ·¹ÀÌ¾î Àç·á
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     PlayerMaterial player;
-    // ÇÃ·¹ÀÌ¾î ¾ÆÀÌÅÛ »óÅÂ
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     PlayerItemDown playerHand;
-    RiverGOD riverGOD; 
-    // ½Ã°£
+    RiverGOD riverGOD;
+    // ï¿½Ã°ï¿½
     float currentTime;
     public float waterTime = 4;
-    // ¹°Ã¤¿ì±â
+    // ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½
     public GameObject water;
     Animal animal;
 
@@ -27,7 +27,7 @@ public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
     public bool isItemDown = false;
 
 
-    // Ã¤ÁýÀ» À§ÇÑ º¯¼öµé
+    // Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     // ingredientItem
     IngredientItem item;
 
@@ -54,41 +54,41 @@ public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
                 iPos.transform.GetChild(1).gameObject.transform.parent = null;
             }
         }
-        // ÇÃ·¹ÀÌ¾î°¡ ¾ÕÀ¸·Î ·¹ÀÌ¸¦ ½ð´Ù
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         Ray playerRay = new Ray(rPos.transform.position, transform.forward);
         RaycastHit rayInfo;
-        // ¸¸¾à ¸ÂÀº ¹°Ã¼°¡ ÀÖ´Ù¸é
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
         if (Physics.Raycast(playerRay, out rayInfo, 1.5f))
         {
             Debug.DrawRay(rPos.transform.position, transform.forward, Color.blue);
-            // ¸ÂÀº °÷ÀÌ °­
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             riverGOD = rayInfo.transform.GetComponentInParent<RiverGOD>();
-            // ¸ÂÀº °÷ÀÌ Àç·á ¼öÁýÇÏ´Â °÷
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
             item = rayInfo.transform.GetComponentInParent<IngredientItem>();
             animal = rayInfo.transform.GetComponent<Animal>();
             if (riverGOD)
             {
-                // ÇÃ·¹ÀÌ¾îÀÇ ¼Õ¿¡ ³ª¹«°¡ ÀÖÀ»¶§
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (player.branchArray.Count > 0)
                 {
-                    // Á¡ÇÁÅ°¸¦ ´©¸¥´Ù¸é
+                    // ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½
                     if (Input.GetButtonDown("Jump"))
                     {
                         if (rayInfo.transform.gameObject.layer == 8)
                         {
                             isBranch = false;
                             player.RemoveBranch();
-                            // bridge·Î ¹Ù²ñ
+                            // bridgeï¿½ï¿½ ï¿½Ù²ï¿½
                             riverGOD.ChangeRiver(RiverGOD.River.Bridge);
                         }
                     }
                 }
-                // ¹°°¡ ±ÙÃ³¿¡ ÀÖÀ»¶§
-                // ¾çµ¿ÀÌ¸¦ µé°í ÀÖ´Ù¸é
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ï¿½çµ¿ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
                 if (playerHand.holdState == PlayerItemDown.Hold.Pail)
                 {
                     currentTime += Time.deltaTime;
-                    // ÀÏÁ¤ ½Ã°£ ÈÄ ¾çµ¿ÀÌ¿¡ ¹°ÀÌ Ã¤¿öÁø´Ù
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ ï¿½çµ¿ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     if (currentTime > waterTime)
                     {
                         water.SetActive(true);
@@ -96,7 +96,7 @@ public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
                     }
                 }
             }
-            // ¸ÂÀº °÷ÀÌ ³ª¹«³ª Ã¶ÀÌ¶ó¸é
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¶ï¿½Ì¶ï¿½ï¿½ï¿½
             if (item)
             {
                 isGathering = true;
@@ -123,7 +123,7 @@ public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
                 }
             }
         }
-        
+
 
     }
 
@@ -138,8 +138,4 @@ public class PlayerForwardRay : MonoBehaviourPun //, IPunObservable
         isWater = s;
     }
 
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    throw new System.NotImplementedException();
-    //}
 }

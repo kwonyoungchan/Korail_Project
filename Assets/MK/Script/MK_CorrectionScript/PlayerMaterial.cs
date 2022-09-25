@@ -57,7 +57,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     GameObject branch;
 
     // bool isBranch = true;
-
+    int checkNum;
     int n;
     float mainDis;
     int layer;
@@ -722,6 +722,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         branchArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                         branchArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                     }
+                    checkNum = 1;
                 }
 
                 else if (steelCount > 0)
@@ -735,6 +736,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         steelArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                         steelArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                     }
+                    checkNum = 2;
                 }
 
                 else if (railCount > 0)
@@ -748,10 +750,11 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                         railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
                     }
+                    checkNum = 3;
                 }
 
             }
-            if (brnCount <= 0)
+            if (brnCount <= 0 && checkNum == 1)
             {
                 for (int i = 0; i < branchArray.Count; i++)
                 {
@@ -759,8 +762,9 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 }
                 branchArray.Clear();
                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+                checkNum = 0;
             }
-            else if (steelCount <= 0)
+            else if (steelCount <= 0 && checkNum == 2)
             {
                 for (int i = 0; i < steelArray.Count; i++)
                 {
@@ -768,8 +772,9 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 }
                 steelArray.Clear();
                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+                checkNum = 0;
             }
-            else if (railCount <= 0)
+            else if (railCount <= 0 && checkNum == 3)
             {
                 for (int i = 0; i < railArray.Count; i++)
                 {
@@ -777,6 +782,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 }
                 railArray.Clear();
                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
+                checkNum = 0;
             }
         }
 
