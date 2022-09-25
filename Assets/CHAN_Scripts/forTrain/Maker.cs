@@ -62,7 +62,7 @@ public class Maker : trainController
         // 기차 위에 나무 개수 증가   
         if (branchCount > 0 && bCount <= 0)
         {
-            if (branchArray.Count == branchCount) return;
+            //if (branchArray.Count == branchCount) return;
             for (int i = 0; i < branchCount; i++)
             {
                 CreateMat("MK_Prefab/Branch", i, matPos[0], branchArray);
@@ -71,7 +71,7 @@ public class Maker : trainController
         }
         if (steelCount > 0 && sCount <= 0)
         {
-            if (steelArray.Count == steelCount) return;
+            //if (steelArray.Count == steelCount) return;
             for (int i = 0; i < steelCount; i++)
             {
                 CreateMat("MK_Prefab/Steel", i, matPos[1], steelArray);

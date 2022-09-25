@@ -6,13 +6,14 @@ using UnityEngine;
 public class Loader : trainController
 {
     // Start is called before the first frame update
-    [SerializeField] Maker maker;
+    Maker maker;
     float createTime = 3;
     float currentTime;
 
     void Start()
     {
         MakeFire();
+        maker = GameObject.Find("train_laugage1").GetComponent<Maker>();
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class Loader : trainController
             DoActive += TurnOffFire;
         }
 
-        if (maker.branchArray.Count > 0 && maker.steelArray.Count > 0)
+        if (maker.branchCount > 0 && maker.steelCount > 0)
         {
             currentTime += Time.deltaTime;
             // 일정시간이 지난 후에 

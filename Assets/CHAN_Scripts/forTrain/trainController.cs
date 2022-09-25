@@ -15,23 +15,23 @@ public class trainController : MonoBehaviourPun
     public List<GameObject> Fires = new List<GameObject>();
     public static bool isFire;
     public static bool isBoom;
-    public static bool TurnedOffFire;
     public static bool boomTurn;
+    public static bool TurnedOffFire;
     public static bool turn;
     public static Action DoActive;
     //진폭
-    public static float amplitude;
-    //진동수
-    public static float SetTime;
-    [SerializeField] float ampli;
-    [SerializeField] float sTime;
+    //public static float amplitude;
+    ////진동수
+    //public static float SetTime;
+    //[SerializeField] float ampli;
+    //[SerializeField] float sTime;
 
 
 
     void Start()
     {
-        amplitude = ampli;
-        SetTime = sTime;
+        //amplitude = ampli;
+        //SetTime = sTime;
     }
 
     // Update is called once per frame
@@ -43,11 +43,7 @@ public class trainController : MonoBehaviourPun
             DoActive = null;
             turn = true;
             if (isBoom)
-            {
                 boomTurn = true;
-            }
-            
-
         }
         
     }
@@ -121,29 +117,29 @@ public class trainController : MonoBehaviourPun
     }
     #endregion
     #region 카메라 흔드는 기능
-    public virtual void DoCamShake()
-    {
-        StopAllCoroutines();
-        photonView.RPC("RpcDoCamShake", RpcTarget.All);
-    }
+    //public virtual void DoCamShake()
+    //{
+    //    StopAllCoroutines();
+    //    photonView.RPC("RpcDoCamShake", RpcTarget.All);
+    //}
 
-    [PunRPC]
-    public virtual void RpcDoCamShake()
-    {
-        StartCoroutine(CameraShaking(amplitude, SetTime));
-    }
+    //[PunRPC]
+    //public virtual void RpcDoCamShake()
+    //{
+    //    StartCoroutine(CameraShaking(amplitude, SetTime));
+    //}
 
-    public  IEnumerator CameraShaking(float amplitude, float setTime)
-    {
-        float curtime = 0;
-        while (curtime < setTime)
-        {
-            Camera.main.transform.position += UnityEngine.Random.insideUnitSphere * amplitude * Time.deltaTime;
-            curtime += Time.deltaTime;
-            yield return null;
-        }
-        turn = false;
-    }
+    //public  IEnumerator CameraShaking(float amplitude, float setTime)
+    //{
+    //    float curtime = 0;
+    //    while (curtime < setTime)
+    //    {
+    //        Camera.main.transform.position += UnityEngine.Random.insideUnitSphere * amplitude * Time.deltaTime;
+    //        curtime += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    turn = false;
+    //}
     #endregion
 
 }
