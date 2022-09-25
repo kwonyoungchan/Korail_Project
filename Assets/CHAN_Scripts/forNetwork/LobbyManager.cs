@@ -103,16 +103,27 @@ namespace Assets.Scripts
         {
             PhotonNetwork.JoinRoom(roomName.text);
         }
+        public void JoinRandomRoom()
+        {
+            PhotonNetwork.JoinRandomRoom();
+        }
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
             print(System.Reflection.MethodBase.GetCurrentMethod().Name);
-            PhotonNetwork.LoadLevel("ProtoType");
+            Destroy(GameObject.Find("Player4Lobby(Clone)"));
+            PhotonNetwork.LoadLevel("WaitingRoom");
 
         }
+        public override void OnJoinRandomFailed(short returnCode, string message)
+        {
+            base.OnJoinRandomFailed(returnCode, message);
+        }
+
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             base.OnJoinRoomFailed(returnCode, message);
+
             print(System.Reflection.MethodBase.GetCurrentMethod().Name + ", " + returnCode + ", " + message);
         }
         public override void OnRoomListUpdate(List<RoomInfo> roomList)

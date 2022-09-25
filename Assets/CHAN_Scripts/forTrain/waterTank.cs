@@ -16,7 +16,6 @@ public class waterTank : trainController
 
     // 기차가 이동하기 시작하는 순간에 물의 양은 줄어들기 시작한다.
     [SerializeField] trainMove tMove;
-
     // 물이 고갈되면 모든 기차에서 불이나기 시작한다.
     // 불이 나는 것은 train control에서 제어 할 것이라 train control 에게 flag만 주게 하자
     // 물이 채워지면 물은 다시 충전되고, 기차의 상태를 원상태로 유지시킨다. 
