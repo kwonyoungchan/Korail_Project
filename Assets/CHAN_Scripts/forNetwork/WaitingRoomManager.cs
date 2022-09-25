@@ -15,6 +15,8 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // spawnPos 둘 변수
     public Vector3[] spawnPos;
     public Button GoBtn;
+    //현재 방에 있는 Player를 담아놓자.
+    public List<PhotonView> players = new List<PhotonView>();
     void Start()
     {
         //OnPhotonSerializeView 호출 빈도
@@ -48,22 +50,22 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
         print(newPlayer.NickName + " 님이 이 방에 들어왔습니다.");
     }
-    //현재 방에 있는 Player를 담아놓자.
-    public List<PhotonView> players = new List<PhotonView>();
+   
 
     public void LoadArena()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
-        }
-        Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-        if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
-        {
+            if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+            {
 
-            PhotonNetwork.LoadLevel("GameScene");
+                PhotonNetwork.LoadLevel("GameScene");
+            }
         }
     }
+
+
 
 
 }
