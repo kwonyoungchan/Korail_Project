@@ -115,7 +115,10 @@ public class trainMove :trainController,IPunObservable
                     }
                 }
             }
-
+            if (!trains[0].activeSelf && !trains[1].activeSelf && !trains[2].activeSelf && !trains[3].activeSelf)
+            {
+                Invoke("BackToRoom", 2);
+            }
         }
         else
         {
@@ -189,10 +192,7 @@ public class trainMove :trainController,IPunObservable
                 explosion.transform.position = trains[i].transform.position;
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
-                if (isDie[0] && isDie[1] && isDie[2] && isDie[3])
-                {
-                    Invoke("BackToRoom", 2);
-                }
+
 
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)

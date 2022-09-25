@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //플레이어를 생성한다.
         PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
         //players.Add(obj.GetPhotonView());
+        
     }
 
     // Update is called once per frame
@@ -52,9 +53,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("WaitingRoom");
+            photonView.RPC("RpcLoadWaitingRoom", RpcTarget.All);
         }
-       
+        
+    }
+
+    [PunRPC]
+    void RpcLoadWaitingRoom()
+    {
+        PhotonNetwork.LoadLevel("WaitingRoom");
     }
 
 

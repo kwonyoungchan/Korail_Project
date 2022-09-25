@@ -34,8 +34,8 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
-        GameObject obj = PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
-        players.Add(obj.GetPhotonView());
+        PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
+        //players.Add(obj.GetPhotonView());
     }
 
     // Update is called once per frame
@@ -56,7 +56,6 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
             if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
             {
                 if(photonView.IsMine)
