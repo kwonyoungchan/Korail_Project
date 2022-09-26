@@ -28,12 +28,14 @@ public class IngredientItem : MonoBehaviourPun
     {
         hp = maxHP;
         player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
-        isGathering = GameObject.Find("Player(Clone)").GetComponent<PlayerForwardRay>().isGathering;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (SceneManager.GetActiveScene().name == "GameScene")
+            isGathering = GameObject.Find("Player(Clone)").GetComponent<PlayerForwardRay>().isGathering;
         if (player.holdState == PlayerItemDown.Hold.Ax) 
         {
             axDis = Vector3.Distance(player.transform.position, transform.position);
