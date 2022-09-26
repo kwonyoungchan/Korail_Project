@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 9201002985324880949}
   m_Layer: 0
   m_Name: RPos
-  m_TagString: Untagged
+  m_TagString: RPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4446306246945821641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.13, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -279,7 +279,6 @@ MonoBehaviour:
   Fires: []
   ampli: 0
   sTime: 0
-  maker: {fileID: 2143841566244431434, guid: 9d3d41ea497c630488d4d44551fe1363, type: 3}
 --- !u!114 &4429296038413045053
 MonoBehaviour:
   m_ObjectHideFlags: 0

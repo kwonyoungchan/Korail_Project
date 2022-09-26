@@ -32,14 +32,22 @@ public class waterTank : trainController
         {
             drainWater();
         }
+        else
+        {
+            curTime = 0;
+            turn = false;
+            isBoom = false;
+            isFire = false;
+            boomTurn = false;
+            TurnedOffFire = false;
+        }
         if (isFire&&!turn)
         {
             DoActive += DoFire;
         }
-        if (isBoom&&!boomTurn)
+        if (isBoom&& !boomTurn)
         {
             DoActive += Boom;
-            
         }
         if (TurnedOffFire&& !turn)
         {
@@ -87,7 +95,8 @@ public class waterTank : trainController
                     if (!isBoom)
                     {
                         isBoom = true;
-                        DoCamShake();
+                        turn = false;
+                        GameManager.instance.DoCamShake();
                     }
                     
                 }
@@ -110,10 +119,10 @@ public class waterTank : trainController
     {
         base.Boom();
     }
-    public override void DoCamShake()
-    {
-        base.DoCamShake();
-    }
+    //public override void DoCamShake()
+    //{
+    //    base.DoCamShake();
+    //}
 
     [PunRPC]
     public override void RpcDofire()
@@ -130,9 +139,9 @@ public class waterTank : trainController
     {
         base.RpcBoom();
     }
-    [PunRPC]
-    public override void RpcDoCamShake()
-    {
-        base.RpcDoCamShake();
-    }
+    //[PunRPC]
+    //public override void RpcDoCamShake()
+    //{
+    //    base.RpcDoCamShake();
+    //}
 }

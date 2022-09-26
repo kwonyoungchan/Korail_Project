@@ -89,7 +89,7 @@ public class trainMove :trainController,IPunObservable
                 {
                     if (isDie[i] && !isturn[i])
                     {
-                        //DoCamShake();
+                        GameManager.instance.DoCamShake();
                         isturn[i] = true;
                     }
 

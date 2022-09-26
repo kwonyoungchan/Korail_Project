@@ -8,6 +8,7 @@ public class ClientManager : MonoBehaviour
     //현재 방에 있는 Player를 담아놓자.
     public List<PhotonView> players = new List<PhotonView>();
 
+
     private void Awake()
     {
         if(instance == null)
