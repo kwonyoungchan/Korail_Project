@@ -91,7 +91,15 @@ public class Maker : trainController, IPunObservable
 
             if(branchCount > 0)
             {
-                if (branchArray.Count == branchCount && steelCount <= 0) return;
+                if(steelCount > 0)
+                {
+                    if (steelArray.Count == steelCount) return;
+                    for (int i = 0; i < steelCount; i++)
+                    {
+                        CreateSteel("MK_Prefab/Steel", i, 1);
+                    }
+                }
+                if (branchArray.Count == branchCount) return;
                 for (int i = 0; i < branchCount; i++)
                 {
                     CreateBranch("MK_Prefab/Branch", i, 0);
