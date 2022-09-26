@@ -50,7 +50,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     PlayerItemDown playerItem;
     // 기차 위치
     Transform matTrain;
-    // MixedItem rail;
+    Maker rail;
 
     GameObject railtrain;
     GameObject train_main; 
@@ -570,18 +570,17 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         if (dis < 1.5f)
                         {
                             //&& rail.railCount > 0
-                            if (Input.GetButtonDown("Jump"))
+                            if (Input.GetButtonDown("Jump") && rail.railCount > 0)
                             {
-                                /*for (int i = 0; i < rail.railArray.Count; i++)
+                                for (int i = 0; i < rail.railArray.Count; i++)
                                 {
                                     MakeMat("CHAN_Prefab/Rail", railArray);
                                     railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
                                     railArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
-                                }*/
+                                }
                                 // 플레이어 손상태 변환
                                 playerItem.holdState = PlayerItemDown.Hold.Mat;
-                                // rail.railCount = 0;
-
+                                rail.railCount = 0;
                             }
                         }
 
