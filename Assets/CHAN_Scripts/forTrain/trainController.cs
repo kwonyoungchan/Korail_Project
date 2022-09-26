@@ -96,6 +96,7 @@ public class trainController : MonoBehaviourPun
             Fires[i].SetActive(false);
             //나중에 자연스럽게 꺼지도록 기능을 구현하자
         }
+        isFire = false;
     }
     #endregion
     #region 기차 터지는 함수 영역
