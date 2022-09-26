@@ -49,10 +49,7 @@ public class waterTank : trainController
         {
             DoActive += Boom;
         }
-        if (TurnedOffFire&& !turn)
-        {
-            DoActive += TurnOffFire;
-        }
+
         // 여기서부터 플레이어 탐지를 시작한다.
         // waterTank가 플레이어를 감지하면 플레이어의 컴포넌트에 접근한다.
         detect=Physics.OverlapSphere(transform.position, detectRange, 1<<6);
@@ -65,6 +62,10 @@ public class waterTank : trainController
                 TurnedOffFire = true;
                 turn = false;
             }
+        }
+        if (TurnedOffFire && !turn)
+        {
+            DoActive += TurnOffFire;
         }
         // 만약 true 이면 isFire를 false 시킨다.
         // 물을 다시 채운다.
@@ -119,10 +120,6 @@ public class waterTank : trainController
     {
         base.Boom();
     }
-    //public override void DoCamShake()
-    //{
-    //    base.DoCamShake();
-    //}
 
     [PunRPC]
     public override void RpcDofire()
@@ -139,9 +136,5 @@ public class waterTank : trainController
     {
         base.RpcBoom();
     }
-    //[PunRPC]
-    //public override void RpcDoCamShake()
-    //{
-    //    base.RpcDoCamShake();
-    //}
+
 }
