@@ -78,7 +78,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            
+            rail = matTrain.GetComponent<Maker>();
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 AddRail();
