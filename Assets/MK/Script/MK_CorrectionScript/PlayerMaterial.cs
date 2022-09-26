@@ -61,6 +61,9 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     int n;
     float mainDis;
     int layer;
+    float dis;
+    int countRail;
+    int countRailArray;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +81,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            rail = matTrain.GetComponent<Maker>();
+            
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 AddRail();
@@ -88,8 +91,8 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                 return;
             }
             // RailTrain과의 거리가 가까우면 
-            float dis = Vector3.Distance(railtrain.transform.position, transform.position);
-
+            dis = Vector3.Distance(railtrain.transform.position, transform.position);
+            rail = matTrain.GetComponent<Maker>();
             // 기차 위치
             //rail = matTrain.GetComponent<MixedItem>();
             layer = 1 << 10;
@@ -155,7 +158,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                matTrain.GetComponent<Maker>().branchCount = branchArray.Count;
+                                rail.branchCount = branchArray.Count;
                                 // 기차 위에 branch 쌓기
                                 DeleteMat(branchArray);
                                 playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
@@ -292,9 +295,10 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         {
                             if (Input.GetButtonDown("Jump"))
                             {
-                                matTrain.GetComponent<Maker>().steelCount = steelArray.Count;
+                                rail.steelCount = steelArray.Count;
                                 // 기차 위에 branch 쌓기
                                 DeleteMat(steelArray);
+                                playerItem.holdState = PlayerItemDown.Hold.ChangeIdle;
                             }
                         }
                         else
@@ -570,9 +574,11 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                         if (dis < 1.5f)
                         {
                             //&& rail.railCount > 0
-                            if (Input.GetButtonDown("Jump") && rail.railCount > 0)
+                            countRail = rail.railCount;
+                            countRailArray = rail.railArray.Count;
+                            if (Input.GetButtonDown("Jump") && countRail > 0)
                             {
-                                for (int i = 0; i < rail.railArray.Count; i++)
+                                for (int i = 0; i < countRailArray; i++)
                                 {
                                     MakeMat("CHAN_Prefab/Rail", railArray);
                                     railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
@@ -724,7 +730,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                     checkNum = 1;
                 }
 
-                else if (steelCount > 0)
+                if (steelCount > 0)
                 {
                     if (steelCount == steelArray.Count) return;
                     GameObject mat = Instantiate(Resources.Load<GameObject>("MK_Prefab/Steel"), itemPos);
@@ -738,7 +744,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                     checkNum = 2;
                 }
 
-                else if (railCount > 0)
+                if (railCount > 0)
                 {
                     if (railCount == railArray.Count) return;
                     GameObject mat = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"), itemPos);
@@ -751,6 +757,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
                     }
                     checkNum = 3;
                 }
+
 
             }
             if (brnCount <= 0 && checkNum == 1)
@@ -898,6 +905,9 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
     int brnCount;
     int steelCount;
     int railCount;
+    float rDis;
+    int rCount;
+    int rCountArray;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -907,6 +917,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
             stream.SendNext(branchArray.Count);
             stream.SendNext(steelArray.Count);
             stream.SendNext(railArray.Count);
+            stream.SendNext(dis);
         }
         else
         {
@@ -915,7 +926,7 @@ public class PlayerMaterial : MonoBehaviourPun, IPunObservable
             brnCount = (int)stream.ReceiveNext();
             steelCount = (int)stream.ReceiveNext();
             railCount = (int)stream.ReceiveNext();
-
+            rDis = (float)stream.ReceiveNext();
         }
     }
 }
