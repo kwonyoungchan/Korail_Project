@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 6210587206830641699}
   - component: {fileID: 4416746454337753914}
   - component: {fileID: 297246485837511287}
-  - component: {fileID: 8774505750135136060}
+  - component: {fileID: 5730209105851289058}
   - component: {fileID: 615293798033487191}
   - component: {fileID: 6605765279024563315}
   - component: {fileID: 8836915508344469019}
@@ -1446,7 +1446,7 @@ MonoBehaviour:
   rotSpeed: 3
   num: 0
   f: 0
---- !u!114 &8774505750135136060
+--- !u!114 &5730209105851289058
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1514,7 +1514,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4416746454337753914}
   - {fileID: 297246485837511287}
-  - {fileID: 8774505750135136060}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1537,6 +1536,7 @@ MonoBehaviour:
   water: {fileID: 5306645351462097965}
   isWater: 0
   isItemDown: 0
+  isMat: 0
   isGathering: 0
 --- !u!114 &2719731608005929767
 MonoBehaviour:

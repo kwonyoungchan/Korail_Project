@@ -25,6 +25,7 @@ public class PlayerForwardRay : MonoBehaviourPun
 
     public bool isWater = false;
     public bool isItemDown = false;
+    public bool isMat = false;
 
 
     // ä���� ���� ������
