@@ -27,7 +27,6 @@ public class trainMove :trainController,IPunObservable
     bool[] isDie;
     [SerializeField] int[] railCount;
     public bool isEnding;
-    public float trainSpeed;
     float delay;
     [SerializeField] float delayTime;
     public float departTime;
@@ -39,11 +38,8 @@ public class trainMove :trainController,IPunObservable
     Vector3[] recievePos;
     Quaternion[] recieveRot;
     float recieveSpeed;
-
-
     [SerializeField] float LerpSpeed;
-
-
+    float tSpeed;
 
     void Start()
     {
@@ -63,7 +59,7 @@ public class trainMove :trainController,IPunObservable
         recievePos = new Vector3[trains.Length];
         recieveRot = new Quaternion[trains.Length];
 
-
+        tSpeed = GameInfo.instance.trainSpeed;
     }
 
     
@@ -76,7 +72,7 @@ public class trainMove :trainController,IPunObservable
             delay += Time.deltaTime;
             if (delay > delayTime)
             {
-                trainSpeed += 0.01f;
+                tSpeed += 0.01f;
                 delay = 0;
             }
             if (!depart)
@@ -114,13 +110,13 @@ public class trainMove :trainController,IPunObservable
                         RailChecker(rayPos[i].position, i);
                         if (connectRail.instance.stageClear)
                         {
-                            trainSpeed = 5;
+                            tSpeed = 5;
                             if (isEnding)
                             {
-                                trainSpeed = 0;
+                                tSpeed = 0;
                             }
                         }
-                        trains[i].transform.position += dir[i] * trainSpeed * Time.deltaTime;
+                        trains[i].transform.position += dir[i] * tSpeed * Time.deltaTime;
                     }
                 }
             }
@@ -136,10 +132,10 @@ public class trainMove :trainController,IPunObservable
                 trains[i].transform.position = Vector3.Lerp(trains[i].transform.position, recievePos[i], LerpSpeed * Time.deltaTime);
                 trains[i].transform.rotation = Quaternion.Lerp(trains[i].transform.rotation, recieveRot[i], LerpSpeed * Time.deltaTime);
             }
-            trainSpeed = recieveSpeed;
+            tSpeed = recieveSpeed;
         }
        
-        SpeedText.text = trainSpeed.ToString("0.00")+" "+ "m/s";
+        SpeedText.text = tSpeed.ToString("0.00")+" "+ "m/s";
 
 
     }
@@ -161,7 +157,7 @@ public class trainMove :trainController,IPunObservable
     {
         //방향이 설정되면 기차는 선로쪽으로 방향을 전환한다.
         //선회 조건은 dir.rotation y 와 기차의 rotation.y 의 차이가 음수거나 양수일때
-        trainPos.rotation = Quaternion.Lerp(trainPos.rotation, Quaternion.LookRotation(dir), trainSpeed *RotScale*Time.deltaTime);
+        trainPos.rotation = Quaternion.Lerp(trainPos.rotation, Quaternion.LookRotation(dir), tSpeed * RotScale*Time.deltaTime);
         //이때 일정시간 간격으로 선회를 한다. (선회와 이동은 독립적으로 작용한다.)
         //회전속도는 어떻게 정의할 것인가?
         // 이동속도와 비례해서 회전하도록 만든다.
@@ -239,7 +235,7 @@ public class trainMove :trainController,IPunObservable
         }
         if (stream.IsWriting)
         {
-            stream.SendNext(trainSpeed);
+            stream.SendNext(tSpeed);
         }
         else
         {

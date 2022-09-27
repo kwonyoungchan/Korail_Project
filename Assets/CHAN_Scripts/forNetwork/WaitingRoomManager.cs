@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class WaitingRoomManager : MonoBehaviourPunCallbacks
 {
     public static WaitingRoomManager instance;
+    public string[] levels;
+    int num;
     private void Awake()
     {
         instance = this;
@@ -15,9 +17,25 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // spawnPos 둘 변수
     public Vector3[] spawnPos;
     public Button GoBtn;
-   
+
+    // 난이도 조절 버튼 관련 변수
+    // 우측 선택
+    public Button RBtn;
+    // 좌측 선택
+    public Button LBtn;
+    // 텍스트 표시
+    public Text Level;
+    public float minSpeed;
+    public float maxSpeed;
+
+
     void Start()
     {
+        //초기에는 레벨설정을 아기으로 설정한다.
+        Level.text = levels[0];
+        //초기 기차속도를 저장
+        minSpeed = GameInfo.instance.trainSpeed;
+        maxSpeed= GameInfo.instance.trainSpeed+levels.Length;
         //OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         PhotonNetwork.SendRate = 60;
@@ -37,13 +55,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
         }
-       
-        
-       
-        
 
-        //players.Add(obj.GetPhotonView());
-        
     }
 
     // Update is called once per frame
@@ -74,6 +86,37 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     void LoadGameScene()
     {
         photonView.RPC("RpcLoadGameScene", RpcTarget.All);
+    }
+
+    //오른쪽 버튼 눌렀을 때
+    public void ClickedRightButton()
+    {
+        num++;
+        if (num > levels.Length-1)
+        {
+            num = 0;
+            GameInfo.instance.trainSpeed = minSpeed;
+            print(num);
+        }
+        GameInfo.instance.trainSpeed += 1;
+        Level.text = levels[num];
+        print(GameInfo.instance.trainSpeed);
+        
+
+    }
+    //왼쪽 버튼 눌렀을 때
+    public void ClickedLeftButton()
+    {
+        num--;
+        if (num < 0)
+        {
+            num = levels.Length - 1;
+            GameInfo.instance.trainSpeed = maxSpeed;
+            print(num);
+        }
+        GameInfo.instance.trainSpeed -= 1;
+        Level.text = levels[num];
+        print(GameInfo.instance.trainSpeed);
     }
 
     [PunRPC]
