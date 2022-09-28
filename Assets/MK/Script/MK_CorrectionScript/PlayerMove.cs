@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 // 플레이어 이동
 // 1. 기본적인 이동
@@ -30,9 +31,13 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     // 네트워크
     // 위치
     Vector3 receivePos;
+    Vector3 receiveNPos;
     // 회전
     Quaternion receiveRot;
     // 보간 속력
+
+    public Transform NicknameUI;
+    public Text nName;
     public float lerpSpeed = 10;
 
     // Start is called before the first frame update
@@ -68,12 +73,16 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
             // 3. 플레이어 움직이기
             transform.position += dir * finSpeed * Time.deltaTime;
+            NicknameUI.transform.position = transform.position + new Vector3(0, 3, 0);
+            nName.text = GameInfo.instance.nickName;
         }
         else
         {
             // Lerp를 이용해서 목적지, 목적방향까지 이동 및 회전
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+            NicknameUI.position = Vector3.Lerp(NicknameUI.transform.position, receiveNPos, lerpSpeed * Time.deltaTime);
+
         }
     }
 
@@ -144,6 +153,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
             // position, rotation => class 못넘김 value만 가능, value 타입 배열이나 리스트 가능
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
+            stream.SendNext(NicknameUI.transform.position);
 
         }
         // 데이터 받기
@@ -151,6 +161,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         {
             receivePos = (Vector3)stream.ReceiveNext();
             receiveRot = (Quaternion)stream.ReceiveNext();
+            receiveNPos = (Vector3)stream.ReceiveNext();
         }
     }
     #endregion

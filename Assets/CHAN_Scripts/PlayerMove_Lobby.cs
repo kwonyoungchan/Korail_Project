@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 
 
@@ -17,6 +19,8 @@ public class PlayerMove_Lobby : MonoBehaviour
 
     // 최종 속도
     public float finSpeed;
+    public Transform NicknameUI;
+    public Text nName;
 
     // 대쉬 시간
     public float dashTime = 0.3f;
@@ -66,6 +70,8 @@ public class PlayerMove_Lobby : MonoBehaviour
 
         // 3. 플레이어 움직이기
         transform.position += dir * finSpeed * Time.deltaTime;
+        NicknameUI.transform.position = transform.position+new Vector3(0,3,0);
+        nName.text = GameInfo.instance.nickName;
 
 
     }

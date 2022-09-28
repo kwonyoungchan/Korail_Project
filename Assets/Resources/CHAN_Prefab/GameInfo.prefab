@@ -47,9 +47,10 @@ MonoBehaviour:
   trainSpeed: 0.1
   distance: 0
   charaters:
-  - {fileID: 1000010447398366, guid: 9465bec6252f65e49bf8cbbddf88aec8, type: 3}
-  - {fileID: 1000013570044720, guid: 87995d2f43a88e047a0db4310f347d61, type: 3}
-  - {fileID: 1000013697295654, guid: de0d59d93e2cfe543b798cd56fd59da4, type: 3}
-  - {fileID: 1000010264933332, guid: 1ae974dff7f144e469ed6a441d963c69, type: 3}
+  - {fileID: 5545212992765044964, guid: 7c57658ac4d62b145b2105c2f5206bb0, type: 3}
+  - {fileID: 5545212992765044964, guid: acd6ac6cc6d7925449b530c44e78ca2d, type: 3}
+  - {fileID: 5545212992765044964, guid: 9ba50c2b076fb6844b1041318766b29e, type: 3}
+  - {fileID: 5545212992765044964, guid: 335a95e0e4c2f6741b6631ee155a7c1a, type: 3}
   curCharacter: {fileID: 0}
   CharacterCount: 0
+  curPos: {x: 0, y: 0, z: 0}

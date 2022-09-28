@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         
     }
-
     [PunRPC]
     void RpcLoadWaitingRoom()
     {

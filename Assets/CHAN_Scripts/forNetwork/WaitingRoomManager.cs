@@ -51,14 +51,9 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
-       // if(ClientManager.instance.IsExit() == false)
-        {
-            PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
-        }
-
+        string s = GameInfo.instance.CallBackName();
+        PhotonNetwork.Instantiate("MK_Prefab" + "/" + "PlayerPrefabs" + "/" + s, GameInfo.instance.curPos+new Vector3(0,1,0), Quaternion.identity);
     }
-
-    // Update is called once per frame
     void Update()
     {
 
@@ -78,9 +73,10 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-                if(photonView.IsMine)
-                LoadGameScene();
+                
             }
+            if (photonView.IsMine)
+                LoadGameScene();
         }
     }
     void LoadGameScene()
@@ -124,8 +120,5 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("GameScene");
     }
-
-
-
 
 }

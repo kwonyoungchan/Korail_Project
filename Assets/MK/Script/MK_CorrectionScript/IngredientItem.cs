@@ -28,6 +28,7 @@ public class IngredientItem : MonoBehaviourPun
     {
         hp = maxHP;
         player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
+
         
     }
 
