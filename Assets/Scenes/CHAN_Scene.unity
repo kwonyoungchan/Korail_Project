@@ -34306,6 +34306,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 890500597914624942, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1567805645146434428, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -34369,6 +34373,22 @@ PrefabInstance:
     - target: {fileID: 1567805645146434430, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
       propertyPath: m_Name
       value: TrainControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934644545892309060, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281975625895836799, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898847361174444395, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356459661766767749, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd2c8df8f5beb94993773a8d00ef16d, type: 3}

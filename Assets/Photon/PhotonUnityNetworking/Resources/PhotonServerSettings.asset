@@ -69,6 +69,14 @@ MonoBehaviour:
   - PunCreateSteel
   - PunAddRail
   - PunMakeMat
+  - PunChangeMats
+  - PunDeleteMat
+  - RpcRemoveBranch
+  - PunDeletMaterial
+  - PunCreateMat
+  - RPCMakeRail
+  - PunDeletRail
+  - RPCAnimState
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

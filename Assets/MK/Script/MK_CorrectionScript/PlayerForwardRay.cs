@@ -15,6 +15,7 @@ public class PlayerForwardRay : MonoBehaviourPun
     PlayerMaterial player;
     // �÷��̾� ������ ����
     PlayerItemDown playerHand;
+    PlayerAnim anim;
     RiverGOD riverGOD;
     // �ð�
     float currentTime;
@@ -39,15 +40,18 @@ public class PlayerForwardRay : MonoBehaviourPun
     {
         player = GetComponent<PlayerMaterial>();
         playerHand = GetComponent<PlayerItemDown>();
+        anim = GetComponent<PlayerAnim>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (playerHand.holdState == PlayerItemDown.Hold.Animal)
         {
             if (Input.GetButtonDown("Jump"))
             {
+                anim.AnimState(PlayerAnim.Anim.Idle);
                 isItemDown = false;
                 iPos.transform.GetChild(1).GetComponent<Animal>().animalState = Animal.Animals.Idle;
                 playerHand.holdState = PlayerItemDown.Hold.ChangeIdle;
@@ -67,8 +71,10 @@ public class PlayerForwardRay : MonoBehaviourPun
             // ���� ���� ���� �����ϴ� ��
             item = rayInfo.transform.GetComponentInParent<IngredientItem>();
             animal = rayInfo.transform.GetComponent<Animal>();
+
             if (riverGOD)
             {
+                isBranch = true;
                 // �÷��̾��� �տ� ������ ������
                 if (player.branchArray.Count > 0)
                 {
@@ -77,7 +83,7 @@ public class PlayerForwardRay : MonoBehaviourPun
                     {
                         if (rayInfo.transform.gameObject.layer == 8)
                         {
-                            isBranch = false;
+
                             player.RemoveBranch();
                             // bridge�� �ٲ�
                             riverGOD.ChangeRiver(RiverGOD.River.Bridge);
@@ -97,12 +103,40 @@ public class PlayerForwardRay : MonoBehaviourPun
                     }
                 }
             }
+            else
+            {
+                isBranch = false;   
+            }
             // ���� ���� ������ ö�̶���
             if (item)
             {
-                isGathering = true;
+                item.isGathering = true;
+                if (playerHand.holdState == PlayerItemDown.Hold.Ax)
+                {
+                    item.isAx = true;
+                    item.isPick = false;
+                }
+                else if (playerHand.holdState == PlayerItemDown.Hold.Pick)
+                {
+                    item.isPick = true;
+                    item.isAx = false;
+                }
+                else
+                {
+                    item.isAx = false;
+                    item.isPick = false;
+                }
+
             }
 
+            if(playerHand.holdState == PlayerItemDown.Hold.Mat || rayInfo.transform.gameObject.layer != 11)
+            {
+                anim.AnimState(PlayerAnim.Anim.Idle);
+            }
+            if (rayInfo.transform.gameObject.layer == 11 && playerHand.holdState != PlayerItemDown.Hold.Mat)
+            {
+                anim.AnimState(PlayerAnim.Anim.Gather);
+            }
             if (animal)
             {
 
@@ -124,7 +158,13 @@ public class PlayerForwardRay : MonoBehaviourPun
                 }
             }
         }
-
+        else
+        {
+            if(playerHand.holdState != PlayerItemDown.Hold.Mat)
+                anim.AnimState(PlayerAnim.Anim.Move);
+            else
+                anim.AnimState(PlayerAnim.Anim.Idle);
+        }
 
     }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1725454013166412176}
   - component: {fileID: 1725454013166412177}
   - component: {fileID: 1725454013166412178}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,9 +212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 1
-  steelCount: 1
-  railCount: 1
+  matCount: 1
+  y: 0.55
   mat: []
 --- !u!114 &4529298355607568949
 MonoBehaviour:
@@ -229,6 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolsState: 0
+  y: 0.55
 --- !u!114 &-6920881640158656656
 MonoBehaviour:
   m_ObjectHideFlags: 0

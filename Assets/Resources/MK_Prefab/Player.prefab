@@ -1376,6 +1376,7 @@ GameObject:
   - component: {fileID: 615293798033487191}
   - component: {fileID: 6605765279024563315}
   - component: {fileID: 8836915508344469019}
+  - component: {fileID: 5138483082818226442}
   - component: {fileID: 4839149134815222586}
   - component: {fileID: 2719731608005929767}
   m_Layer: 6
@@ -1517,6 +1518,20 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5138483082818226442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5545212992765044964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9766a6599d20be48ad5aa77d78339d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  anim: {fileID: 2524665428816205223}
 --- !u!114 &4839149134815222586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,6 +2531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 36561063747992047}
+  - component: {fileID: 2524665428816205223}
   m_Layer: 0
   m_Name: PinkBunny
   m_TagString: Untagged
@@ -2543,6 +2559,26 @@ Transform:
   m_Father: {fileID: 6210587206830641699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2524665428816205223
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8968189219871155549}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6ca231520fba2b499ae456ae3412313, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9110856640734605728
 GameObject:
   m_ObjectHideFlags: 0
