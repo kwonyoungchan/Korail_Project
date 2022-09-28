@@ -37,8 +37,11 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     // 보간 속력
 
     public Transform NicknameUI;
+    public Transform IntroUI;
     public Text nName;
     public float lerpSpeed = 10;
+    float curTime;
+    float SetTime=5;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +50,22 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         rigid = GetComponentInChildren<Rigidbody>();
         // 속도 초기화
         finSpeed = speed;
+        IntroUI.transform.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        curTime += Time.deltaTime;
+        if (curTime > SetTime)
+        {
+            IntroUI.transform.gameObject.SetActive(true);
+        }
+        if (curTime > 2*SetTime)
+        {
+            IntroUI.transform.gameObject.SetActive(false);
+            curTime = 0;
+        }
         // 움직임 연동 : 내것이 아니면 반환
         if (photonView.IsMine)
         {
