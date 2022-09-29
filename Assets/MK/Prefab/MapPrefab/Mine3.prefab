@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1725454013166412176}
   - component: {fileID: 1725454013166412177}
   - component: {fileID: 1725454013166412178}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5576150445262535444}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.971127, y: 2.1041481, z: 5.4476385}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -212,9 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 1
-  steelCount: 1
-  railCount: 1
+  matCount: 1
   mat: []
 --- !u!114 &4529298355607568949
 MonoBehaviour:

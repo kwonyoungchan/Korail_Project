@@ -115,9 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 1
-  steelCount: 1
-  railCount: 1
+  matCount: 1
   mat: []
 --- !u!114 &2643301451550268546
 MonoBehaviour:
@@ -177,6 +175,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2051009745310149537}
     m_Modifications:
+    - target: {fileID: 1119556527304297320, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217769466052089254, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5905957032906755931, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6956181089895126217, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -224,6 +234,18 @@ PrefabInstance:
     - target: {fileID: 7833983047612807096, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
       propertyPath: m_Name
       value: Tree2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833983047612807096, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833983047612807096, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203990616270864791, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 011989dfdf7cf714591b1a7e76492235, type: 3}
