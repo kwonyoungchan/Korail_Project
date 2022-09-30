@@ -40,7 +40,9 @@ public class MapInformation : MonoBehaviour
     //public GameObject blueCube;
 
     //생성하고싶은 게임오브젝트를 담을 변수를 만들자
-    public GameObject[] objs;
+    public GameObject[] mapObjs;
+    public GameObject[] ToolObjs;
+    public GameObject[] SpacailObjs;
     //선택한 오브젝트 index
     public int selectObjIdx;
 

@@ -12,7 +12,9 @@ public class MapEditor : Editor
     //계층에서 클릭이 되었을 때 호출되는 함수
     MapInformation map;
     //map.objs 의 이름을 담을 변수
-    string[] objsName;
+    string[] mapObjsName;
+    string[] toolObjsName;
+    string[] specialObjsName;
     //저장 파일 이름
     string saveFileName;
     //이건 시험삼아 만들어본 변수
@@ -20,28 +22,31 @@ public class MapEditor : Editor
     private void OnEnable()
     {
         map = (MapInformation)target;
-        objsName = new string[map.objs.Length];
-        // 오브젝트들 이름 셋팅
-        for (int i = 0; i < map.objs.Length; i++)
-        {
-            objsName[i] = map.objs[i].name;
-        }
+        // 맵오브젝트들 이름 셋팅
+        mapObjsNameSetObjNames(mapObjsName, map.mapObjs);
+        //mapObjsName = new string[map.mapObjs.Length];
+        //for (int i = 0; i < map.mapObjs.Length; i++)
+        //{
+        //    mapObjsName[i] = map.mapObjs[i].name;
+        //}
+        //SetObjNames(toolObjsName, map.ToolObjs);
+        //SetObjNames(specialObjsName, map.SpacailObjs);
     }
 
     //Inspector를 그리는 함수 
     public override void OnInspectorGUI()
     {
 
-
         //map objField
         EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("objs"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("mapObjs")); 
         if (check.changed)
         {
             serializedObject.ApplyModifiedProperties();
         }
         //선택한 오브젝트 Idx Field
-        map.selectObjIdx = EditorGUILayout.Popup("선택 오브젝트", map.selectObjIdx, objsName);
+        map.selectObjIdx = EditorGUILayout.Popup("선택 오브젝트", map.selectObjIdx, mapObjsName);
+
         //바닥 Prefab Field 
         // 계층의 게임 오브젝트를 인스펙터 창에 못 넣도록 한다.(프로젝트 창에서는 가져올 수 있다.)
         //map.floor = (GameObject)EditorGUILayout.ObjectField("바닥", map.floor, typeof(GameObject), false);
@@ -50,7 +55,7 @@ public class MapEditor : Editor
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("objs"));
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("createdObjects"));
         // 공간을 추가하자
-        EditorGUILayout.Space();
+        EditorGUILayout.Space(10);
         // 바닥 생성 버튼
         if (GUILayout.Button("타일 초기화"))
         {
@@ -156,15 +161,15 @@ public class MapEditor : Editor
         Vector3 end;
         for (int i = 0; i < map.tileX+1; i++)
         {
-            start = new Vector3(i-0.5f, 0, -0.5f);
-            end = new Vector3(i-0.5f, 0, map.tileZ-0.5f);
-            Handles.color = Color.red;
+            start = new Vector3(i-0.5f, 0.5f, -0.5f);
+            end = new Vector3(i-0.5f, 0.5f, map.tileZ-0.5f);
+            Handles.color = Color.blue;
             Handles.DrawLine(start, end);
         }
         for (int i = 0; i < map.tileZ+1; i++)
         {
-            start = new Vector3(-0.5f, 0, i-0.5f);
-            end = new Vector3(map.tileX-0.5f, 0, i-0.5f);
+            start = new Vector3(-0.5f, 0.5f, i-0.5f);
+            end = new Vector3(map.tileX-0.5f, 0.5f, i-0.5f);
             Handles.color = Color.blue;
             Handles.DrawLine(start, end);
         }
@@ -188,7 +193,7 @@ public class MapEditor : Editor
         {
             for (int j = 0; j < map.tileX; j++)
             {
-                GameObject floor = (GameObject)PrefabUtility.InstantiatePrefab(map.objs[0], empty.transform);
+                GameObject floor = (GameObject)PrefabUtility.InstantiatePrefab(map.mapObjs[0], empty.transform);
                 floor.transform.position = new Vector3(j, 0, i);
             }
         }
@@ -197,7 +202,7 @@ public class MapEditor : Editor
     void LoadObject(int idx, Vector3 position, Vector3 eulerAngle, Vector3 localScale)
     {
         GameObject obj = (GameObject)PrefabUtility.InstantiatePrefab(
-    map.objs[idx]);
+    map.mapObjs[idx]);
 
         // 만약 맞은 오브젝트가 Obj 이면  맞은 객체의 위,아래 ,오른쪽으로 
         //dir.Normalize();
@@ -228,7 +233,7 @@ public class MapEditor : Editor
             {
                 Debug.Log("ray :"+hit.transform.position);
                 Vector3 p = new Vector3(Mathf.RoundToInt(hit.point.x), 0, Mathf.RoundToInt(hit.point.z));
-                if (hit.transform.name != map.objs[map.selectObjIdx].transform.name)
+                if (hit.transform.name != map.mapObjs[map.selectObjIdx].transform.name)
                 {
                     Vector3 pos = hit.transform.position;
                     pos.y = 0;
@@ -238,35 +243,43 @@ public class MapEditor : Editor
             }
         }
     }
-        //void DeleteObject()
-        //{
-        //    Event e = Event.current;
-        //    //마우스 왼쪽 버튼을 누리면&컨트롤 키를 누르고 있으면
-        //    if (e.button == 0 && e.control && e.type == EventType.MouseDown)
-        //    {
-        //        Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-        //        //마우스 포인터에서 Ray를 만들고
-        //        RaycastHit hit;
-        //        if (Physics.Raycast(ray, out hit))
-        //        {
-        //            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Obj"))
-        //            {
-        //                for (int i = 0; i < map.createdObjects.Count; i++)
-        //                {
+    //void DeleteObject()
+    //{
+    //    Event e = Event.current;
+    //    //마우스 왼쪽 버튼을 누리면&컨트롤 키를 누르고 있으면
+    //    if (e.button == 0 && e.control && e.type == EventType.MouseDown)
+    //    {
+    //        Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+    //        //마우스 포인터에서 Ray를 만들고
+    //        RaycastHit hit;
+    //        if (Physics.Raycast(ray, out hit))
+    //        {
+    //            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Obj"))
+    //            {
+    //                for (int i = 0; i < map.createdObjects.Count; i++)
+    //                {
 
-        //                    if (map.createdObjects[i].go == hit.transform.gameObject)
-        //                    {
-        //                        map.createdObjects.RemoveAt(i);
-        //                        break;
-        //                    }
-        //                }
-        //                DestroyImmediate(hit.transform.gameObject);
-        //            }
+    //                    if (map.createdObjects[i].go == hit.transform.gameObject)
+    //                    {
+    //                        map.createdObjects.RemoveAt(i);
+    //                        break;
+    //                    }
+    //                }
+    //                DestroyImmediate(hit.transform.gameObject);
+    //            }
 
-        //        }
-        //        //만든 Ray를 발사해서 부딪친 놈이 있다면
-        //        // 해당 오브젝트를 파괴하겠다.
-        //    }
+    //        }
+    //        //만든 Ray를 발사해서 부딪친 놈이 있다면
+    //        // 해당 오브젝트를 파괴하겠다.
+    //    }
 
-        //}
+    //}
+    static void SetObjNames(string[] listName,GameObject[] objs)
+    {
+        listName = new string[objs.Length];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            listName[i] = objs[i].name;
+        }
+    }
     }
