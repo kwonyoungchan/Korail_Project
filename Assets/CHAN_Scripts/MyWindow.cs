@@ -133,7 +133,7 @@ public class MyWindow : EditorWindow
         string jsonData = JsonUtility.ToJson(arrayJson, true);
         //jsonData를 파일로 저장
         Debug.Log("json :" + jsonData);
-        File.WriteAllText(Application.dataPath + "/" + saveFileName + ".txt", jsonData);
+        File.WriteAllText(Application.streamingAssetsPath + "/" + saveFileName + ".txt", jsonData);
     }
 
     private void OnGUI() 
@@ -248,6 +248,7 @@ public class MyWindow : EditorWindow
         {
             Initialize();
             StartRailCount = 0;
+            EndRailCount = 0;
             initial = false;
         }
         if (Save)
@@ -539,7 +540,7 @@ public class MyWindow : EditorWindow
                     floor.transform.position = hit.transform.position;
                     CreatedInfo info = new CreatedInfo();
                     info.go = floor;
-                    info.name = "startCube";
+                    info.name = "endCube";
                     info.fileType = "StationTile";
                     createdObjects.Add(info);
                     GameObject hitObj = hit.transform.gameObject;
