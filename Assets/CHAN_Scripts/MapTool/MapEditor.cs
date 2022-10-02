@@ -22,8 +22,16 @@ public class MapEditor : Editor
     private void OnEnable()
     {
         map = (MapInformation)target;
+        mapObjsName = new string[map.mapObjs.Length];
+        toolObjsName = new string[map.toolObjs.Length];
+        specialObjsName = new string[map.specialObjs.Length];
+
+        SetObjNames(mapObjsName, map.mapObjs);
+        SetObjNames(toolObjsName, map.toolObjs);
+        SetObjNames(specialObjsName, map.specialObjs);
+
         // 맵오브젝트들 이름 셋팅
-        mapObjsNameSetObjNames(mapObjsName, map.mapObjs);
+
         //mapObjsName = new string[map.mapObjs.Length];
         //for (int i = 0; i < map.mapObjs.Length; i++)
         //{
@@ -45,7 +53,10 @@ public class MapEditor : Editor
             serializedObject.ApplyModifiedProperties();
         }
         //선택한 오브젝트 Idx Field
-        map.selectObjIdx = EditorGUILayout.Popup("선택 오브젝트", map.selectObjIdx, mapObjsName);
+        map.selectMapIdx = EditorGUILayout.Popup("맵 타일", map.selectMapIdx, mapObjsName);
+        map.selectToolIdx = EditorGUILayout.Popup("도구 오브젝트", map.selectToolIdx, toolObjsName);
+        map.selectSpecialIdx = EditorGUILayout.Popup("특수 오브젝트", map.selectSpecialIdx, specialObjsName);
+
 
         //바닥 Prefab Field 
         // 계층의 게임 오브젝트를 인스펙터 창에 못 넣도록 한다.(프로젝트 창에서는 가져올 수 있다.)
@@ -92,7 +103,9 @@ public class MapEditor : Editor
         int id = GUIUtility.GetControlID(FocusType.Passive);
         HandleUtility.AddDefaultControl(id);
         DrawGrid();
-        CreateObject();
+        CreateObject(map.selectMapIdx,EventType.MouseDrag);
+        CreateObject(map.selectToolIdx,EventType.MouseDown);
+        CreateObject(map.selectSpecialIdx,EventType.MouseDown);
         //DeleteObject();
 
     }
@@ -214,15 +227,14 @@ public class MapEditor : Editor
         CreatedInfo info = new CreatedInfo();
         //만들어진 오브젝트를 리스트에 추가
         info.go = obj;
-        info.idx = idx;
         map.MapObjects.Add(info);
     }
-    void CreateObject()
+    void CreateObject(int idx ,EventType mouseType)
     {
         // 현재 마우스 이벤트
         Event e = Event.current;
         //마우스가 드래그됐다면
-        if (e.button == 0 && !e.control && e.type == EventType.MouseDrag)
+        if (e.button == 0 && !e.control && e.type == mouseType)
         {
             //레이를 쏴서 마우스 포인터가 위치한 지점에 오브젝트를 설치한다.
             
@@ -231,13 +243,13 @@ public class MapEditor : Editor
             int layer = 1 << 11;
             if (Physics.Raycast(ray, out hit,900,~layer))
             {
-                Debug.Log("ray :"+hit.transform.position);
+                //Debug.Log("ray :"+hit.transform.position);
                 Vector3 p = new Vector3(Mathf.RoundToInt(hit.point.x), 0, Mathf.RoundToInt(hit.point.z));
-                if (hit.transform.name != map.mapObjs[map.selectObjIdx].transform.name)
+                if (hit.transform.name != map.mapObjs[idx].transform.name)
                 {
                     Vector3 pos = hit.transform.position;
                     pos.y = 0;
-                    LoadObject(map.selectObjIdx, pos, Vector3.zero, Vector3.one);
+                    LoadObject(idx, pos, Vector3.zero, Vector3.one);
                     DestroyImmediate(hit.transform.gameObject);
                 }
             }
@@ -274,9 +286,8 @@ public class MapEditor : Editor
     //    }
 
     //}
-    static void SetObjNames(string[] listName,GameObject[] objs)
+    void SetObjNames(string[] listName,GameObject[] objs)
     {
-        listName = new string[objs.Length];
         for (int i = 0; i < objs.Length; i++)
         {
             listName[i] = objs[i].name;

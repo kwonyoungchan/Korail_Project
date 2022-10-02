@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class CreatedInfo
-{
-    //만들어진 게임 오브젝트
-    public GameObject go;
-    //선택된 오브젝트의 idx
-    //여기서 idx는 해당오브젝트의 인덱스이다.
-    public int idx;
-}
+//[Serializable]
+//public class CreatedInfo
+//{
+//    //만들어진 게임 오브젝트
+//    public GameObject go;
+//    //선택된 오브젝트의 idx
+//    //여기서 idx는 해당오브젝트의 인덱스이다.
+//    public int idx;
+//}
 // 블럭의 정보들을 JSON형식으로 저장한다.
 //[Serializable]
 //public class SaveJsonInfo
@@ -41,10 +41,12 @@ public class MapInformation : MonoBehaviour
 
     //생성하고싶은 게임오브젝트를 담을 변수를 만들자
     public GameObject[] mapObjs;
-    public GameObject[] ToolObjs;
-    public GameObject[] SpacailObjs;
+    public GameObject[] toolObjs;
+    public GameObject[] specialObjs;
     //선택한 오브젝트 index
-    public int selectObjIdx;
+    public int selectMapIdx;
+    public int selectToolIdx;
+    public int selectSpecialIdx;
 
     //맵 오브젝트 정보 담을 리스트
     public List<CreatedInfo> MapObjects = new List<CreatedInfo>();
