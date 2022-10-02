@@ -86,7 +86,7 @@ public class MyWindow : EditorWindow
         //Initialize();
         //이전 맵 데이터를 삭제한다.
         //mapData.txt를 불러오기
-        string jsonData = File.ReadAllText(Application.dataPath + "/" + saveFileName + ".txt");
+        string jsonData = File.ReadAllText(Application.streamingAssetsPath + "/" + saveFileName + ".txt");
         //ArratJson 형태로 Json을 변환
         ArrayJson arrayJson = JsonUtility.FromJson<ArrayJson>(jsonData);
         for (int i = 0; i < arrayJson.datas.Count; i++)

@@ -75,7 +75,7 @@ public class ItemGOD : MonoBehaviourPun
             case Items.StartRail:
                 if (!turn)
                 {
-                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, 0.5f, 0), setRot);
+                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, railHeight, 0), setRot);
                     //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                     //createItem.transform.rotation = setRot;
@@ -115,7 +115,7 @@ public class ItemGOD : MonoBehaviourPun
             case Items.EndRail:
                 if (!turn)
                 {
-                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, 0.5f, 0),setRot);
+                    createItem = PhotonNetwork.Instantiate("CHAN_Prefab/Rail", transform.position + new Vector3(0, railHeight, 0),setRot);
                     //createItem = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"));
                     //createItem.transform.position = transform.position + new Vector3(0, railHeight, 0);
                    // rd.material.color = Color.black;
