@@ -882,9 +882,12 @@ MonoBehaviour:
   railArray: []
   itemPos: {fileID: 6337779290616086347}
   rayPos: {fileID: 9198375197412803880}
+<<<<<<< Updated upstream
   audioClip:
   - {fileID: 8300000, guid: 21acf20075b3add4db4980d0793c641b, type: 3}
   - {fileID: 8300000, guid: db97b9eff618c7c48a7cfb6645e3f9df, type: 3}
+=======
+>>>>>>> Stashed changes
 --- !u!136 &6579820779849455572
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -959,10 +962,13 @@ MonoBehaviour:
   isWater: 0
   isItemDown: 0
   isMat: 0
+<<<<<<< Updated upstream
   audioClips:
   - {fileID: 8300000, guid: ae54476525f3171438b6769299a26cfd, type: 3}
   - {fileID: 8300000, guid: 4669652f38f781640b9e54eeb6891a08, type: 3}
   slider: {fileID: 1139326480363363989}
+=======
+>>>>>>> Stashed changes
   isGathering: 0
 --- !u!114 &8531967431126026660
 MonoBehaviour:

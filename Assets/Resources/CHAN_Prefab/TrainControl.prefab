@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1567805645146434429}
   - component: {fileID: 890500597914624942}
   - component: {fileID: -1646311354369612356}
+  - component: {fileID: 6932439310228466641}
   m_Layer: 0
   m_Name: TrainControl
   m_TagString: Untagged
@@ -112,6 +113,24 @@ MonoBehaviour:
   fireObj: {fileID: 0}
   Fires: []
   FireUI: {fileID: 0}
+--- !u!114 &6932439310228466641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567805645146434430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 2
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &1567805643293021561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -287,6 +306,14 @@ PrefabInstance:
     - target: {fileID: 5529417374954917074, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
       propertyPath: m_Name
       value: train_main
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742574740681429612, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742574740692233905, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de89f4d2fbef0904ba93a30cbc8bbe7e, type: 3}
