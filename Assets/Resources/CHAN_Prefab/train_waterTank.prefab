@@ -337,6 +337,7 @@ MonoBehaviour:
   fireObj: {fileID: 4363528374927502100, guid: 8c9c3cfd3f3be0d47a4759718b9aec5b, type: 3}
   Fires:
   - {fileID: 6808481893268935902}
+  FireUI: {fileID: 0}
   maxVolume: 100
   curVolume: 0
   explosionTime: 0

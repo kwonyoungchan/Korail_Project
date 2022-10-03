@@ -7,14 +7,14 @@ using Photon.Pun;
 
 public class trainMove :trainController,IPunObservable
 {
-    // ±âÂ÷¸¦ ÀÌµ¿½ÃÅ°´Â ¾Ë°í¸®Áò
-    // ±âÂ÷´Â ¼±·Î¸¦ µû¶ó ÀÌµ¿ÇÔ
-    // ¿©±â¼­ ±âÂ÷ÀÇ ¹æÇâÀº RailÀÇ À§Ä¡¸¦ ¸ñÇ¥ dir ·Î ¼³Á¤ÇÏ¿© ÀÌµ¿ÇÏ°Ô µÈ´Ù.
-    // °ÔÀÓÀÌ Å¬¸®¾î µÇ¸é ±âÂ÷´Â ºü¸¥ ¼Óµµ·Î ³¡ ¼±·Î±îÁö ÀÌµ¿ÇÏµµ·Ï ÇÑ´Ù.
-    // ±âÂ÷ÀÇ »óÅÂ (ÀÏ¹Ý »óÅÂ, È­Àç, °ÔÀÓ Å¬¸®¾î, ±âÂ÷ die
-    // ¼Ó¼º
-    // ±âÂ÷ÀÇ ¼Óµµ, ¹æÇâ, ±âÂ÷ ¿ÀºêÁ§Æ®, ±âÂ÷ »ý¼º À§Ä¡, ±âÂ÷ Ãâ¹ß Å¸ÀÌ¸Ó
-    // °ÔÀÓÀÌ ½ÃÀÛµÉ ´ë, ¸ÞÀÎ ±âÂ÷´Â start ºí·°¿¡, ³ª¸ÓÁö ÁüÄ­ÀÏ °æ¿ì, ¸ÞÀÎ±âÂ÷ÀÇ ¿ÞÂÊÀ¸·Î À§Ä¡½ÃÅ²´Ù. 
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ë°ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Railï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Ç¥ dir ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ìµï¿½ï¿½Ï°ï¿½ ï¿½È´ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½, È­ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ die
+    // ï¿½Ó¼ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ start ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä­ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½Å²ï¿½ï¿½. 
      Vector3[] dir;
     
     [SerializeField] Transform[] rayPos;
@@ -33,7 +33,7 @@ public class trainMove :trainController,IPunObservable
     float time;
     float setTime = 2;
     bool[] isturn;
-    [Header("Æ÷Åæ UDP Á¤º¸ ¸ðÀ½")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UDP ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] GameObject[] trains;
     Vector3[] recievePos;
     Quaternion[] recieveRot;
@@ -44,7 +44,7 @@ public class trainMove :trainController,IPunObservable
     void Start()
     {
 
-        // ¿©±â¼­ ±âÂ÷´Â ½Ã°¢¼±·Î¿¡¼­ ½ÃÀÛµÇµµ·Ï ¼³Á¤ ÇÑ´Ù.
+        // ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÇµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
         transform.position = DefineBlocks.instance.StartBlocks[1].transform.position;
         for (int i = 0; i < trains.Length; i++)
         { 
@@ -66,7 +66,7 @@ public class trainMove :trainController,IPunObservable
     void Update()
     {
         
-        //Ã³À½¿¡ ±âÂ÷´Â ¹Ù·Î Ãâ¹ßÇÏÁö ¾Ê°í ÀÏÁ¤ ½Ã°£ÀÌ Áö³­ ÈÄ Ãâ¹ßÇÑ´Ù.
+        //Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         if (photonView.IsMine)
         {
             delay += Time.deltaTime;
@@ -92,14 +92,14 @@ public class trainMove :trainController,IPunObservable
                     if (trains[i].activeSelf)
                     {
 
-                        //¸¸¾à ¸®½ºÆ®»ó¿¡ ¼±·Î ¿ÀºêÁ§Æ®°¡ ¾øÀ¸¸é ±âÂ÷´Â ±×³É Á÷Áø¸¸ ÇÏµµ·Ï ÇÑ´Ù.
+                        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
                         if (connectRail.instance.connectedRails.Count > railCount[i])
                         {
-                            //±âÂ÷ÀÇ ¹æÇâÀº ¸®½ºÆ®¿¡¼­ ÀúÀåµÈ ¼±·ÎÀÇ À§Ä¡¸¦ ¸ñÇ¥ ¹æÇâÀ¸·Î Àâ´Â´Ù. 
+                            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â´ï¿½. 
                             if (!isDie[i])
                             { dir[i] = (connectRail.instance.connectedRails[railCount[i]].transform.position - trains[i].transform.position).normalized; }
                             CheckTrainPos(railCount[i], trains[i].transform.position, i);
-                            //¿©±â¼­ yÁÂÇ¥´Â ¹«½ÃÇÑ´Ù.
+                            //ï¿½ï¿½ï¿½â¼­ yï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
                             dir[i].y = trains[i].transform.position.y;
                             RotateTrain(dir[i], trains[i].transform);
                         }
@@ -140,7 +140,7 @@ public class trainMove :trainController,IPunObservable
 
     }
 
-    //  ±âÂ÷ Ãâ¹ß Å¸ÀÌ¸Ó
+    //  ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½
     void  ReadyToDepart()
     {
         trainTimer += Time.deltaTime;
@@ -149,18 +149,19 @@ public class trainMove :trainController,IPunObservable
             for (int i = 0; i < railCount.Length; i++)
             {
                 railCount[i] = DefineBlocks.instance.StartBlocks.Length;
+                GetComponent<AudioSource>().PlayOneShot(soundClips[0]);
             }
             depart = true;
         }
     }
     void RotateTrain(Vector3 dir, Transform trainPos)
     {
-        //¹æÇâÀÌ ¼³Á¤µÇ¸é ±âÂ÷´Â ¼±·ÎÂÊÀ¸·Î ¹æÇâÀ» ÀüÈ¯ÇÑ´Ù.
-        //¼±È¸ Á¶°ÇÀº dir.rotation y ¿Í ±âÂ÷ÀÇ rotation.y ÀÇ Â÷ÀÌ°¡ À½¼ö°Å³ª ¾ç¼öÀÏ¶§
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½.
+        //ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dir.rotation y ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ rotation.y ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½
         trainPos.rotation = Quaternion.Lerp(trainPos.rotation, Quaternion.LookRotation(dir), tSpeed * RotScale*Time.deltaTime);
-        //ÀÌ¶§ ÀÏÁ¤½Ã°£ °£°ÝÀ¸·Î ¼±È¸¸¦ ÇÑ´Ù. (¼±È¸¿Í ÀÌµ¿Àº µ¶¸³ÀûÀ¸·Î ÀÛ¿ëÇÑ´Ù.)
-        //È¸Àü¼Óµµ´Â ¾î¶»°Ô Á¤ÀÇÇÒ °ÍÀÎ°¡?
-        // ÀÌµ¿¼Óµµ¿Í ºñ·ÊÇØ¼­ È¸ÀüÇÏµµ·Ï ¸¸µç´Ù.
+        //ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ñ´ï¿½. (ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¿ï¿½ï¿½Ñ´ï¿½.)
+        //È¸ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ ï¿½î¶»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½?
+        // ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ È¸ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
     }
     void CheckTrainPos(int count, Vector3 trainPosition,int i)
     {
@@ -168,15 +169,15 @@ public class trainMove :trainController,IPunObservable
         Vector3 railPos = new Vector3(connectRail.instance.connectedRails[count].transform.position.x, 0, connectRail.instance.connectedRails[count].transform.position.z);
 
         float distance = Vector3.Distance(trainPos, railPos);
-        //¸¸¾à ±âÂ÷¿Í rail »çÀÌ °Å¸®°¡ ÀÏÁ¤°Å¸® ÀÌÇÏ Á¼ÇôÁ³À» ¶§
-        //´ÙÀ½ ·¹ÀÏÀ» °áÁ¤½ÃÅ´
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ rail ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å´
         if (distance < 0.1f)
         {
-            //¸¸¾à ±âÂ÷°¡ ¼±·ÎÂÊÀ¸·Î ÀÌµ¿À» ¿Ï·áÇß´Ù¸é, ´ÙÀ½ ¼±·ÎÂÊÀ¸·Î¹æÇâÀ» ¼³Á¤ÇÑ´Ù.
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ß´Ù¸ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
             railCount[i]++;
         }
     }
-    //±âÂ÷ Å»¼±µÆÀ» ¶§ Á×´Â Ã³¸®ÇÏ´Â ±â´É
+    //ï¿½ï¿½ï¿½ï¿½ Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×´ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
      void RailChecker(Vector3 rayPosition,int i)
     {
         photonView.RPC("RpcRailChecker", RpcTarget.All, rayPosition, i);
@@ -189,13 +190,14 @@ public class trainMove :trainController,IPunObservable
         int layerMask = 1 << LayerMask.NameToLayer("Bridge");
         if (Physics.Raycast(ray, out hit, 3, ~layerMask))
         {
-            //¸¸¾à Áö±Ý ±âÂ÷°¡ ¼±·Î°¡ ¾Æ´Ñ°÷¿¡ ÀÖ´Ù¸é 
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½ ï¿½Æ´Ñ°ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ 
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.Idle)
             {
-                //±âÂ÷°¡ ÅÍÁø´Ù
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 isDie[i] = true;
                 GameObject explosion = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/train_explosion"));
                 explosion.transform.position = trains[i].transform.position;
+                GetComponent<AudioSource>().PlayOneShot(soundClips[2]);
                 Destroy(explosion,1);
                 trains[i].transform.gameObject.SetActive(false);
 
@@ -203,9 +205,9 @@ public class trainMove :trainController,IPunObservable
             }
             if (hit.transform.GetComponent<ItemGOD>().items == ItemGOD.Items.EndRail)
             {
-                //¸¸¾à ±âÂ÷°¡ µµÂø ¼±·Î·Î µµÂøÇÑ´Ù¸é °ÔÀÓ Å¬¸®¾î 
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ 
                 isEnding = true;
-                //clear¾À
+                //clearï¿½ï¿½
                 time += Time.deltaTime;
                 if (time > setTime)
                 {
@@ -220,13 +222,13 @@ public class trainMove :trainController,IPunObservable
     {
         for (int i = 0; i < trains.Length; i++)
         {
-            //µ¥ÀÌÅÍ º¸³»±â
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (stream.IsWriting)//IsMine==true;
             {
                 stream.SendNext(trains[i].transform.position);
                 stream.SendNext(trains[i].transform.rotation);
             }
-            //µ¥ÀÌÅÍ ¹Þ±â
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½
             else if (stream.IsReading)//IsMine==false  
             {
                 recievePos[i] = (Vector3)stream.ReceiveNext();

@@ -8,18 +8,19 @@ using Photon.Pun;
 
 public class trainController : MonoBehaviourPun
 {
-    // ±âÂ÷ È­Àç °ü¸®ÇØÁÖ´Â ½ºÅ©¸³Æ®
-    // ¹°ÅÊÅ©¿¡¼­ °í°¥ ÇÃ·¡±×¸¦ ÁÖ¸é  ¸ðµç °´½Ç¿¡ È­Àç°¡ ¹ß»ýÇÏµµ·Ï ÇÑ´Ù. 
+    // ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®
+    // ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½×¸ï¿½ ï¿½Ö¸ï¿½  ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ È­ï¿½ç°¡ ï¿½ß»ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. 
     public Transform[] firePos;
     public GameObject fireObj;
     public List<GameObject> Fires = new List<GameObject>();
-    public static bool isFire;
-    public static bool isBoom;
-    public static bool boomTurn;
-    public static bool TurnedOffFire;
     public static bool turn;
     public static Action DoActive;
     public GameObject FireUI;
+    public static AudioSource audio;
+    public GameObject FireSound;
+    public UnityEngine.Object[] sounds;
+    public static List<AudioClip> soundClips = new List<AudioClip>();
+    //ublic static AudioSource audio;
     public enum TrainState
     { 
         Idle,
@@ -36,6 +37,12 @@ public class trainController : MonoBehaviourPun
         //amplitude = ampli;
         //SetTime = sTime;
         FireUI.SetActive(false);
+        audio = GetComponent<AudioSource>();
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            soundClips.Add((AudioClip)sounds[i]);
+        }
+        
     }
 
     // Update is called once per frame
@@ -44,11 +51,13 @@ public class trainController : MonoBehaviourPun
         if (DoActive != null&&!turn)
         {
             DoActive();
+            audio.PlayOneShot(audio.clip);
+            turn = true;
             DoActive = null;
             StateMachine(TrainState.Idle);
         }
-        // ºÒ³µ´Ù´Â ½ÅÈ£°¡ ¹ß»ýÇÏ¸é »¡°£ UI ¹ß»ýÇÏµµ·Ï
-        if (isFire)
+        // ï¿½Ò³ï¿½ï¿½Ù´ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ß»ï¿½ï¿½Ïµï¿½ï¿½ï¿½
+        if (trainState == TrainState.isFire)
         {
             FireUI.SetActive(true);
         }
@@ -69,11 +78,11 @@ public class trainController : MonoBehaviourPun
         }
     }
 
-    #region ±âÂ÷¿¡ ºÒ³»´Â ÇÔ¼ö ¿µ¿ª
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò³ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     public virtual void DoFire()
     {
         photonView.RPC("RpcDofire", RpcTarget.All);
-        ////ÁöÁ¤ÇÑ È­Àç À§Ä¡¿¡ ºÒÀ» ¹ß»ý½ÃÅ²´Ù. 
+        ////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½. 
         //for (int i = 0; i < firePos.Length; i++)
         //{
         //    Fires[i].SetActive(true);
@@ -82,21 +91,21 @@ public class trainController : MonoBehaviourPun
     [PunRPC]
     public virtual void RpcDofire()
     {
-        //ÁöÁ¤ÇÑ È­Àç À§Ä¡¿¡ ºÒÀ» ¹ß»ý½ÃÅ²´Ù. 
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½. 
         for (int i = 0; i < firePos.Length; i++)
         {
             Fires[i].SetActive(true);
         }
     }
     #endregion
-    #region ±âÂ÷ ºÒ²ô´Â ÇÔ¼ö ¿µ¿ª
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½Ò²ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     public virtual void TurnOffFire()
     {
         photonView.RPC("RpcTurnOffFire", RpcTarget.All);
         //for (int i = 0; i < firePos.Length; i++)
         //{
         //    Fires[i].SetActive(false);
-        //    //³ªÁß¿¡ ÀÚ¿¬½º·´°Ô ²¨Áöµµ·Ï ±â´ÉÀ» ±¸ÇöÇÏÀÚ
+        //    //ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //}
     }
     [PunRPC]
@@ -105,12 +114,12 @@ public class trainController : MonoBehaviourPun
         for (int i = 0; i < firePos.Length; i++)
         {
             Fires[i].SetActive(false);
-            //³ªÁß¿¡ ÀÚ¿¬½º·´°Ô ²¨Áöµµ·Ï ±â´ÉÀ» ±¸ÇöÇÏÀÚ
+            //ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
-        isFire = false;
+        
     }
     #endregion
-    #region ±âÂ÷ ÅÍÁö´Â ÇÔ¼ö ¿µ¿ª
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     public virtual void Boom()
     {
         photonView.RPC("RpcBoom", RpcTarget.All);
@@ -128,9 +137,10 @@ public class trainController : MonoBehaviourPun
         gameObject.SetActive(false);
     }
     #endregion
-    // »óÅÂ¸Ó½Å
-    public static void StateMachine(TrainState s)
+    // ï¿½ï¿½ï¿½Â¸Ó½ï¿½
+    public  void StateMachine(TrainState s)
     {
+        if (turn) return;
         switch (s)
         {
             case TrainState.Idle:
@@ -138,12 +148,15 @@ public class trainController : MonoBehaviourPun
                 break;
             case TrainState.isFire:
                 trainState = TrainState.isFire;
+                audio.clip = soundClips[1];
                 break;
             case TrainState.isBoom:
                 trainState = TrainState.isBoom;
+                audio.clip = soundClips[2];
                 break;
             case TrainState.TurnOffFire:
                 trainState = TrainState.TurnOffFire;
+                audio.clip = soundClips[3];
                 break;
         }
     }

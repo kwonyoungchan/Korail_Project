@@ -36,7 +36,7 @@ public class waterTank : trainController
             curTime = 0;
             StateMachine(TrainState.Idle);
         }
-        if (trainState== TrainState.isFire)
+        if (trainState== TrainState.isFire&&!turn)
         {
             DoActive += DoFire;
         }
@@ -54,6 +54,7 @@ public class waterTank : trainController
             if (detect[0].GetComponent<PlayerForwardRay>().isWater)
             {
                 curVolume = maxVolume;
+                turn = false;
                 StateMachine(TrainState.TurnOffFire);
                 detect[0].GetComponent<PlayerForwardRay>().Water(false);
             }
@@ -88,7 +89,8 @@ public class waterTank : trainController
                 if (photonView.IsMine)
                 {
                     GameManager.instance.DoCamShake();
-                    StateMachine(TrainState.Idle);
+                    turn = false;
+                    StateMachine(TrainState.isBoom);
                 }
             }
         }

@@ -13,6 +13,8 @@ public class Maker : trainController
     [HideInInspector]
     public int steelCount;
     public int railCount;
+    AudioSource sound;
+    bool turn;
 
 
     // 나무랑 철 위치
@@ -37,6 +39,7 @@ public class Maker : trainController
     void Start()
     {
         MakeFire();
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -112,10 +115,17 @@ public class Maker : trainController
     void RPCMakeRail()
     {
         if (railCount == railArray.Count && railCount > 0) return;
+        if (!turn)
+        {
+            sound.Play();
+            turn = true;
+        }
+            
         currentTime += Time.deltaTime;
         // 일정시간이 지난 후에 
         if (currentTime > createTime)
         {
+            turn = false;
             // 레일이 나오게 만든다
             GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"), matPos[2]);
             railArray.Add(rail);
