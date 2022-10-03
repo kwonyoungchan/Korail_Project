@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 1220988075701483961}
   - component: {fileID: 8531967431126026660}
   - component: {fileID: 1321578615450884408}
+  - component: {fileID: 139642703838782837}
   m_Layer: 6
   m_Name: player
   m_TagString: Player
@@ -878,6 +879,7 @@ MonoBehaviour:
   railArray: []
   itemPos: {fileID: 6337779290616086347}
   rayPos: {fileID: 9198375197412803880}
+  audioClip: []
 --- !u!136 &6579820779849455572
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -952,6 +954,7 @@ MonoBehaviour:
   isWater: 0
   isItemDown: 0
   isMat: 0
+  audioClips: []
   isGathering: 0
 --- !u!114 &8531967431126026660
 MonoBehaviour:
@@ -978,6 +981,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 4011447147094281828}
+--- !u!114 &139642703838782837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246526032087894631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9766a6599d20be48ad5aa77d78339d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  anim: {fileID: 426800325266997022}
 --- !u!1 &2360015739527041301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,6 +1514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6005596592993688428}
+  - component: {fileID: 426800325266997022}
   m_Layer: 0
   m_Name: PinkBunny
   m_TagString: Untagged
@@ -1524,6 +1542,26 @@ Transform:
   m_Father: {fileID: 426081064807149728}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &426800325266997022
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435303977527805918}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6ca231520fba2b499ae456ae3412313, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3762878483782670110
 GameObject:
   m_ObjectHideFlags: 0
