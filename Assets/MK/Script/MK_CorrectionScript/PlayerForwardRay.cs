@@ -253,5 +253,13 @@ public class PlayerForwardRay : MonoBehaviourPun
     void RPCWater(bool s)
     {
         isWater = s;
+        if(isWater == false)
+        {
+            water.SetActive(false);
+        }
+        else
+        {
+            water.SetActive(true);
+        }
     }
 }
