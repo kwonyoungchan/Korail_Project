@@ -18,31 +18,28 @@ public class IngredientItem : MonoBehaviourPun
     int hp;
     float axDis;
     float pickDis;
-    
-    PlayerItemDown player;
 
-    bool isGathering;
+    public bool isGathering;
+
+    public bool isAx = false;
+    public bool isPick = false;
 
     // Start is called before the first frame update
     void Start()
     {
         hp = maxHP;
-        player = GameObject.Find("Player(Clone)").GetComponent<PlayerItemDown>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "GameScene")
-            isGathering = GameObject.Find("Player(Clone)").GetComponent<PlayerForwardRay>().isGathering;
-        if (player.holdState == PlayerItemDown.Hold.Ax) 
+        if (isAx)
         {
-            axDis = Vector3.Distance(player.transform.position, transform.position);
-
             if (gameObject.name.Contains("Tree"))
             {
-                if (axDis < 1f && isGathering)
+                if (isGathering)
                 {
+
                     currentTime += Time.deltaTime;
 
                     if (currentTime > maxTime)
@@ -52,13 +49,11 @@ public class IngredientItem : MonoBehaviourPun
                 }
             }
         }
-        if (player.holdState == PlayerItemDown.Hold.Pick)
+        if (isPick)
         {
-            pickDis = Vector3.Distance(player.transform.position, transform.position);
-
             if (gameObject.name.Contains("Iron"))
             {
-                if (pickDis < 1.2f && isGathering)
+                if (isGathering)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime > maxTime)
@@ -79,10 +74,12 @@ public class IngredientItem : MonoBehaviourPun
         if (hp <= 0)
         {
             isGathering = false;
+            isAx = false;
+            isPick = false;
             // GOD�� �ִ� State ����
             if (n == 0)
                 GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Branch, 1);
-            if(n == 1)
+            if (n == 1)
                 GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Steel, 1);
         }
 
