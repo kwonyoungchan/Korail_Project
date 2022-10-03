@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7887843558590396080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.5, y: 0, z: 3.5}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -114,9 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 1
-  steelCount: 1
-  railCount: 1
+  matCount: 1
   mat: []
 --- !u!114 &8470321773874906803
 MonoBehaviour:
@@ -146,7 +144,7 @@ MonoBehaviour:
   items: 0
   turn: 0
   isConnected: 0
-  railHeight: 0
+  railHeight: 0.55
 --- !u!114 &-7819074640255125047
 MonoBehaviour:
   m_ObjectHideFlags: 0

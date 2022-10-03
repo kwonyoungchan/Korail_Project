@@ -46,7 +46,7 @@ public class ClientManager : MonoBehaviour
         {
             if(players[i].IsMine)
             {
-                PhotonNetwork.Destroy(players[i].gameObject);
+                PhotonNetwork.Destroy(players[i].transform.parent.gameObject);
                 
                 break;
             }

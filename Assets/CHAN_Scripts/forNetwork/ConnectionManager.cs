@@ -17,8 +17,8 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     GameObject player_Lobby;
     private void Awake()
     {
-        player_Lobby = (GameObject)Instantiate(Resources.Load("CHAN_Prefab/Player4Lobby"));
-        player_Lobby.transform.position = Vector3.zero;
+        player_Lobby = Instantiate(GameInfo.instance.curCharacter);
+        //player_Lobby.transform.position = Vector3.zero;
         DontDestroyOnLoad(player_Lobby);
     }
     void Start()
@@ -67,6 +67,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
         //닉네임 설정
         PhotonNetwork.NickName = inputNickName.text;
+        GameInfo.instance.nickName= inputNickName.text;
         //기본 로비 진입 
         PhotonNetwork.JoinLobby();
         //특정 로비 진입

@@ -17,6 +17,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // spawnPos 둘 변수
     public Vector3[] spawnPos;
     public Button GoBtn;
+    public Button BackBtn;
 
     // 난이도 조절 버튼 관련 변수
     // 우측 선택
@@ -35,7 +36,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         Level.text = levels[0];
         //초기 기차속도를 저장
         minSpeed = GameInfo.instance.trainSpeed;
-        maxSpeed= GameInfo.instance.trainSpeed+levels.Length;
+        maxSpeed = GameInfo.instance.trainSpeed + levels.Length;
         //OnPhotonSerializeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         PhotonNetwork.SendRate = 60;
@@ -51,14 +52,9 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
-       // if(ClientManager.instance.IsExit() == false)
-        {
-            PhotonNetwork.Instantiate("MK_Prefab/Player", spawnPos[idx], Quaternion.identity);
-        }
-
+        string s = GameInfo.instance.CallBackName();
+        PhotonNetwork.Instantiate("MK_Prefab" + "/" + "PlayerPrefabs" + "/" + s, GameInfo.instance.curPos + new Vector3(0, 1, 0), Quaternion.identity);
     }
-
-    // Update is called once per frame
     void Update()
     {
 
@@ -70,7 +66,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
         print(newPlayer.NickName + " 님이 이 방에 들어왔습니다.");
     }
-   
+
 
     public void LoadArena()
     {
@@ -78,9 +74,10 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
             {
-                if(photonView.IsMine)
-                LoadGameScene();
+
             }
+            if (photonView.IsMine)
+                LoadGameScene();
         }
     }
     void LoadGameScene()
@@ -92,7 +89,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     public void ClickedRightButton()
     {
         num++;
-        if (num > levels.Length-1)
+        if (num > levels.Length - 1)
         {
             num = 0;
             GameInfo.instance.trainSpeed = minSpeed;
@@ -101,7 +98,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         GameInfo.instance.trainSpeed += 1;
         Level.text = levels[num];
         print(GameInfo.instance.trainSpeed);
-        
+
 
     }
     //왼쪽 버튼 눌렀을 때
@@ -125,7 +122,20 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("GameScene");
     }
 
-
-
+    public void ReJoinLobby()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        GameObject clientManager = GameObject.Find("clientManager");
+        GameObject player = GameObject.Find("Player(Clone)");
+        Destroy(clientManager);
+        Destroy(player);
+        GameObject lobbyPlayer=Instantiate(GameInfo.instance.charaters_Lobby[GameInfo.instance.CharacterCount]);
+        lobbyPlayer.transform.position = GameInfo.instance.curPos;
+        PhotonNetwork.LoadLevel("MainLobby");
+    }
 
 }

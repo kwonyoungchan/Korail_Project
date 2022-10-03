@@ -60,6 +60,7 @@ public class waterTank : trainController
             {
                 curVolume = maxVolume;
                 TurnedOffFire = true;
+                detect[0].GetComponent<PlayerForwardRay>().Water(false);
                 turn = false;
             }
         }

@@ -69,19 +69,18 @@ namespace Assets.Scripts
             RoomOptions roomOptions = new RoomOptions();
             //최대인원
             //where '0' means "no limit"
-            roomOptions.MaxPlayers = byte.Parse(totalNum.text);
+            roomOptions.MaxPlayers = 4;//byte.Parse(totalNum.text);
             //룸 목록에 모이나? 보이지 않느냐?
             roomOptions.IsVisible = true;
             // 커스텀 정보를 셋팅
             ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable(); ;
-            hash["desc"] =" "+Random.Range(1, 1000);
             //hash["map_id"] = Random.Range(0, mapThumbs.Length);
             hash["room_name"] = roomName.text;
             hash["password"] = inputPassword.text;
             roomOptions.CustomRoomProperties = hash;
             //print((string)hash["desc"]+ ", " + (float)hash[1]);
             //custom 정보를 공개하는 설정
-            roomOptions.CustomRoomPropertiesForLobby = new string[] { "desc", "room_name", "password" };
+            roomOptions.CustomRoomPropertiesForLobby = new string[] { "room_name", "password" };
             // 방을 만든다.
             PhotonNetwork.CreateRoom(roomName.text + inputPassword.text, roomOptions, TypedLobby.Default);
         }
@@ -111,7 +110,7 @@ namespace Assets.Scripts
         {
             base.OnJoinedRoom();
             print(System.Reflection.MethodBase.GetCurrentMethod().Name);
-            Destroy(GameObject.Find("Player4Lobby(Clone)"));
+            Destroyplayer();  
             PhotonNetwork.LoadLevel("WaitingRoom");
 
         }
@@ -248,5 +247,15 @@ namespace Assets.Scripts
             btnCreate.transform.gameObject.SetActive(true);
             btnBack.transform.gameObject.SetActive(false);
         }
+        public void Destroyplayer()
+        {
+            photonView.RPC("RpcDestroyplayer", RpcTarget.All);
+        }
+        [PunRPC]
+        void RpcDestroyplayer()
+        {
+            Destroy(GameObject.Find(GameInfo.instance.CallBackName() + "(Clone)"));
+        }
+
     }
 }

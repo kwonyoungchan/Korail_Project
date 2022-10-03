@@ -33,13 +33,13 @@ public class IngredientItem : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (isAx) 
+        if (isAx)
         {
             if (gameObject.name.Contains("Tree"))
             {
-                if (isGathering )
+                if (isGathering)
                 {
-                    
+
                     currentTime += Time.deltaTime;
 
                     if (currentTime > maxTime)
@@ -79,7 +79,7 @@ public class IngredientItem : MonoBehaviourPun
             // GOD�� �ִ� State ����
             if (n == 0)
                 GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Branch, 1);
-            if(n == 1)
+            if (n == 1)
                 GetComponentInParent<MaterialGOD>().ChangeMaterial(MaterialGOD.Materials.Steel, 1);
         }
 

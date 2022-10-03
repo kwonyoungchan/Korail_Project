@@ -19,6 +19,7 @@ public class trainController : MonoBehaviourPun
     public static bool TurnedOffFire;
     public static bool turn;
     public static Action DoActive;
+    public GameObject FireUI;
     //진폭
     //public static float amplitude;
     ////진동수
@@ -32,6 +33,7 @@ public class trainController : MonoBehaviourPun
     {
         //amplitude = ampli;
         //SetTime = sTime;
+        FireUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,6 +46,15 @@ public class trainController : MonoBehaviourPun
             turn = true;
             if (isBoom)
                 boomTurn = true;
+        }
+        // 불났다는 신호가 발생하면 빨간 UI 발생하도록
+        if (isFire)
+        {
+            FireUI.SetActive(true);
+        }
+        else
+        {
+            FireUI.SetActive(false);
         }
         
     }
