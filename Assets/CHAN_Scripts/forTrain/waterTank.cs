@@ -13,7 +13,6 @@ public class waterTank : trainController
     [SerializeField]float detectRange;
     float curTime;
     [SerializeField] Collider[] detect;
-
     // 기차가 이동하기 시작하는 순간에 물의 양은 줄어들기 시작한다.
     [SerializeField] trainMove tMove;
     // 물이 고갈되면 모든 기차에서 불이나기 시작한다.
@@ -35,17 +34,13 @@ public class waterTank : trainController
         else
         {
             curTime = 0;
-            turn = false;
-            isBoom = false;
-            isFire = false;
-            boomTurn = false;
-            TurnedOffFire = false;
+            StateMachine(TrainState.Idle);
         }
-        if (isFire&&!turn)
+        if (trainState== TrainState.isFire)
         {
             DoActive += DoFire;
         }
-        if (isBoom&& !boomTurn)
+        if (trainState == TrainState.isBoom)
         {
             DoActive += Boom;
         }
@@ -59,12 +54,11 @@ public class waterTank : trainController
             if (detect[0].GetComponent<PlayerForwardRay>().isWater)
             {
                 curVolume = maxVolume;
-                TurnedOffFire = true;
+                StateMachine(TrainState.TurnOffFire);
                 detect[0].GetComponent<PlayerForwardRay>().Water(false);
-                turn = false;
             }
         }
-        if (TurnedOffFire && !turn)
+        if (trainState == TrainState.TurnOffFire)
         {
             DoActive += TurnOffFire;
         }
@@ -79,28 +73,22 @@ public class waterTank : trainController
         //만약 물탱크의 양이 0이하로 떨어지면 trainscontrol에게 불이 났다고 전달한다. 
         if (curVolume <= 0)
         {
-            isFire = true;
+            StateMachine(TrainState.isFire);
         }
         else
         {
             curVolume -= 10f * Time.deltaTime;
         }
-        if (isFire)
+        if (trainState == TrainState.isFire)
         {
             curTime += Time.deltaTime;
             if (curTime > explosionTime)
             {
                 // 이때 기차는 폭발한다.
-                
                 if (photonView.IsMine)
                 {
-                    if (!isBoom)
-                    {
-                        isBoom = true;
-                        turn = false;
-                        GameManager.instance.DoCamShake();
-                    }
-                    
+                    GameManager.instance.DoCamShake();
+                    StateMachine(TrainState.Idle);
                 }
             }
         }

@@ -20,12 +20,14 @@ public class trainController : MonoBehaviourPun
     public static bool turn;
     public static Action DoActive;
     public GameObject FireUI;
-    //진폭
-    //public static float amplitude;
-    ////진동수
-    //public static float SetTime;
-    //[SerializeField] float ampli;
-    //[SerializeField] float sTime;
+    public enum TrainState
+    { 
+        Idle,
+        isFire,
+        isBoom,
+        TurnOffFire
+    }
+    public static TrainState trainState;
 
 
 
@@ -43,9 +45,7 @@ public class trainController : MonoBehaviourPun
         {
             DoActive();
             DoActive = null;
-            turn = true;
-            if (isBoom)
-                boomTurn = true;
+            StateMachine(TrainState.Idle);
         }
         // 불났다는 신호가 발생하면 빨간 UI 발생하도록
         if (isFire)
@@ -128,30 +128,24 @@ public class trainController : MonoBehaviourPun
         gameObject.SetActive(false);
     }
     #endregion
-    #region 카메라 흔드는 기능
-    //public virtual void DoCamShake()
-    //{
-    //    StopAllCoroutines();
-    //    photonView.RPC("RpcDoCamShake", RpcTarget.All);
-    //}
-
-    //[PunRPC]
-    //public virtual void RpcDoCamShake()
-    //{
-    //    StartCoroutine(CameraShaking(amplitude, SetTime));
-    //}
-
-    //public  IEnumerator CameraShaking(float amplitude, float setTime)
-    //{
-    //    float curtime = 0;
-    //    while (curtime < setTime)
-    //    {
-    //        Camera.main.transform.position += UnityEngine.Random.insideUnitSphere * amplitude * Time.deltaTime;
-    //        curtime += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    turn = false;
-    //}
-    #endregion
+    // 상태머신
+    public static void StateMachine(TrainState s)
+    {
+        switch (s)
+        {
+            case TrainState.Idle:
+                trainState = TrainState.Idle;
+                break;
+            case TrainState.isFire:
+                trainState = TrainState.isFire;
+                break;
+            case TrainState.isBoom:
+                trainState = TrainState.isBoom;
+                break;
+            case TrainState.TurnOffFire:
+                trainState = TrainState.TurnOffFire;
+                break;
+        }
+    }
 
 }

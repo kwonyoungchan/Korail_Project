@@ -15,16 +15,16 @@ public class mainTrain : trainController
     // Update is called once per frame
     void Update()
     {
-        if (isFire&&!turn)
+        if (trainState == TrainState.isFire)
         {
             DoActive += DoFire;
 
         }
-        if (isBoom && !boomTurn)
+        if (trainState == TrainState.isBoom)
         {
             DoActive += Boom;
         }
-        if (TurnedOffFire && !turn)
+        if (trainState == TrainState.TurnOffFire)
         {
             DoActive += TurnOffFire;
         }
