@@ -30,9 +30,9 @@ public class PlayerMaterial : MonoBehaviourPun
     // 레이 위치
     public Transform rayPos;
     // 오디오 클립
-    public AudioClip[] audioClip;
+/*    public AudioClip[] audioClip;
 
-    AudioSource audioSource;
+    AudioSource audioSource;*/
 
     // MaterialGod 컴포넌트
     MaterialGOD matGod;
@@ -83,7 +83,7 @@ public class PlayerMaterial : MonoBehaviourPun
         railtrain = GameObject.Find("train_laugage2");
         train_main = GameObject.Find("train_main");
         anim = GetComponent<PlayerAnim>();
-        audioSource = GetComponent<AudioSource>();
+        // audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -575,12 +575,12 @@ public class PlayerMaterial : MonoBehaviourPun
         GameObject mat = Instantiate(Resources.Load<GameObject>(s));
         mat.gameObject.transform.parent = itemPos;
         matArray.Add(mat);
-        audioSource.clip = audioClip[0];
+        // audioSource.clip = audioClip[0];
         // 손 위치 위로 아이템 쌓게 만들기
         for (int i = 0; i < matArray.Count; i++)
         {
-            audioSource.Stop();
-            audioSource.Play();
+            // audioSource.Stop();
+            // audioSource.Play();
             matArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
             matArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
             matCount++;
@@ -612,9 +612,9 @@ public class PlayerMaterial : MonoBehaviourPun
             GameObject mat = Instantiate(Resources.Load<GameObject>(s));
             mat.transform.parent = itemPos;
             matArray.Add(mat);
-            audioSource.clip = audioClip[0];
+/*            audioSource.clip = audioClip[0];
             audioSource.Stop();
-            audioSource.Play();
+            audioSource.Play();*/
             matArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
             matArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
         }
@@ -640,9 +640,9 @@ public class PlayerMaterial : MonoBehaviourPun
         {
             matArray = railArray;
         }
-        audioSource.clip = audioClip[1];
+/*        audioSource.clip = audioClip[1];
         audioSource.Stop();
-        audioSource.Play();
+        audioSource.Play();*/
         // 바닥에 손에 있는 개수만큼 쌓임
         // 손에 있는 모든 것들이 제거
         for (int i = 0; i < matArray.Count; i++)
@@ -671,9 +671,9 @@ public class PlayerMaterial : MonoBehaviourPun
         for (int i = 0; i < railArray.Count; i++)
         {
             railArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-            audioSource.clip = audioClip[0];
+/*            audioSource.clip = audioClip[0];
             audioSource.Stop();
-            audioSource.Play();
+            audioSource.Play();*/
         }
         playerItem.holdState = PlayerItemDown.Hold.Mat;
     }
@@ -690,9 +690,9 @@ public class PlayerMaterial : MonoBehaviourPun
             GameObject rail = railArray[railArray.Count - 1];
             railArray.RemoveAt(railArray.Count - 1);
             Destroy(rail);
-            audioSource.clip = audioClip[1];
+/*            audioSource.clip = audioClip[1];
             audioSource.Stop();
-            audioSource.Play();
+            audioSource.Play();*/
         }
         if(railArray.Count <= 0)
         {
@@ -717,9 +717,9 @@ public class PlayerMaterial : MonoBehaviourPun
             GameObject branch = branchArray[branchArray.Count - 1];
             branchArray.RemoveAt(branchArray.Count - 1);
             Destroy(branch);
-            audioSource.clip = audioClip[0];
+/*            audioSource.clip = audioClip[0];
             audioSource.Stop();
-            audioSource.Play();
+            audioSource.Play();*/
             playerItem.holdState = PlayerItemDown.Hold.Mat;
         }
         else

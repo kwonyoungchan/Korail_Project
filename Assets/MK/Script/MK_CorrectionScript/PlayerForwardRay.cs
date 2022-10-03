@@ -31,9 +31,9 @@ public class PlayerForwardRay : MonoBehaviourPun
     public bool isWater = false;
     public bool isItemDown = false;
     public bool isMat = false;
-
+/*
     public AudioClip[] audioClips;
-    AudioSource audioSource;
+    AudioSource audioSource;*/
 
     // UI
     //public Slider slider;
@@ -51,7 +51,7 @@ public class PlayerForwardRay : MonoBehaviourPun
         player = GetComponent<PlayerMaterial>();
         playerHand = GetComponent<PlayerItemDown>();
         anim = GetComponent<PlayerAnim>();
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         /*slider.value = 0;
         slider.maxValue = waterTime;
         slider.gameObject.SetActive(false);*/
@@ -138,8 +138,8 @@ public class PlayerForwardRay : MonoBehaviourPun
                         if (audioTime > 1)
                         {
                             audioTime = 0;
-                            audioSource.clip = audioClips[1];
-                            audioSource.Play();
+                            /*audioSource.clip = audioClips[1];
+                            audioSource.Play();*/
                         }
                     }
                     else if (playerHand.holdState == PlayerItemDown.Hold.Pick)
@@ -150,8 +150,8 @@ public class PlayerForwardRay : MonoBehaviourPun
                         if (audioTime > 1)
                         {
                             audioTime = 0;
-                            audioSource.clip = audioClips[0];
-                            audioSource.Play();
+                            /*audioSource.clip = audioClips[0];
+                            audioSource.Play();*/
                         }
                     }
                     else
