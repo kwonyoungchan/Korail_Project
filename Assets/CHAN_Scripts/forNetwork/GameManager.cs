@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 1. spawnPos의 갯수를 할당
         spawnPos = new Vector3[PhotonNetwork.CurrentRoom.MaxPlayers];
         RandomSpawn();
-
-
         // 현재 방에 들어와있는 인원수를 이용해서 index 구하자
         int idx = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //플레이어를 생성한다.
