@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class connectRail : MonoBehaviour
+public class connectRail : MonoBehaviourPun
 {
     public static connectRail instance;
     private void Awake()
@@ -33,28 +34,40 @@ public class connectRail : MonoBehaviour
     void Update()
     {
         //리스트의 마지막부분에 들어간 게임오브젝트만 해당 함수를 작동시키고 싶다.
-        Detect();
-        if (connectedRails.Count > 2)
-        { 
-            CheckConnect();
+        if (photonView.IsMine)
+        {
+            Detect();
+            if (connectedRails.Count > 2)
+            {
+                CheckConnect();
+            }
         }
+
     }
     //4방향 벡터 저장해놓은 배열
     Vector3[] dir = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
     void Detect()
     {
+        photonView.RPC("RpcDetect", RpcTarget.All);
+    }
+    [PunRPC]
+    void RpcDetect()
+    {
         if (connectedRails.Count > 0)
         {
             for (int i = 0; i < 4; i++)
             {
-                Ray ray = new Ray(connectedRails[connectedRails.Count-1].transform.position, dir[i]);
+                Ray ray = new Ray(connectedRails[connectedRails.Count - 1].transform.position, dir[i]);
                 RaycastHit hit;
                 Physics.Raycast(ray, out hit);
                 ItemGOD itemInfo = hit.transform.GetComponent<ItemGOD>();
+                //hit 정보가 들어 왔을 때 작동
                 if (itemInfo)
                 {
+                    //상태가 Rail이고 연결된 상태일 때
                     if (itemInfo.items == ItemGOD.Items.Rail && !itemInfo.isConnected)
                     {
+                        //연결됐다고 신호
                         itemInfo.isConnected = true;
                         if (!connectedRails.Contains(hit.transform.gameObject))
                         {
