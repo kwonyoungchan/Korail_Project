@@ -2005,8 +2005,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   rayPos: {fileID: 576876812929175268}
-  rArm: {fileID: 0}
-  lArm: {fileID: 0}
+  rArm: {fileID: 8824267969410416370}
+  lArm: {fileID: 8824267971780690122}
   rotSpeed: 3
   num: 0
   f: 0
@@ -2027,6 +2027,7 @@ MonoBehaviour:
   railArray: []
   itemPos: {fileID: 2328953961689642119}
   rayPos: {fileID: 576876812929175268}
+  audioClip: []
 --- !u!136 &3239904272655670296
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2078,7 +2079,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1816334702846720629}
   - {fileID: 2332738905007444792}
-  - {fileID: 6753934666783094387}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2119,6 +2119,8 @@ MonoBehaviour:
   isWater: 0
   isItemDown: 0
   isMat: 0
+  audioClips: []
+  slider: {fileID: 0}
   isGathering: 0
 --- !u!114 &1801750478762472245
 MonoBehaviour:

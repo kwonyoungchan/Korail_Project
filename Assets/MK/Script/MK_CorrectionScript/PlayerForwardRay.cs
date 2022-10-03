@@ -36,7 +36,7 @@ public class PlayerForwardRay : MonoBehaviourPun
     AudioSource audioSource;
 
     // UI
-    public Slider slider;
+    //public Slider slider;
     float audioTime;
 
     // ä���� ���� ������
@@ -52,9 +52,9 @@ public class PlayerForwardRay : MonoBehaviourPun
         playerHand = GetComponent<PlayerItemDown>();
         anim = GetComponent<PlayerAnim>();
         audioSource = GetComponent<AudioSource>();
-        slider.value = 0;
+        /*slider.value = 0;
         slider.maxValue = waterTime;
-        slider.gameObject.SetActive(false);
+        slider.gameObject.SetActive(false);*/
     }
 
     // Update is called once per frame
@@ -110,7 +110,7 @@ public class PlayerForwardRay : MonoBehaviourPun
                     {
                         currentTime += Time.deltaTime;
                         // UI 작업 = 동기화 동시에 하기
-                        WaterSlider(true, currentTime);
+                        // WaterSlider(true, currentTime);
 
                         // ���� �ð� �� �絿�̿� ���� ä������
                         if (currentTime > waterTime)
@@ -192,7 +192,7 @@ public class PlayerForwardRay : MonoBehaviourPun
             }
             else
             {
-                WaterSlider(false, 0);
+                //WaterSlider(false, 0);
                 if (playerHand.holdState != PlayerItemDown.Hold.Mat)
                 {
                     if (playerHand.holdState == PlayerItemDown.Hold.Pail)
@@ -242,7 +242,7 @@ public class PlayerForwardRay : MonoBehaviourPun
     [PunRPC]
     void RpcWaterSlider(bool water, float time)
     {
-        // 나의 앞방향을 카메라 앞방향으로 셋팅하자
+        /*// 나의 앞방향을 카메라 앞방향으로 셋팅하자
         slider.transform.forward = Camera.main.transform.forward;
         if (water)
         {
@@ -253,7 +253,7 @@ public class PlayerForwardRay : MonoBehaviourPun
         else
         {
             slider.gameObject.SetActive(false);
-        }
+        }*/
     }
     public void Water(bool s)
     {

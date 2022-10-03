@@ -70,6 +70,18 @@ MonoBehaviour:
   - RpcDestroyplayer
   - PunAddRail
   - PunMakeMat
+  - PunChangeMats
+  - PunCreateMat
+  - PunDeleteMat
+  - PunDeletMaterial
+  - PunDeletRail
+  - RpcAnimalState
+  - RPCAnimState
+  - RpcHoldAnimal
+  - RPCMakeRail
+  - RpcRemoveBranch
+  - RPCTheifState
+  - RpcWaterSlider
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
