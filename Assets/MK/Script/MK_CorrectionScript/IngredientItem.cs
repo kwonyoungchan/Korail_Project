@@ -33,7 +33,6 @@ public class IngredientItem : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-
         if (isAx) 
         {
             if (gameObject.name.Contains("Tree"))

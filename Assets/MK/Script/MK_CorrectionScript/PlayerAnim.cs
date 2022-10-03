@@ -15,7 +15,6 @@ public class PlayerAnim : MonoBehaviourPun
     public Anim state;
 
     public Animator anim;
-    
     public void AnimState(Anim s)
     {
         state = s;

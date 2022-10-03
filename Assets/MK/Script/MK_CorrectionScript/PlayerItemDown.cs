@@ -230,7 +230,6 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                 {
                     tool[i].SetActive(false);
                 }
-                anim.AnimState(PlayerAnim.Anim.Move);
                 break;
             // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
@@ -264,10 +263,10 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
             // 양동이를 들고 있을 때,
             case Hold.Pail:
                 // 팔 돌리기
+                anim.AnimState(PlayerAnim.Anim.Idle);
                 RotArm(rArm, -85, 90);
                 RotArm(lArm, -80, -90);
                 tool[2].SetActive(true);
-                anim.AnimState(PlayerAnim.Anim.Idle);
                 break;
             #endregion
             #region 재료
@@ -277,9 +276,9 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                 {
                     tool[i].SetActive(false);
                 }
+                anim.AnimState(PlayerAnim.Anim.Idle);
                 RotArm(rArm, -85, 90);
                 RotArm(lArm, -80, -90);
-                anim.AnimState(PlayerAnim.Anim.Idle);
                 break;
             #endregion
             case Hold.Animal:
@@ -289,7 +288,6 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                 }
                 RotArm(rArm, -85, 90);
                 RotArm(lArm, -80, -90);
-                anim.AnimState(PlayerAnim.Anim.Idle);
                 break;
         }
     }

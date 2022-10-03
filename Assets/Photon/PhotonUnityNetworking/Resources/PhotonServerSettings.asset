@@ -77,6 +77,13 @@ MonoBehaviour:
   - RPCMakeRail
   - PunDeletRail
   - RPCAnimState
+  - RPCTheifState
+  - RpcAnimalState
+  - RpcHoldAnimal
+  - RpcWaterSlider
+  - RPCDamage
+  - PunSmallObject
+  - SmallObject
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

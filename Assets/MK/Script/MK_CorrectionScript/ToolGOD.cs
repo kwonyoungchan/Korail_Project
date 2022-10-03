@@ -55,6 +55,7 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Ax"));
+                toolItem.transform.GetChild(1).gameObject.SetActive(true);
                 toolItem.transform.position = transform.position + new Vector3(0, y, 0);
                 break;
             case Tools.Pick:
@@ -71,6 +72,7 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Pick"));
+                toolItem.transform.GetChild(1).gameObject.SetActive(true);
                 toolItem.transform.position = transform.position + new Vector3(0, y, 0);
                 break;
             case Tools.Pail:
@@ -87,6 +89,7 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Pail"));
+                toolItem.transform.GetChild(1).gameObject.SetActive(true);
                 toolItem.transform.position = transform.position + new Vector3(0, y + 0.2f, 0);
                 break;
         }

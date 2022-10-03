@@ -945,6 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552578091fcfba64d8f41660848de333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: []
   water: {fileID: 5306645351462097965}
 --- !u!1 &4726546595665489068
 GameObject:
@@ -1493,7 +1494,7 @@ Animator:
   m_GameObject: {fileID: 4726546598180054510}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ff2cca9b697ea4f459d092a01d439300, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6ca231520fba2b499ae456ae3412313, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1869,6 +1870,8 @@ GameObject:
   - component: {fileID: 8836915508344469019}
   - component: {fileID: -4360814510425656172}
   - component: {fileID: 4839149134815222586}
+  - component: {fileID: 3049931174863105712}
+  - component: {fileID: 434574278979860458}
   m_Layer: 6
   m_Name: Player 1
   m_TagString: Player
@@ -1944,7 +1947,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5545212992765044964}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 726dad306e177934388c25d0d54f9f64, type: 3}
   m_Name: 
@@ -1952,8 +1955,11 @@ MonoBehaviour:
   branchArray: []
   steelArray: []
   railArray: []
-  itemPos: {fileID: 301071571733175752}
-  rayPos: {fileID: 3206281260203616171}
+  itemPos: {fileID: 301071571733175752, guid: 7c57658ac4d62b145b2105c2f5206bb0, type: 3}
+  rayPos: {fileID: 3206281260203616171, guid: 7c57658ac4d62b145b2105c2f5206bb0, type: 3}
+  audioClip:
+  - {fileID: 8300000, guid: 21acf20075b3add4db4980d0793c641b, type: 3}
+  - {fileID: 8300000, guid: db97b9eff618c7c48a7cfb6645e3f9df, type: 3}
 --- !u!136 &615293798033487191
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2005,8 +2011,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4416746454337753914}
   - {fileID: 297246485837511287}
-  - {fileID: 8774505750135136060}
-  - {fileID: 4839149134815222586}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2034,19 +2038,51 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5545212992765044964}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3ed80e3a4cd87f49898c0fd249061f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rPos: {fileID: 122694445870208107}
-  iPos: {fileID: 44306439055955659}
+  rPos: {fileID: 0}
+  iPos: {fileID: 0}
   isBranch: 0
   waterTime: 4
-  water: {fileID: 4515616995476909995}
+  water: {fileID: 0}
   isWater: 0
   isItemDown: 0
+  isMat: 0
+  audioClips:
+  - {fileID: 8300000, guid: 25eaf61ef1438fd43aab7cc41cb46e04, type: 3}
+  - {fileID: 8300000, guid: 4669652f38f781640b9e54eeb6891a08, type: 3}
+  slider: {fileID: 0}
   isGathering: 0
+--- !u!114 &3049931174863105712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5545212992765044964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9766a6599d20be48ad5aa77d78339d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  anim: {fileID: 4668577591038302754}
+--- !u!114 &434574278979860458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5545212992765044964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dd0ead477760e4c9ab92546380f04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rPos: {fileID: 122694445870208107}
 --- !u!1 &5587062031630758818
 GameObject:
   m_ObjectHideFlags: 0
