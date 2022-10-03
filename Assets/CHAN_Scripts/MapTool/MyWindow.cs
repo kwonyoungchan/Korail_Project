@@ -1,8 +1,10 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 using System;
+
 [Serializable]
 public class CreatedInfo
 {
@@ -61,7 +63,7 @@ public class MyWindow : EditorWindow
     string saveFileName;
 
     [MenuItem("Window/My Map Editor")]
-   
+
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(MyWindow));
@@ -97,7 +99,7 @@ public class MyWindow : EditorWindow
             //    createdObjects.RemoveAt(i);
             //    DestroyImmediate(createdObjects[i].go);
             //}
-            LoadObject(info.fileType,info.name,info.pos);
+            LoadObject(info.fileType, info.name, info.pos);
         }
         //ArrayJson의 데이터를 가지고 오브젝트 생성
 
@@ -136,9 +138,9 @@ public class MyWindow : EditorWindow
         File.WriteAllText(Application.streamingAssetsPath + "/" + saveFileName + ".txt", jsonData);
     }
 
-    private void OnGUI() 
+    private void OnGUI()
     {
-        
+
         EditorGUILayout.BeginHorizontal();
         EditMap = GUILayout.Toggle(EditMap, "맵 타일", "Button", GUILayout.Height(60f));
         EditTool = GUILayout.Toggle(EditTool, "도구 타일", "Button", GUILayout.Height(60f));
@@ -180,7 +182,7 @@ public class MyWindow : EditorWindow
         if (EditMap)
         {
             GUILayout.Label("맵 타일");
-            mapScrollPos = EditorGUILayout.BeginScrollView(mapScrollPos,true,false);
+            mapScrollPos = EditorGUILayout.BeginScrollView(mapScrollPos, true, false);
             paletteIndex = GUILayout.SelectionGrid(paletteIndex, mapPaletteIcons.ToArray(), mapPaletteIcons.Count);
             EditorGUILayout.EndScrollView();
         }
@@ -199,10 +201,10 @@ public class MyWindow : EditorWindow
             EditorGUILayout.EndScrollView();
         }
         #endregion;
-        Save = GUILayout.Toggle(Save, "저장 하기", "Button",GUILayout.Height(60f));
+        Save = GUILayout.Toggle(Save, "저장 하기", "Button", GUILayout.Height(60f));
         saveFileName = GUILayout.TextArea(saveFileName);
         GUILayout.Space(10);
-        Load = GUILayout.Toggle(Load, "불러 오기", "Button",GUILayout.Height(60f));
+        Load = GUILayout.Toggle(Load, "불러 오기", "Button", GUILayout.Height(60f));
         GUILayout.Space(10);
         EditorGUILayout.EndVertical();
 
@@ -217,13 +219,13 @@ public class MyWindow : EditorWindow
 
         if (EditMap)
         {
-            DoEdit(mapPalette, "Map",paletteIndex,EventType.MouseDrag);
+            DoEdit(mapPalette, "Map", paletteIndex, EventType.MouseDrag);
             EditTool = false;
             EditSpecial = false;
         }
         if (EditTool)
         {
-            DoEdit(toolPalette,"Tool", toolpPaletteIndex, EventType.MouseDown);
+            DoEdit(toolPalette, "Tool", toolpPaletteIndex, EventType.MouseDown);
             EditMap = false;
             EditSpecial = false;
         }
@@ -235,7 +237,7 @@ public class MyWindow : EditorWindow
         }
         if (startRails)
         {
-            
+
             SetStartRail();
         }
         if (endRail)
@@ -261,7 +263,7 @@ public class MyWindow : EditorWindow
             LoadJson();
             Load = false;
         }
-        
+
     }
 
     //에디터창을 열었을 때 발생하는 코드?
@@ -325,7 +327,7 @@ public class MyWindow : EditorWindow
     }
     void Initialize()
     {
-        
+
         //땅 오브젝트를 넣을 빈 오브젝트를 만든다.
         GameObject empty = GameObject.Find("obj_parent");
         if (empty != null)
@@ -344,8 +346,8 @@ public class MyWindow : EditorWindow
         {
             for (int j = 0; j < tileX; j++)
             {
-                
-                GameObject floor =CreateBaseTile();
+
+                GameObject floor = CreateBaseTile();
                 floor.transform.position = new Vector3(j, 0, i);
                 CreatedInfo info = new CreatedInfo();
                 info.go = floor;
@@ -356,7 +358,7 @@ public class MyWindow : EditorWindow
 
             }
         }
-        
+
 
     }
     void DeleteObject()
@@ -374,7 +376,7 @@ public class MyWindow : EditorWindow
 
                 if (hit.transform.name != "MapCube")
                 {
-                    GameObject floor=CreateBaseTile();
+                    GameObject floor = CreateBaseTile();
                     floor.transform.position = hit.transform.position;
                     for (int i = 0; i < createdObjects.Count; i++)
                     {
@@ -386,7 +388,7 @@ public class MyWindow : EditorWindow
                             break;
                         }
                     }
-                    
+
                 }
 
             }
@@ -396,9 +398,9 @@ public class MyWindow : EditorWindow
 
     }
 
-    void LoadObject(string fileType,string prefabName, Vector3 position)
+    void LoadObject(string fileType, string prefabName, Vector3 position)
     {
-        GameObject JH = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Editor Default Resources/prefab/"+ fileType+"\\\\" + prefabName + ".prefab", typeof(GameObject));
+        GameObject JH = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Editor Default Resources/prefab/" + fileType + "\\\\" + prefabName + ".prefab", typeof(GameObject));
         GameObject obj = PrefabUtility.InstantiatePrefab(JH) as GameObject;
         // 만약 맞은 오브젝트가 Obj 이면  맞은 객체의 위,아래 ,오른쪽으로 
         obj.transform.position = position;
@@ -419,7 +421,7 @@ public class MyWindow : EditorWindow
 
         return floor;
     }
-    void DoEdit(List<GameObject> pallette, string fileType,int idx,EventType Mtype)
+    void DoEdit(List<GameObject> pallette, string fileType, int idx, EventType Mtype)
     {
         Ray guiRay = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         RaycastHit hit;
@@ -479,7 +481,7 @@ public class MyWindow : EditorWindow
             Vector3 p = new Vector3(Mathf.RoundToInt(hit.point.x), 0.5f, Mathf.RoundToInt(hit.point.z));
             DisplayVisualHelp(p);
             HandleSceneViewInputs(p);
-            if (e.button == 0 && e.type == EventType.MouseDown )
+            if (e.button == 0 && e.type == EventType.MouseDown)
             {
                 if (StartRailCount <= 1)
                 {
@@ -512,7 +514,7 @@ public class MyWindow : EditorWindow
                 { Debug.LogError("이미 생성된 타일입니다."); }
             }
 
-            
+
         }
 
     }
@@ -563,4 +565,6 @@ public class MyWindow : EditorWindow
 
         }
     }
+
 }
+#endif
