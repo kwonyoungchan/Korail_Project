@@ -612,11 +612,11 @@ public class PlayerMaterial : MonoBehaviourPun
             GameObject mat = Instantiate(Resources.Load<GameObject>(s));
             mat.transform.parent = itemPos;
             matArray.Add(mat);
+            matArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
+            matArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
             audioSource.clip = audioClip[0];
             audioSource.Stop();
             audioSource.Play();
-            matArray[i].transform.position = itemPos.position + new Vector3(0, i * 0.2f, 0);
-            matArray[i].transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
     }
