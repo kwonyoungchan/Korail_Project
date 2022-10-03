@@ -1389,7 +1389,7 @@ GameObject:
   - component: {fileID: 6372727991055690639}
   m_Layer: 0
   m_Name: Player1_4Lobby
-  m_TagString: Untagged
+  m_TagString: check
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

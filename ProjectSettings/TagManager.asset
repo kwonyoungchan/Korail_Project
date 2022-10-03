@@ -9,6 +9,7 @@ TagManager:
   - Steel
   - RPos
   - Bullet
+  - check
   layers:
   - Default
   - TransparentFX
@@ -26,10 +27,6 @@ TagManager:
   - Theif
   - Train
   - etc
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 

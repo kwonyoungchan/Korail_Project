@@ -14,12 +14,12 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     //Á¢¼Ó Button
     public Button btnConnect;
 
-    GameObject player_Lobby;
+    public GameObject player_Lobby;
     private void Awake()
     {
-        player_Lobby = Instantiate(GameInfo.instance.curCharacter);
+        //player_Lobby = Instantiate(GameInfo.instance.curCharacter);
         //player_Lobby.transform.position = Vector3.zero;
-        DontDestroyOnLoad(player_Lobby);
+        //DontDestroyOnLoad(player_Lobby);
     }
     void Start()
     {

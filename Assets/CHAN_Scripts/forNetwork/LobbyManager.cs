@@ -254,7 +254,7 @@ namespace Assets.Scripts
         [PunRPC]
         void RpcDestroyplayer()
         {
-            Destroy(GameObject.Find(GameInfo.instance.CallBackName() + "(Clone)"));
+            Destroy(GameObject.FindGameObjectWithTag("check"));
         }
 
     }
