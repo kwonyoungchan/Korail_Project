@@ -62,6 +62,10 @@ public class PlayerForwardRay : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            if (isWater == false)
+            {
+                water.SetActive(false);
+            }
             // �÷��̾ ������ ���̸� ����
             Ray playerRay = new Ray(rPos.transform.position, transform.forward);
             RaycastHit rayInfo;
@@ -105,7 +109,6 @@ public class PlayerForwardRay : MonoBehaviourPun
                         // ���� �ð� �� �絿�̿� ���� ä������
                         if (currentTime > waterTime)
                         {
-                            water.SetActive(true);
                             Water(true);
                         }
                     }
@@ -221,19 +224,24 @@ public class PlayerForwardRay : MonoBehaviourPun
         photonView.RPC("RpcWaterSlider", RpcTarget.All, water, time);
     }
     [PunRPC]
-    void RpcWaterSlider(bool water, float time)
+    void RpcWaterSlider(bool isFill, float time)
     {
         // 나의 앞방향을 카메라 앞방향으로 셋팅하자
         slider.transform.forward = Camera.main.transform.forward;
-        if (water)
+        if (isFill)
         {
             slider.gameObject.SetActive(true);
             slider.value = time;
-            if (slider.value == slider.maxValue) slider.gameObject.SetActive(false);
+            if (slider.value == slider.maxValue)
+            {
+                slider.gameObject.SetActive(false);
+            }
         }
         else
         {
+            currentTime = 0;
             slider.gameObject.SetActive(false);
+            slider.value = 0;
         }
     }
     public void Water(bool s)

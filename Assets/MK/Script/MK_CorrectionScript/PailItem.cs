@@ -26,6 +26,10 @@ public class PailItem : MonoBehaviourPun
             {
                 isPail = true;
             }
+            else if(player[i].GetComponent<PlayerForwardRay>().isWater == false)
+            {
+                isPail = false; 
+            }
         }
 
         if (isPail)

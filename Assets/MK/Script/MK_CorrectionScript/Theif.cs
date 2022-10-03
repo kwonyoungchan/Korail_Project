@@ -147,6 +147,15 @@ public class Theif : MonoBehaviourPun, IPunObservable
     // 근처에 재료가 생성된다면 그곳으로 움직임
     void Move()
     {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit rayInfo;
+        if (Physics.Raycast(ray, out rayInfo, 3))
+        {
+            if (rayInfo.transform.gameObject.name.Contains("train"))
+            {
+                TheifState(TState.Rot);
+            }
+        }
         // 물체가 있다면
         if (material.Length > 0)
         {
