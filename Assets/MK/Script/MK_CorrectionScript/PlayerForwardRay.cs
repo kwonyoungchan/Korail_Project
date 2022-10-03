@@ -106,7 +106,7 @@ public class PlayerForwardRay : MonoBehaviourPun
             if (animal)
             {
 
-                if (Input.GetButtonDown("Jump"))
+/*                if (Input.GetButtonDown("Jump"))
                 {
                     if (playerHand.holdState == PlayerItemDown.Hold.Idle)
                     {
@@ -117,7 +117,7 @@ public class PlayerForwardRay : MonoBehaviourPun
                         animal.gameObject.transform.localPosition = new Vector3(0, 0.5f, 0.6f);
                     }
 
-                }
+                }*/
                 if (playerHand.holdState == PlayerItemDown.Hold.Ax || playerHand.holdState == PlayerItemDown.Hold.Pick)
                 {
                     animal.Damage();
