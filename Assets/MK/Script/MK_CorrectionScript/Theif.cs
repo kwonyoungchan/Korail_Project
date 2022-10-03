@@ -154,7 +154,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
             if (matArray.Count > 0) TheifState(TState.Throw);
             for (int i = 0; i < material.Length; i++)
             {
-                if(material[i].transform.parent != null)
+                if (material[i].transform.parent != null)
                 {
                     continue;
                 }
@@ -164,7 +164,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
                     // 도둑 주변에 물체가 있는지 여부 확인
                     material = Physics.OverlapSphere(transform.position, r, layer);
                 }
-                if(material.Length > 0) mat.Add(material[i]);
+                if (material.Length > 0) mat.Add(material[i]);
                 if (mat.Count > 0)
                 {
                     if (mat[0] == null)
@@ -208,7 +208,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
         {
             matGod = rayInfo.transform.gameObject.GetComponent<MaterialGOD>();
             // 나무나 철이라면 줍기
-            if(matGod.matState == MaterialGOD.Materials.Branch || matGod.matState == MaterialGOD.Materials.Steel)
+            if (matGod.matState == MaterialGOD.Materials.Branch || matGod.matState == MaterialGOD.Materials.Steel)
             {
                 //      손 로테이션 시키기
                 /*                arm.transform.localEulerAngles = new Vector3(rotX, 0, rotAngle);
@@ -219,7 +219,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
                 {
                     CreateMat(0);
                 }
-                else if(matGod.matState == MaterialGOD.Materials.Steel)
+                else if (matGod.matState == MaterialGOD.Materials.Steel)
                 {
                     CreateMat(1);
                 }
@@ -228,7 +228,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
                 //      바닥 상태 변화 시키기
                 matGod.ChangeMaterial(MaterialGOD.Materials.None, 1);
                 // 손에 무언가 들리면 state 변경
-                if(matArray.Count > 0)
+                if (matArray.Count > 0)
                 {
                     TheifState(TState.Throw);
                 }
@@ -251,7 +251,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
             pos.y = 1.5f;
             // 방향이 정해지고 
             Vector3 dir = pos - transform.position;
-            
+
             dir.Normalize();
             float dis = Vector3.Distance(pos, transform.position);
             // 거리 확인
@@ -290,7 +290,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
     // 랜덤 위치로 움직이기
     void Rot()
     {
-        if (matArray.Count <= 0 || isCollision || (isCollision != true && matArray.Count > 0)) 
+        if (matArray.Count <= 0 || isCollision || (isCollision != true && matArray.Count > 0))
         {
             anim.SetTrigger("Move");
             if (rndPos == Vector3.zero || isCollision)
@@ -326,7 +326,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
                     movement = Physics.OverlapSphere(transform.position, 5, layer1);
                 }
                 if (movement.Length > 0) TheifState(TState.Throw);
-                
+
             }
             else
             {
@@ -461,7 +461,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Gather") || collision.gameObject.layer == LayerMask.NameToLayer("Prevent")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Gather") || collision.gameObject.layer == LayerMask.NameToLayer("Prevent")
             || collision.gameObject.layer == LayerMask.NameToLayer("Movement") || collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
             isCollision = true;
@@ -469,6 +469,6 @@ public class Theif : MonoBehaviourPun, IPunObservable
     }
     private void OnCollisionExit(Collision collision)
     {
-        isCollision = false;    
+        isCollision = false;
     }
 }
