@@ -33,35 +33,28 @@ public class IngredientItem : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (isAx)
+        if (isGathering)
         {
-            if (gameObject.name.Contains("Tree"))
+            if (isAx)
             {
-                if (isGathering)
+
+                currentTime += Time.deltaTime;
+
+                if (currentTime > maxTime)
                 {
-
-                    currentTime += Time.deltaTime;
-
-                    if (currentTime > maxTime)
-                    {
-                        DamagedObject(0);
-                    }
+                    DamagedObject(0);
                 }
             }
-        }
-        if (isPick)
-        {
-            if (gameObject.name.Contains("Iron"))
+            
+            if (isPick)
             {
-                if (isGathering)
+                currentTime += Time.deltaTime;
+                if (currentTime > maxTime)
                 {
-                    currentTime += Time.deltaTime;
-                    if (currentTime > maxTime)
-                    {
-                        DamagedObject(1);
-                    }
+                    DamagedObject(1);
                 }
             }
+            
         }
 
     }

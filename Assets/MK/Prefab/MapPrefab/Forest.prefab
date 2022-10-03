@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matState: 0
   matCount: 1
+  y: 0.55
   mat: []
 --- !u!114 &2643301451550268546
 MonoBehaviour:
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolsState: 0
+  y: 0.55
 --- !u!114 &1394344932678914527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,10 +177,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2051009745310149537}
     m_Modifications:
-    - target: {fileID: 1666857056811372752, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 2764824039683115842, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -226,26 +224,6 @@ PrefabInstance:
     - target: {fileID: 3053465953948690483, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
       propertyPath: m_Name
       value: Tree
-      objectReference: {fileID: 0}
-    - target: {fileID: 3053465953948690483, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3053465953948690483, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 5286812215117714659, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6867707990238451248, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 7283189139305289507, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}
-      propertyPath: m_Layer
-      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33876d7627b7af54abf9a59cab0e6de7, type: 3}

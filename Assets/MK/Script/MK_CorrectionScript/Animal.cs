@@ -53,7 +53,6 @@ public class Animal : MonoBehaviourPun, IPunObservable
                     Rot();
                     break;
                 case Animals.Stop:
-                    Stop();
                     break;
             }
         }
@@ -85,7 +84,7 @@ public class Animal : MonoBehaviourPun, IPunObservable
         if (Vector3.Distance(transform.position, rndPos) < 0.1f)
         {
             transform.position = rndPos;
-            AnimalFSM(Animals.Stop);
+            // AnimalFSM(Animals.Stop);
         }
         else
         {
@@ -108,16 +107,6 @@ public class Animal : MonoBehaviourPun, IPunObservable
         }
     }
     
-    void Stop()
-    {
-        // 부모 변경
-        anim.SetTrigger("Stop");
-        Destroy(gameObject);
-/*        rndPos = Vector3.zero;
-        int rnd = UnityEngine.Random.Range(0, 2);
-        if (rnd == 0) AnimalFSM(Animals.Rot);
-        else AnimalFSM(Animals.Idle);*/
-    }
 
     // ������
     public void Damage()

@@ -31,12 +31,12 @@ public class PlayerForwardRay : MonoBehaviourPun
     public bool isWater = false;
     public bool isItemDown = false;
     public bool isMat = false;
-/*
+
     public AudioClip[] audioClips;
-    AudioSource audioSource;*/
+    AudioSource audioSource;
 
     // UI
-    //public Slider slider;
+    public Slider slider;
     float audioTime;
 
     // ä���� ���� ������
@@ -51,10 +51,10 @@ public class PlayerForwardRay : MonoBehaviourPun
         player = GetComponent<PlayerMaterial>();
         playerHand = GetComponent<PlayerItemDown>();
         anim = GetComponent<PlayerAnim>();
-        //audioSource = GetComponent<AudioSource>();
-        /*slider.value = 0;
+        audioSource = GetComponent<AudioSource>();
+        slider.value = 0;
         slider.maxValue = waterTime;
-        slider.gameObject.SetActive(false);*/
+        slider.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -62,16 +62,6 @@ public class PlayerForwardRay : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-
-            /*            if (playerHand.holdState == PlayerItemDown.Hold.Animal)
-                        {
-                            if (Input.GetButtonDown("Jump"))
-                            {
-                                anim.AnimState(PlayerAnim.Anim.Move);
-
-                                HoldAnimal(false);
-                            }
-                        }*/
             // �÷��̾ ������ ���̸� ����
             Ray playerRay = new Ray(rPos.transform.position, transform.forward);
             RaycastHit rayInfo;
@@ -110,7 +100,7 @@ public class PlayerForwardRay : MonoBehaviourPun
                     {
                         currentTime += Time.deltaTime;
                         // UI 작업 = 동기화 동시에 하기
-                        // WaterSlider(true, currentTime);
+                        WaterSlider(true, currentTime);
 
                         // ���� �ð� �� �絿�̿� ���� ä������
                         if (currentTime > waterTime)
@@ -127,10 +117,10 @@ public class PlayerForwardRay : MonoBehaviourPun
                 // ���� ���� ������ ö�̶���
                 if (item)
                 {
-
                     item.isGathering = true;
                     if (playerHand.holdState == PlayerItemDown.Hold.Ax)
                     {
+                        audioSource.clip = audioClips[1];
                         anim.AnimState(PlayerAnim.Anim.Gather);
                         item.isAx = true;
                         item.isPick = false;
@@ -138,20 +128,24 @@ public class PlayerForwardRay : MonoBehaviourPun
                         if (audioTime > 1)
                         {
                             audioTime = 0;
-                            /*audioSource.clip = audioClips[1];
-                            audioSource.Play();*/
+                        
+                            audioSource.Stop();
+                            audioSource.Play();
                         }
                     }
                     else if (playerHand.holdState == PlayerItemDown.Hold.Pick)
                     {
+                        
                         anim.AnimState(PlayerAnim.Anim.Gather);
                         item.isPick = true;
                         item.isAx = false;
+                        audioTime += Time.deltaTime;
                         if (audioTime > 1)
                         {
                             audioTime = 0;
-                            /*audioSource.clip = audioClips[0];
-                            audioSource.Play();*/
+                            audioSource.clip = audioClips[0];
+                            audioSource.Stop();
+                            audioSource.Play();
                         }
                     }
                     else
@@ -163,19 +157,6 @@ public class PlayerForwardRay : MonoBehaviourPun
                 }
                 if (animal)
                 {
-
-                    /*                    if (Input.GetButtonDown("Jump"))
-                                        {
-                                            if (playerHand.holdState == PlayerItemDown.Hold.Idle)
-                                            {
-                                                // animal.anim.SetTrigger("Stop");
-                                                // animal.AnimalFSM(Animal.Animals.Stop);
-                                                HoldAnimal(true);
-                                                // 이부분 동기화를 어떻게 진행해야 좋을까
-
-                                            }
-
-                                        }*/
                     if (playerHand.holdState == PlayerItemDown.Hold.Ax || playerHand.holdState == PlayerItemDown.Hold.Pick)
                     {
                         animal.Damage();
@@ -192,7 +173,7 @@ public class PlayerForwardRay : MonoBehaviourPun
             }
             else
             {
-                //WaterSlider(false, 0);
+                WaterSlider(false, 0);
                 if (playerHand.holdState != PlayerItemDown.Hold.Mat)
                 {
                     if (playerHand.holdState == PlayerItemDown.Hold.Pail)
@@ -242,7 +223,7 @@ public class PlayerForwardRay : MonoBehaviourPun
     [PunRPC]
     void RpcWaterSlider(bool water, float time)
     {
-        /*// 나의 앞방향을 카메라 앞방향으로 셋팅하자
+        // 나의 앞방향을 카메라 앞방향으로 셋팅하자
         slider.transform.forward = Camera.main.transform.forward;
         if (water)
         {
@@ -253,7 +234,7 @@ public class PlayerForwardRay : MonoBehaviourPun
         else
         {
             slider.gameObject.SetActive(false);
-        }*/
+        }
     }
     public void Water(bool s)
     {

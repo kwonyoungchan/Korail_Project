@@ -242,7 +242,7 @@ public class Theif : MonoBehaviourPun, IPunObservable
             // 맵 가장자리로 가기
             layer1 = 1 << 12;
             // 도둑 주변에 물체가 있는지 여부 확인
-            movement = Physics.OverlapSphere(transform.position, 10, layer1);
+            movement = Physics.OverlapSphere(transform.position, 5, layer1);
         }
         if (movement.Length > 0)
         {
@@ -282,7 +282,17 @@ public class Theif : MonoBehaviourPun, IPunObservable
         }
         if (isCollision)
         {
-            TheifState(TState.Rot);
+            Ray ray = new Ray(transform.position, transform.forward);
+            RaycastHit info;
+            int layer = 1 << 11;
+            if (Physics.Raycast(ray, out info, 1.2f, layer))
+            {
+                transform.Rotate(0, 360, 0);
+                if (info.transform == null)
+                {
+                    transform.position += transform.forward.normalized * speed * Time.deltaTime;
+                }
+            }
             movement = null;
         }
 
