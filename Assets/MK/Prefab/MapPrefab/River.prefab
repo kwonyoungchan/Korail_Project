@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 8894911351449390064}
   - component: {fileID: 1623738762174283687}
   - component: {fileID: 8245134987283845882}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: PreventCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

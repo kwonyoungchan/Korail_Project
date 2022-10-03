@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6071611135911613326}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7571782809417299869}
   - component: {fileID: 5427613033658418939}
   - component: {fileID: 3945030774209446294}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 1566603312802144112}
   - component: {fileID: 7205258715987832175}
   - component: {fileID: 3201390192969561372}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmAx
   m_TagString: Tool
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 6526522850567188125}
   - component: {fileID: 1325684247087412652}
   - component: {fileID: 1645583431918678461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 9093182394931762454}
   - component: {fileID: 7395263399707612939}
   - component: {fileID: 8076811605404756536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2362184746276780319}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Shoulder_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4004160383661511789}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head_jnt_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7361711563841983569}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 3708225380173073560}
   - component: {fileID: 1002019197861824552}
   - component: {fileID: 1647792360652229553}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 263021967914821310}
   - component: {fileID: 4864191203132473950}
   - component: {fileID: 4848922092003925671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +706,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1956007513249789691}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IngredientPos
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 4193442696939294245}
   - component: {fileID: 5121771653459669778}
   - component: {fileID: 5650324448687438269}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmPail
   m_TagString: Tool
   m_Icon: {fileID: 0}
@@ -841,7 +841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4904576931133696823}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_elbow_jnt_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 8530310345249404758}
   - component: {fileID: 5730534050668191740}
   - component: {fileID: 6547140896258984939}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -970,7 +970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3830452836721446555}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ItemPos
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
@@ -1003,7 +1003,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4757544219717663397}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Shoulder_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1038,7 +1038,7 @@ GameObject:
   - component: {fileID: 2639819058324915628}
   - component: {fileID: 1309591355909092085}
   - component: {fileID: 4342886337389632137}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1231,7 +1231,7 @@ GameObject:
   - component: {fileID: 5036328613805703412}
   - component: {fileID: 4920161596672078219}
   - component: {fileID: 5918582921774801418}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1325,7 +1325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2609365066741347792}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Elbow_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1357,7 +1357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9040608527628282843}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1466,7 +1466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 669168584162662416}
   - component: {fileID: 3021241003065727953}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1560,7 +1560,7 @@ GameObject:
   - component: {fileID: 8803891677449350404}
   - component: {fileID: 7334708195107177601}
   - component: {fileID: 6773622110015991799}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1756,7 +1756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3915706523287409626}
   - component: {fileID: 2654910272629917900}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1850,7 +1850,7 @@ GameObject:
   - component: {fileID: 7364728775747919951}
   - component: {fileID: 6117801418555588735}
   - component: {fileID: 1884504932316926406}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pail
   m_TagString: Tool
   m_Icon: {fileID: 0}
@@ -1944,7 +1944,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7430171027464341077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Torso_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1978,7 +1978,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4773216729169361951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_elbow_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2010,7 +2010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2272444929482379996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PinkBunny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2049,7 +2049,7 @@ GameObject:
   - component: {fileID: 4134194110693382176}
   - component: {fileID: 1298149927322000242}
   - component: {fileID: 4315489160025888343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2144,7 +2144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9008960734545049276}
   - component: {fileID: 9172215089386131549}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2261,10 +2261,10 @@ RectTransform:
   m_Father: {fileID: 6100142172721538107}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 247.33331, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5767472349216613993
 Canvas:
@@ -2339,7 +2339,7 @@ GameObject:
   - component: {fileID: 3151100850783116220}
   - component: {fileID: 6426546960435945008}
   - component: {fileID: 7265117008915472101}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmPick
   m_TagString: Tool
   m_Icon: {fileID: 0}
@@ -2437,7 +2437,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8563594435602703089}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player_4Lobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2471,7 +2471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 497236145545046991}
   - component: {fileID: 7593407302354829977}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2668,7 +2668,7 @@ GameObject:
   - component: {fileID: 6300774627083990427}
   - component: {fileID: 4601381146153047817}
   - component: {fileID: 8671432369551949733}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2858,7 +2858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2261086862072190681}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Elbow_jnt_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2892,7 +2892,7 @@ GameObject:
   - component: {fileID: 3171882564901574966}
   - component: {fileID: 4010630684699009490}
   - component: {fileID: 1226967052571941538}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

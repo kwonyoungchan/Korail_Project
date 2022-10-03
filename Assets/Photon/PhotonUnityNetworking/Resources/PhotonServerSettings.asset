@@ -68,6 +68,8 @@ MonoBehaviour:
   - PunCreateBranch
   - PunCreateSteel
   - RpcDestroyplayer
+  - PunAddRail
+  - PunMakeMat
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
