@@ -20,7 +20,7 @@ public class MaterialGOD : MonoBehaviourPun
     // 생성된 오브젝트 만들 개수
     public int matCount = 1;
 
-    float y = 0.55f;
+    public float y = 0.55f;
 
     // 생성된 게임오브젝트
     public List<GameObject> mat = new List<GameObject>();
@@ -46,14 +46,14 @@ public class MaterialGOD : MonoBehaviourPun
                 {
                     if (transform.childCount > 0)
                     {
-                        DestroyChild();
+                        DestroyChild("MK_Prefab/Branch", y);
                     }
                     else
                     {
                         for (int i = 0; i < matCount; i++)
                         {
                             //  GameObject ingredient = PhotonNetwork.Instantiate("MK_Prefab/Branch", transform.position + new Vector3(0, y + i * 0.2f, 0), default);
-                            CreateMat("MK_Prefab/Branch", i);
+                            CreateMat("MK_Prefab/Branch", y, i);
                         }
                     }
                 }
@@ -66,13 +66,13 @@ public class MaterialGOD : MonoBehaviourPun
                 {
                     if (transform.childCount > 0)
                     {
-                        DestroyChild();
+                        DestroyChild("MK_Prefab/Steel", y);
                     }
                     else
                     {
                         for (int i = 0; i < matCount; i++)
                         {
-                            CreateMat("MK_Prefab/Steel", i);
+                            CreateMat("MK_Prefab/Steel", y, i);
                         }
                     }
                 }
@@ -86,13 +86,13 @@ public class MaterialGOD : MonoBehaviourPun
                 {
                     if (transform.childCount > 0)
                     {
-                        DestroyChild();
+                        DestroyChild("CHAN_Prefab/Rail", y);
                     }
                     else
                     {
                         for (int i = 0; i < matCount; i++)
                         {
-                            CreateMat("CHAN_Prefab/Rail", i);
+                            CreateMat("CHAN_Prefab/Rail", y, i);
                         }
                     }
                 }
@@ -113,19 +113,32 @@ public class MaterialGOD : MonoBehaviourPun
                 break;
         }
     }
-    void DestroyChild()
+    void DestroyChild(string s, float y)
     {
         Destroy(gameObject.transform.GetChild(0).gameObject);
         matCount = 1;
-        GameObject branch = Instantiate(Resources.Load<GameObject>("MK_Prefab/Branch"));
-        mat.Add(branch);
-        branch.transform.position = transform.position + new Vector3(0, y, 0);
+        GameObject material = Instantiate(Resources.Load<GameObject>(s));
+        mat.Add(material);
+        material.transform.position = transform.position + new Vector3(0, y, 0);
     }
-    void CreateMat(string s, int i)
+    void CreateMat(string s, float y, int i)
     {
         GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
         mat.Insert(i, ingredient);
         mat[i].transform.position = transform.position + new Vector3(0, y + i * 0.2f, 0);
+    }
+    public void DeletMaterial()
+    {
+        photonView.RPC("PunDeletMaterial", RpcTarget.All);
+    }
+    [PunRPC]
+    void PunDeletMaterial()
+    {
+        for (int i = 0; i < mat.Count; i++)
+        {
+            Destroy(mat[i]);
+        }
+        mat.Clear();
     }
 
     public void ChangeMaterial(Materials s, int count)

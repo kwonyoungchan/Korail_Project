@@ -17,7 +17,7 @@ public class ToolGOD : MonoBehaviourPun
     public Tools toolsState;
 
     // 생성되는 y 위치
-    float y = 0.5f;
+    public float y = 0.55f;
 
     // 아이템 생성 확인
     GameObject toolItem;
@@ -55,7 +55,8 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Ax"));
-                toolItem.transform.position = transform.position + new Vector3(0, 0.55f, 0);
+                toolItem.transform.GetChild(1).gameObject.SetActive(true);
+                toolItem.transform.position = transform.position + new Vector3(0, y, 0);
                 break;
             case Tools.Pick:
                 if (toolItem)
@@ -71,6 +72,7 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Pick"));
+                toolItem.transform.GetChild(1).gameObject.SetActive(true);
                 toolItem.transform.position = transform.position + new Vector3(0, y, 0);
                 break;
             case Tools.Pail:
@@ -87,7 +89,8 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Pail"));
-                toolItem.transform.position = transform.position + new Vector3(0, 0.75f, 0);
+                toolItem.transform.GetChild(1).gameObject.SetActive(true);
+                toolItem.transform.position = transform.position + new Vector3(0, y + 0.2f, 0);
                 break;
         }
     }

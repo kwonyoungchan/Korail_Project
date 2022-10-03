@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1959868108193887094}
   - component: {fileID: 5447118166621017673}
   - component: {fileID: 1882203161997955714}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2764824039683115842}
   - component: {fileID: 6617373094389383237}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +149,9 @@ MonoBehaviour:
   - {fileID: 220032747963324046, guid: 0da75dfc077d2bd4cbfb0280b175c575, type: 3}
   - {fileID: 8311551919865575204, guid: 2bfb0be2357996949a6cca404819b9c6, type: 3}
   y: 0.3
+  isGathering: 0
+  isAx: 0
+  isPick: 0
 --- !u!1 &5286812215117714659
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +164,7 @@ GameObject:
   - component: {fileID: 4293515108297778074}
   - component: {fileID: 5893564803941757039}
   - component: {fileID: 9066563167487999168}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +261,7 @@ GameObject:
   - component: {fileID: 3753483077571992613}
   - component: {fileID: 3940172298546756519}
   - component: {fileID: 3504723385006206373}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +358,7 @@ GameObject:
   - component: {fileID: 2932059538596173406}
   - component: {fileID: 5249707757481352446}
   - component: {fileID: 6420494772614944728}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

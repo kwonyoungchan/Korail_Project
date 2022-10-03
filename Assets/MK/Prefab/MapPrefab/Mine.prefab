@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1725454013166412177}
   - component: {fileID: 1725454013166412178}
   - component: {fileID: 1725454013166412179}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,6 +114,9 @@ MonoBehaviour:
   - {fileID: 220032747963324046, guid: 0da75dfc077d2bd4cbfb0280b175c575, type: 3}
   - {fileID: 8311551919865575204, guid: 2bfb0be2357996949a6cca404819b9c6, type: 3}
   y: 0
+  isGathering: 0
+  isAx: 0
+  isPick: 0
 --- !u!1 &5576150445262535444
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,9 +232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matState: 0
-  branchCount: 1
-  steelCount: 1
-  railCount: 1
+  matCount: 1
+  y: 0.55
   mat: []
 --- !u!114 &4529298355607568949
 MonoBehaviour:
@@ -246,6 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolsState: 0
+  y: 0.55
 --- !u!114 &-6920881640158656656
 MonoBehaviour:
   m_ObjectHideFlags: 0

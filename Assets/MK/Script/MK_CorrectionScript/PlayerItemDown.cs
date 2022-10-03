@@ -15,7 +15,7 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
         Mat,
         Animal
     }
-    public Hold holdState = Hold.Idle;
+    public Hold holdState;
     // 팔에 있는 도구 활성화
     public GameObject[] tool = new GameObject[3];
     // 팔에 있는 mat 활성화
@@ -44,11 +44,13 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
     MaterialGOD matGOD;
     ItemGOD itemGOD;
     PlayerForwardRay player;
+    PlayerAnim anim;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<PlayerForwardRay>();
+        anim = GetComponent<PlayerAnim>();
     }
 
     // Update is called once per frame
@@ -107,7 +109,8 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                         }
                         else
                         {
-                            PlayerFSM(Hold.ChangeIdle);
+                            if(holdState != Hold.Mat)
+                                PlayerFSM(Hold.ChangeIdle);
                         }
 
                     }
@@ -215,9 +218,9 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
         PUNPlayerFSM(s);
     }
     // 플레이어 상태
-    [PunRPC]
     void PUNPlayerFSM(Hold s)
     {
+
         holdState = s;
         switch (s)
         {
@@ -260,6 +263,7 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
             // 양동이를 들고 있을 때,
             case Hold.Pail:
                 // 팔 돌리기
+                anim.AnimState(PlayerAnim.Anim.Idle);
                 RotArm(rArm, -85, 90);
                 RotArm(lArm, -80, -90);
                 tool[2].SetActive(true);
@@ -272,6 +276,7 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                 {
                     tool[i].SetActive(false);
                 }
+                anim.AnimState(PlayerAnim.Anim.Idle);
                 RotArm(rArm, -85, 90);
                 RotArm(lArm, -80, -90);
                 break;
