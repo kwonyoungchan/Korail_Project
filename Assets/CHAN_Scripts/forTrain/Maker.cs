@@ -98,9 +98,8 @@ public class Maker : trainController
             matArray = railArray;
             matArray.Clear();
         }
-        total += matCount;
-        if (matArray.Count == total) return;
-        for (int i = 0; i < total; i++)
+        if (matArray.Count == matCount) return;
+        for (int i = 0; i < matCount; i++)
         {
             GameObject ingredient = Instantiate(Resources.Load<GameObject>(s));
             ingredient.transform.parent = matPos[pos];
