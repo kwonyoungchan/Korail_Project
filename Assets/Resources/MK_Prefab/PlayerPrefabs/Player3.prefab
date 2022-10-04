@@ -2388,6 +2388,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   rayPos: {fileID: 576876812929175268}
+  audioClip:
+  - {fileID: 8300000, guid: 21acf20075b3add4db4980d0793c641b, type: 3}
+  - {fileID: 8300000, guid: db97b9eff618c7c48a7cfb6645e3f9df, type: 3}
   rArm: {fileID: 8824267969410416370}
   lArm: {fileID: 8824267971780690122}
   rotSpeed: 3

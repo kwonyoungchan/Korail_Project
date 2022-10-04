@@ -12,7 +12,7 @@ public class PailItem : MonoBehaviourPun
     // 물 오브젝트
     public GameObject water;
 
-    bool isPail = false;
+    public bool isPail = false;
 
     bool isWater;
 
@@ -25,10 +25,6 @@ public class PailItem : MonoBehaviourPun
             if (player[i].GetComponent<PlayerForwardRay>().isWater)
             {
                 isPail = true;
-            }
-            else if(player[i].GetComponent<PlayerForwardRay>().isWater == false)
-            {
-                isPail = false; 
             }
         }
 

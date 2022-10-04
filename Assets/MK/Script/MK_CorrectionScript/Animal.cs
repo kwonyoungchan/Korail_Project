@@ -34,6 +34,11 @@ public class Animal : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
+            if (isCollision)
+            {
+                rndPos = Vector3.zero;
+                AnimalFSM(Animals.Rot);
+            }
             switch (animalState)
             {
                 case Animals.Idle:
@@ -84,7 +89,8 @@ public class Animal : MonoBehaviourPun, IPunObservable
         if (Vector3.Distance(transform.position, rndPos) < 0.1f)
         {
             transform.position = rndPos;
-            // AnimalFSM(Animals.Stop);
+            rndPos = Vector3.zero;
+            AnimalFSM(Animals.Rot);
         }
         else
         {
@@ -122,7 +128,19 @@ public class Animal : MonoBehaviourPun, IPunObservable
             currentTime1 = 0;
         }
     }
-
+    bool isCollision;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Gather") || collision.gameObject.layer == LayerMask.NameToLayer("Prevent")
+            || collision.gameObject.layer == LayerMask.NameToLayer("Movement") || collision.gameObject.layer == LayerMask.NameToLayer("Train"))
+        {
+            isCollision = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        isCollision = false;
+    }
     // 위치
     Vector3 receivePos;
     // 회전

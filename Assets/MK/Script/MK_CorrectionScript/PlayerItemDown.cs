@@ -23,6 +23,12 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
     // 레이 발사 위치
     public Transform rayPos;
 
+    // 오디오 클립
+    public AudioClip[] audioClip;
+
+    AudioSource audioSource;
+
+
     #region 팔 회전 관련
     // 팔
     public GameObject rArm;
@@ -51,6 +57,7 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
     {
         player = GetComponent<PlayerForwardRay>();
         anim = GetComponent<PlayerAnim>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -110,7 +117,7 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                         else
                         {
                             if(holdState != Hold.Mat)
-                                PlayerFSM(Hold.ChangeIdle);
+                                PlayerFSM(Hold.Idle);
                         }
 
                     }
@@ -119,6 +126,9 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                     {
                         // 손에 무언갈 들고 있을 때
                         hand = CheckHand();
+                        audioSource.clip = audioClip[0];
+                        audioSource.Stop();
+                        audioSource.Play();
                         // 곡갱이를 들고 있다면
                         if (hand == 1)
                         {
@@ -148,6 +158,9 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                     {
 
                         hand = CheckHand();
+                        audioSource.clip = audioClip[0];
+                        audioSource.Stop();
+                        audioSource.Play();
                         // 도끼를 들고 있다면
                         if (hand == 0)
                         {
@@ -175,9 +188,20 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                     // 바닥 상태 : 양동이
                     else if (toolGOD.toolsState == ToolGOD.Tools.Pail)
                     {
-                        // 손에 무언가 있을 때
-
+                        if (toolGOD.isWater)
+                        {
+                            player.Water(false);
+                        }
+                        else
+                        {
+                            player.Water(true);
+                        }
+                       
+                        // 손에 무언가 있을 때 
                         hand = CheckHand();
+                        audioSource.clip = audioClip[0];
+                        audioSource.Stop();
+                        audioSource.Play();
                         // 도끼를 들고 있다면
                         if (hand == 0)
                         {
@@ -233,8 +257,11 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                 break;
             // 도구를 들고 있다가 내려 놓을 때
             case Hold.ChangeIdle:
+                audioSource.clip = audioClip[1];
+                audioSource.Stop();
+                audioSource.Play();
                 // 한쪽팔만 들 때
-                if(lArm.transform.localEulerAngles != new Vector3(-80, 0, 0) || rArm.transform.localEulerAngles != new Vector3(-85, 0, 0))
+                if (lArm.transform.localEulerAngles != new Vector3(-80, 0, 0) || rArm.transform.localEulerAngles != new Vector3(-85, 0, 0))
                 {
                     RotArm(lArm, -80, 0);
                     RotArm(rArm, -85, 0);

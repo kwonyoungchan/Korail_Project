@@ -16,8 +16,6 @@ public class IngredientItem : MonoBehaviourPun
     // ü��
     int maxHP = 3;
     int hp;
-    float axDis;
-    float pickDis;
 
     public bool isGathering;
 
@@ -37,21 +35,26 @@ public class IngredientItem : MonoBehaviourPun
         {
             if (isAx)
             {
-
-                currentTime += Time.deltaTime;
-
-                if (currentTime > maxTime)
+                if (gameObject.name.Contains("Tree"))
                 {
-                    DamagedObject(0);
+                    currentTime += Time.deltaTime;
+
+                    if (currentTime > maxTime)
+                    {
+                        DamagedObject(0);
+                    }
                 }
             }
             
             if (isPick)
             {
-                currentTime += Time.deltaTime;
-                if (currentTime > maxTime)
+                if (gameObject.name.Contains("Iron"))
                 {
-                    DamagedObject(1);
+                    currentTime += Time.deltaTime;
+                    if (currentTime > maxTime)
+                    {
+                        DamagedObject(1);
+                    }
                 }
             }
             
