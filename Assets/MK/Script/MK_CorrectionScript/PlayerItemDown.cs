@@ -44,6 +44,7 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
 
     public int f;
     int hand;
+    int cnt;
 
     // ToolGod 컴포넌트
     ToolGOD toolGOD;
@@ -196,7 +197,6 @@ public class PlayerItemDown : MonoBehaviourPun, IPunObservable
                         {
                             player.Water(true);
                         }
-                       
                         // 손에 무언가 있을 때 
                         hand = CheckHand();
                         audioSource.clip = audioClip[0];

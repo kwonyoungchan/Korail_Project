@@ -16,6 +16,8 @@ public class PailItem : MonoBehaviourPun
 
     bool isWater;
 
+    public int cnt;
+
     // Update is called once per frame
     void Update()
     {
@@ -26,6 +28,7 @@ public class PailItem : MonoBehaviourPun
             {
                 isPail = true;
             }
+            
         }
 
         if (isPail)
@@ -36,7 +39,7 @@ public class PailItem : MonoBehaviourPun
         {
             water.SetActive(false);
         }
-        
+
 
     }
 }

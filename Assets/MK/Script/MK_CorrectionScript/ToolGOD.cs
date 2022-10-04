@@ -98,7 +98,8 @@ public class ToolGOD : MonoBehaviourPun
                 }
                 else
                 {
-                    isWater = false;    
+                    isWater = false;
+                    
                 }
                 break;
         }
