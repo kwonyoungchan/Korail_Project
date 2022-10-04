@@ -86,16 +86,19 @@ public class Maker : trainController
         if (index == 0)
         {
             matArray = branchArray;
+            matArray.Clear();
         }
         else if (index == 1)
         {
             matArray = steelArray;
+            matArray.Clear();
         }
         else
         {
             matArray = railArray;
+            matArray.Clear();
         }
-        total += matCount;
+
         if (matArray.Count == total) return;
         for (int i = 0; i < total; i++)
         {
