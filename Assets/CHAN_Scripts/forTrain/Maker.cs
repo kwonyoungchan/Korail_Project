@@ -79,7 +79,7 @@ public class Maker : trainController
     {
         photonView.RPC("PunCreateMat", RpcTarget.All, index, matCount, count, s, pos);
     }
-    int total;
+    public int total;
     [PunRPC]
     void PunCreateMat(int index, int matCount, int count, string s, int pos)
     {
@@ -98,7 +98,7 @@ public class Maker : trainController
             matArray = railArray;
             matArray.Clear();
         }
-
+        total += matCount;
         if (matArray.Count == total) return;
         for (int i = 0; i < total; i++)
         {

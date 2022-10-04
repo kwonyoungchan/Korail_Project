@@ -306,9 +306,21 @@ public class PlayerMaterial : MonoBehaviourPun
                         {
                             if (railDis < 2 && railDis > 0.5f && rayInfo.transform.gameObject != connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1].gameObject)
                             {
-                                // 손에서 제거
-                                itemGOD.ChangeState(ItemGOD.Items.Rail);
-                                RemoveRail();
+                                if (riverGOD)
+                                {
+                                    if (riverGOD.riverState == RiverGOD.River.Bridge)
+                                    {
+                                        itemGOD.ChangeState(ItemGOD.Items.Rail, default, 0.75f);
+                                        // 손에서 제거
+                                        RemoveRail();
+                                    }
+                                }
+                                else
+                                {
+                                    // 손에서 제거
+                                    itemGOD.ChangeState(ItemGOD.Items.Rail);
+                                    RemoveRail();
+                                }
                             }
                             if (rayInfo.transform.gameObject == connectRail.instance.connectedRails[connectRail.instance.connectedRails.Count - 1].gameObject)
                             {

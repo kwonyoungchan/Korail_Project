@@ -1020,6 +1020,7 @@ MonoBehaviour:
   player: []
   water: {fileID: 6321214939166682561}
   isPail: 0
+  cnt: 0
 --- !u!1 &2454645020125422216
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,6 +2507,7 @@ MonoBehaviour:
   isWater: 0
   isItemDown: 0
   isMat: 0
+  cnt: 0
   audioClips:
   - {fileID: 8300000, guid: ae54476525f3171438b6769299a26cfd, type: 3}
   - {fileID: 8300000, guid: 4669652f38f781640b9e54eeb6891a08, type: 3}
