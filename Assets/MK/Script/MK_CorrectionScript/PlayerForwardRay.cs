@@ -31,7 +31,7 @@ public class PlayerForwardRay : MonoBehaviourPun
     public bool isWater = false;
     public bool isItemDown = false;
     public bool isMat = false;
-    bool isR;
+    public int cnt;
 
 
     public AudioClip[] audioClips;
@@ -237,5 +237,6 @@ public class PlayerForwardRay : MonoBehaviourPun
             water.SetActive(true);
         }
     }
+
 
 }
