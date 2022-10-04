@@ -86,17 +86,14 @@ public class Maker : trainController
         if (index == 0)
         {
             matArray = branchArray;
-            matArray.Clear();
         }
         else if (index == 1)
         {
             matArray = steelArray;
-            matArray.Clear();
         }
         else
         {
             matArray = railArray;
-            matArray.Clear();
         }
         if (matArray.Count == matCount) return;
         for (int i = 0; i < matCount; i++)
@@ -118,7 +115,7 @@ public class Maker : trainController
     [PunRPC]
     void RPCMakeRail()
     {
-        if (railCount == railArray.Count && railCount > 0) return;
+
         if (!turn)
         {
             sound.Play();
@@ -133,6 +130,7 @@ public class Maker : trainController
             // 레일이 나오게 만든다
             GameObject rail = Instantiate(Resources.Load<GameObject>("CHAN_Prefab/Rail"), matPos[2]);
             railArray.Add(rail);
+            if (railCount == railArray.Count && railCount > 0) return;
             for (int i = 0; i < railArray.Count; i++)
             {
                 rail.transform.position = matPos[2].position + new Vector3(0, i * 0.2f, 0);
