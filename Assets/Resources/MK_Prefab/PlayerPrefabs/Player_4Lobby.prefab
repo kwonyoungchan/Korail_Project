@@ -1978,9 +1978,9 @@ MonoBehaviour:
   finSpeed: 0
   IntroUI: {fileID: 4107883287626827330}
   IntroUI2: {fileID: 2805930229435761183}
-  nName: {fileID: 0}
   dashTime: 0.3
   lerpSpeed: 10
+  SetTime: 5
 --- !u!114 &3906522131311234399
 MonoBehaviour:
   m_ObjectHideFlags: 0
