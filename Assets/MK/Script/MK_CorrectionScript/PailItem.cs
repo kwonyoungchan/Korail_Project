@@ -12,7 +12,7 @@ public class PailItem : MonoBehaviourPun
     // 물 오브젝트
     public GameObject water;
 
-    bool isPail = false;
+    public bool isPail = false;
 
     bool isWater;
 

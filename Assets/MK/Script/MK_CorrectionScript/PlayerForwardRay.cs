@@ -31,6 +31,8 @@ public class PlayerForwardRay : MonoBehaviourPun
     public bool isWater = false;
     public bool isItemDown = false;
     public bool isMat = false;
+    bool isR;
+
 
     public AudioClip[] audioClips;
     AudioSource audioSource;
@@ -62,10 +64,7 @@ public class PlayerForwardRay : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            if (isWater == false)
-            {
-                water.SetActive(false);
-            }
+
             // �÷��̾ ������ ���̸� ����
             Ray playerRay = new Ray(rPos.transform.position, transform.forward);
             RaycastHit rayInfo;
@@ -79,7 +78,6 @@ public class PlayerForwardRay : MonoBehaviourPun
                 item = rayInfo.transform.GetComponentInParent<IngredientItem>();
                 animal = rayInfo.transform.GetComponent<Animal>();
                 theif = rayInfo.transform.GetComponent<Theif>();
-
                 if (riverGOD)
                 {
                     isBranch = true;
@@ -109,6 +107,7 @@ public class PlayerForwardRay : MonoBehaviourPun
                         // ���� �ð� �� �絿�̿� ���� ä������
                         if (currentTime > waterTime)
                         {
+
                             Water(true);
                         }
                     }
@@ -123,32 +122,37 @@ public class PlayerForwardRay : MonoBehaviourPun
                     item.isGathering = true;
                     if (playerHand.holdState == PlayerItemDown.Hold.Ax)
                     {
-                        audioSource.clip = audioClips[1];
-                        anim.AnimState(PlayerAnim.Anim.Gather);
-                        item.isAx = true;
-                        item.isPick = false;
-                        audioTime += Time.deltaTime;
-                        if (audioTime > 1)
+                        if (item.name.Contains("Tree"))
                         {
-                            audioTime = 0;
-                        
-                            audioSource.Stop();
-                            audioSource.Play();
+                            audioSource.clip = audioClips[1];
+                            anim.AnimState(PlayerAnim.Anim.Gather);
+
+                            item.isAx = true;
+                            item.isPick = false;
+                            audioTime += Time.deltaTime;
+                            if (audioTime > 1)
+                            {
+                                audioTime = 0;
+                                audioSource.Stop();
+                                audioSource.Play();
+                            }
                         }
                     }
                     else if (playerHand.holdState == PlayerItemDown.Hold.Pick)
                     {
-                        
-                        anim.AnimState(PlayerAnim.Anim.Gather);
-                        item.isPick = true;
-                        item.isAx = false;
-                        audioTime += Time.deltaTime;
-                        if (audioTime > 1)
+                        if (item.gameObject.name.Contains("Iron"))
                         {
-                            audioTime = 0;
-                            audioSource.clip = audioClips[0];
-                            audioSource.Stop();
-                            audioSource.Play();
+                            anim.AnimState(PlayerAnim.Anim.Gather);
+                            item.isPick = true;
+                            item.isAx = false;
+                            audioTime += Time.deltaTime;
+                            if (audioTime > 1)
+                            {
+                                audioTime = 0;
+                                audioSource.clip = audioClips[0];
+                                audioSource.Stop();
+                                audioSource.Play();
+                            }
                         }
                     }
                     else
@@ -190,35 +194,6 @@ public class PlayerForwardRay : MonoBehaviourPun
         }
 
     }
-
-    void HoldAnimal(bool isItem)
-    {
-        photonView.RPC("RpcHoldAnimal", RpcTarget.All, isItem);
-    }
-
-    [PunRPC]
-    void RpcHoldAnimal(bool isItem)
-    {
-        isItemDown = isItem;
-        if (isItem != true)
-        {
-            iPos.transform.GetChild(1).GetComponent<Animal>().AnimalFSM(Animal.Animals.Idle);
-            animal.GetComponent<Animal>().anim.SetTrigger("Move");
-            iPos.transform.GetChild(1).gameObject.transform.position = iPos.transform.position + new Vector3(0, 0.5f, 0.8f);
-            iPos.transform.GetChild(1).gameObject.transform.parent = null;
-            playerHand.holdState = PlayerItemDown.Hold.ChangeIdle;
-
-        }
-        else
-        {
-            GameObject animal = Instantiate(Resources.Load<GameObject>("MK_Prefab/Animal"));
-            animal.transform.parent = iPos.transform;
-            animal.transform.localPosition = new Vector3(0, 0, 0);
-            playerHand.holdState = PlayerItemDown.Hold.Animal;
-
-        }
-    }
-
     void WaterSlider(bool water, float time)
     {
         photonView.RPC("RpcWaterSlider", RpcTarget.All, water, time);
@@ -262,4 +237,5 @@ public class PlayerForwardRay : MonoBehaviourPun
             water.SetActive(true);
         }
     }
+
 }

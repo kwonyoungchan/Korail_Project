@@ -21,6 +21,7 @@ public class ToolGOD : MonoBehaviourPun
 
     // 아이템 생성 확인
     GameObject toolItem;
+    public bool isWater;
 
 
     // Update is called once per frame
@@ -89,8 +90,16 @@ public class ToolGOD : MonoBehaviourPun
                     }
                 }
                 toolItem = Instantiate(Resources.Load<GameObject>("MK_Prefab/Pail"));
-                toolItem.transform.GetChild(1).gameObject.SetActive(true);
+                // toolItem.transform.GetChild(1).gameObject.SetActive(true);
                 toolItem.transform.position = transform.position + new Vector3(0, y + 0.2f, 0);
+                if (toolItem.transform.GetComponentInChildren<Collider>() != null)
+                {
+                    isWater = true;
+                }
+                else
+                {
+                    isWater = false;    
+                }
                 break;
         }
     }

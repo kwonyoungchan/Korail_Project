@@ -306,10 +306,24 @@ public class Theif : MonoBehaviourPun, IPunObservable
         }
 
     }
+    bool isTrain = false;
     // 랜덤 위치로 움직이기
     void Rot()
     {
-        if (matArray.Count <= 0 || isCollision || (isCollision != true && matArray.Count > 0))
+        Ray train = new Ray(transform.position, transform.forward);
+        RaycastHit rayInfo;
+        if (Physics.Raycast(train, out rayInfo, 3))
+        {
+            if (rayInfo.transform.gameObject.name.Contains("train"))
+            {
+                isTrain = true;
+            }
+        }
+        else
+        {
+            isTrain = false;
+        }
+        if (matArray.Count <= 0 || isCollision || (isCollision != true && matArray.Count > 0) || isTrain)
         {
             anim.SetTrigger("Move");
             if (rndPos == Vector3.zero || isCollision)

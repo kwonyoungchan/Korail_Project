@@ -860,6 +860,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   rayPos: {fileID: 9198375197412803880}
+  audioClip:
+  - {fileID: 8300000, guid: 21acf20075b3add4db4980d0793c641b, type: 3}
+  - {fileID: 8300000, guid: db97b9eff618c7c48a7cfb6645e3f9df, type: 3}
   rArm: {fileID: 1147627928802511518}
   lArm: {fileID: 3290316616459277091}
   rotSpeed: 3
@@ -3451,6 +3454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: []
   water: {fileID: 1908738461620254382}
+  isPail: 0
 --- !u!1 &7889273102484749568
 GameObject:
   m_ObjectHideFlags: 0
