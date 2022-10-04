@@ -836,7 +836,6 @@ MonoBehaviour:
   finSpeed: 0
   dashTime: 0.3
   NicknameUI: {fileID: 570688589344316203}
-  IntroUI: {fileID: 7561033013301342256}
   nName: {fileID: 6338129035350836042}
   lerpSpeed: 10
 --- !u!114 &6339315975320738036

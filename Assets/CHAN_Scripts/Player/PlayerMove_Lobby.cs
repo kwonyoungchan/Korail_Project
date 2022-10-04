@@ -19,9 +19,10 @@ public class PlayerMove_Lobby : MonoBehaviour
 
     // 최종 속도
     public float finSpeed;
-    public Transform NicknameUI;
     public Transform IntroUI;
-    public Text nName;
+    public Transform IntroUI2;
+    int n = -1;
+    GameObject ui;
 
     // 대쉬 시간
     public float dashTime = 0.3f;
@@ -36,7 +37,7 @@ public class PlayerMove_Lobby : MonoBehaviour
     // 보간 속력
     public float lerpSpeed = 10;
     float curTime;
-    float SetTime=5;
+    public float SetTime=5;
 
     // Start is called before the first frame update
     void Start()
@@ -44,19 +45,30 @@ public class PlayerMove_Lobby : MonoBehaviour
         // 속도 초기화
         finSpeed = speed;
         IntroUI.transform.gameObject.SetActive(false);
+        IntroUI2.transform.gameObject.SetActive(false);
+        ui = IntroUI.transform.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (n == -1)
+        {
+            ui = IntroUI2.transform.gameObject;
+        }
+        else
+        {
+            ui = IntroUI.transform.gameObject;
+        }
         curTime += Time.deltaTime;
         if (curTime > SetTime)
         {
-            IntroUI.transform.gameObject.SetActive(true);
+            ui.gameObject.SetActive(true);
         }
         if (curTime > 2 * SetTime)
         {
-            IntroUI.transform.gameObject.SetActive(false);
+            ui.gameObject.SetActive(false);
+            n *= -1;
             curTime = 0;
         }
         // 움직임 연동 : 내것이 아니면 반환
@@ -77,8 +89,8 @@ public class PlayerMove_Lobby : MonoBehaviour
 
         // 3. 플레이어 움직이기
         transform.position += dir * finSpeed * Time.deltaTime;
-        NicknameUI.transform.position = transform.position+new Vector3(0,3,0);
-        nName.text = GameInfo.instance.nickName;
+        ui.transform.position = transform.position+new Vector3(1,3,0);
+        
 
 
     }
