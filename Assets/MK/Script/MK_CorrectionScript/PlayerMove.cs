@@ -52,6 +52,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         rigid = GetComponentInChildren<Rigidbody>();
         // 속도 초기화
         finSpeed = speed;
+        nName.text = photonView.Owner.NickName;
     }
 
     // Update is called once per frame
@@ -88,7 +89,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
             // 3. 플레이어 움직이기
             transform.position += dir * finSpeed * Time.deltaTime;
             NicknameUI.transform.position = transform.position + new Vector3(0, 3, 0);
-            nName.text = GameInfo.instance.nickName;
+            
         }
         else
         {
@@ -96,7 +97,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
             NicknameUI.position = Vector3.Lerp(NicknameUI.transform.position, receiveNPos, lerpSpeed * Time.deltaTime);
-
+            
         }
     }
 
@@ -179,4 +180,13 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         }
     }
     #endregion
+    //void ShowNickName()
+    //{
+    //    photonView.RPC("RpcshowNickName", RpcTarget.All);
+    //}
+    //[PunRPC]
+    //void RpcshowNickName()
+    //{
+    //    nName.text = GameInfo.instance.nickName;
+    //}
 }

@@ -14,6 +14,7 @@ public class StartTrigger : MonoBehaviourPun
    [SerializeField] float setTime;
    [SerializeField] Scrollbar Scrollbar;
    [SerializeField] GameObject Handle;
+    bool turn;
     void Start()
     {
         Handle.SetActive(false);
@@ -25,7 +26,7 @@ public class StartTrigger : MonoBehaviourPun
     void Update()
     {
         detect = Physics.OverlapBox(transform.position, boxSize * 0.5f, default, 1 << 6);
-        if (detect.Length == 3)
+        if (detect.Length == 4)
         {
             // 로딩 시작
             StartLoading();
@@ -44,9 +45,10 @@ public class StartTrigger : MonoBehaviourPun
         // ui 에 게이지가 차도록 만든다. 
         // 시간은 방장 기준으로 해도 게이지 ui는 RPC로 보내야 한다. 
         curTime += Time.deltaTime;
-        if (curTime > setTime)
+        if (curTime > setTime&&!turn)
         {
             WaitingRoomManager.instance.LoadArena();
+            turn = true;
         }
     }
     void ShowGuageUI()
